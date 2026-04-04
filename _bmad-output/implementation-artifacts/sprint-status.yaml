@@ -15,7 +15,7 @@ development_status:
   epic-1: in-progress
   1-1-initialize-11ty-project: review
   1-2-set-up-excel-json-data-pipeline: review
-  1-3-implement-image-download-and-optimization: backlog
+  1-3-implement-image-download-and-optimization: ready-for-dev
   1-4-create-github-actions-workflow-for-automated-build: backlog
   1-5-configure-github-secrets-and-ftp-deployment: backlog
   1-6-implement-data-validation-and-deployment-error-handling: backlog
