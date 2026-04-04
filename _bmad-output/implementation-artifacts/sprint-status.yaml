@@ -13,7 +13,7 @@
 development_status:
   # Epic 1: Project Initialization & Deployment Infrastructure
   epic-1: in-progress
-  1-1-initialize-11ty-project: ready-for-dev
+  1-1-initialize-11ty-project: in-progress
   1-2-set-up-excel-json-data-pipeline: backlog
   1-3-implement-image-download-and-optimization: backlog
   1-4-create-github-actions-workflow-for-automated-build: backlog
