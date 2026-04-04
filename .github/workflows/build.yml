@@ -1,0 +1,50 @@
+name: Build Site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: _site/
+          retention-days: 7
+
+      - name: Build status report
+        if: success()
+        run: |
+          echo "✅ Build completed successfully"
+          echo "Build time: $(date)"
+          echo "Artifact: build-output"
+          echo "Size: $(du -sh _site/ | cut -f1)"
+
+      - name: Build failure report
+        if: failure()
+        run: |
+          echo "❌ Build failed"
+          echo "Check logs above for error details"
+          exit 1
