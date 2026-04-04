@@ -7,9 +7,58 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PPIProperties - Property Listing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f5f5; }
+        header { background: white; padding: 20px; border-bottom: 1px solid #ddd; }
+        h1 { color: #333; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .property-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .property-image { width: 100%; height: 200px; overflow: hidden; background: #e5e7eb; }
+        picture { display: block; width: 100%; height: 100%; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .property-content { padding: 15px; }
+        .property-price { font-size: 20px; font-weight: bold; color: #059669; margin: 10px 0; }
+        .property-address { font-size: 14px; color: #666; margin: 5px 0; }
+        .property-beds { font-size: 13px; color: #999; }
+        .responsive-image { display: block; width: 100%; height: 100%; }
+        .responsive-image__img { display: block; width: 100%; height: 100%; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to PPIProperties</h1>
-    <p>Property listing website initialized with 11ty.</p>
+    <header>
+        <h1>🏠 PPIProperties</h1>
+        <p>Premium Property Listings</p>
+    </header>
+
+    <div class="container">
+        <h2>Featured Properties</h2>
+        <div class="property-grid">
+            {% for property in properties %}
+                <div class="property-card">
+                    <div class="property-image">
+                        {% set propertyId = property.id %}
+                        {% set alt = property.address %}
+                        {% include "responsive-image.njk" %}
+                    </div>
+                    <div class="property-content">
+                        <div class="property-price">R {{ property.price | toLocaleString }}</div>
+                        <div class="property-address">{{ property.address }}</div>
+                        <div class="property-beds">
+                            🛏️ {{ property.bedrooms }} | 🚿 {{ property.bathrooms }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Format numbers with commas (for older browsers)
+        Nunjucks.filters.toLocaleString = function(num) {
+            return num ? num.toLocaleString() : '0';
+        };
+    </script>
 </body>
 </html>

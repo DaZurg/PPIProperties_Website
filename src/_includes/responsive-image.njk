@@ -1,0 +1,45 @@
+{# Responsive Image Component
+   Generates a <picture> element with WebP primary source and JPEG fallback
+   Includes responsive sizes (640px, 1024px, 1920px)
+
+   Usage: {% include "responsive-image.njk" with { propertyId: "property-1", alt: "Property photo" } %}
+#}
+
+<picture class="responsive-image">
+  {# Desktop: 1920px WebP #}
+  <source media="(min-width: 1920px)"
+          srcset="/images/property-{{ propertyId }}-1920.webp 1920w"
+          type="image/webp">
+
+  {# Tablet: 1024px WebP #}
+  <source media="(min-width: 1024px)"
+          srcset="/images/property-{{ propertyId }}-1024.webp 1024w"
+          type="image/webp">
+
+  {# Mobile: 640px WebP #}
+  <source media="(max-width: 1023px)"
+          srcset="/images/property-{{ propertyId }}-640.webp 640w"
+          type="image/webp">
+
+  {# Desktop: 1920px JPEG (fallback) #}
+  <source media="(min-width: 1920px)"
+          srcset="/images/property-{{ propertyId }}-1920.jpg 1920w"
+          type="image/jpeg">
+
+  {# Tablet: 1024px JPEG (fallback) #}
+  <source media="(min-width: 1024px)"
+          srcset="/images/property-{{ propertyId }}-1024.jpg 1024w"
+          type="image/jpeg">
+
+  {# Mobile: 640px JPEG (fallback) #}
+  <source media="(max-width: 1023px)"
+          srcset="/images/property-{{ propertyId }}-640.jpg 640w"
+          type="image/jpeg">
+
+  {# Final fallback img tag #}
+  <img
+    src="/images/property-{{ propertyId }}-640.jpg"
+    alt="{{ alt | default('Property photo') }}"
+    class="responsive-image__img"
+    loading="lazy">
+</picture>

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.oneroof.co.nz)",
+      "Bash(cat:*)",
+      "WebSearch",
+      "Skill(bmad-create-prd)",
+      "Bash(ls -la \"N:\\\\GitHub\\\\PPIProperties_Website\\\\_bmad-output\\\\planning-artifacts\"\" 2>&1 || echo \"Directory does not exist \")",
+      "Bash(test:*)",
+      "Skill(bmad-create-architecture)",
+      "Skill(bmad-create-ux-design)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nCreate comprehensive epic and story breakdown for PPIProperties_Website\n\n## Summary\n\nGenerated complete epic and story breakdown from PRD, Architecture, and UX Design specifications:\n\n- **6 Epics** organized by user value: Project Initialization, Property Listing, Filtering, Details/Gallery/SEO, Engagement, Accessibility/Performance\n- **27 User Stories** with detailed acceptance criteria\n- **53 Functional Requirements** fully mapped to stories\n- **50 UX Design Requirements** covered by specific implementations\n- **21 Non-Functional Requirements** addressed across epics\n\n## Epics Created\n\n1. Project Initialization & Deployment Infrastructure \\(6 stories\\)\n2. Property Listing & Discovery \\(4 stories\\)\n3. Smart Property Filtering \\(4 stories\\)\n4. Property Details, Image Gallery & SEO \\(6 stories\\)\n5. Property Interaction & Engagement \\(3 stories\\)\n6. Accessibility & Performance Excellence \\(4 stories\\)\n\n## Implementation Ready\n\n- All stories follow user-value-first approach\n- No forward dependencies within epics\n- Each story independently completable\n- Clear acceptance criteria for development\n- Architecture patterns enforced \\(11ty, Tailwind CSS, vanilla JS\\)\n- Performance and accessibility built-in from start\n\nCo-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nCreate story file for 1.1: Initialize 11ty Project with Minimal Template\n\nThis comprehensive story document provides the developer with:\n- Complete acceptance criteria and task breakdown\n- Detailed technical requirements and architecture compliance notes\n- Testing strategy and success metrics\n- References to source documentation\n- Build and development workflow setup\n\nAlso create sprint-status.yaml to track epic and story progress throughout development.\n\nCo-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(node --version:*)",
+      "Bash(npm --version:*)",
+      "Bash(npm create:*)",
+      "Bash(npm init -y)",
+      "Bash(npm run build:*)",
+      "Bash(timeout 5 npm run dev:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nImplement Story 1.1: Initialize 11ty Project with Minimal Template\n\n✅ Completed all 7 tasks:\n1. Verified Node.js 24.11.1 \\(≥18+\\) and npm 11.6.2 \\(≥8+\\)\n2. Initialized npm project and installed @11ty/eleventy v3.1.5\n3. Created directory structure:\n   - src/ \\(templates and content\\)\n   - src/_data/ \\(global data files for properties.json\\)\n   - src/_includes/ \\(reusable components\\)\n4. Created .eleventy.js configuration file\n5. Updated package.json with build and dev scripts\n6. Created minimal src/index.html template\n7. Verified all acceptance criteria:\n   - npm run build: ✅ Generates _site/index.html \\(0.90 seconds\\)\n   - npm run dev: ✅ Starts server on http://localhost:8080/\n   - Project structure: ✅ Matches architecture requirements\n   - Build output: ✅ Valid HTML in _site/ directory\n\nAll prerequisites met for Story 1.2 \\(Excel → JSON pipeline\\).\n\nCo-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(node:*)",
+      "Bash(npm install:*)",
+      "Bash(ls:*)",
+      "Bash(if [ -d \"_site/images\" ])",
+      "Bash(then echo \"✅ Build completed\")",
+      "Bash(else echo \"⏳ Still building...\")",
+      "Bash(fi)",
+      "Bash(if [ -f \"_site/index.html\" ])",
+      "Bash(then echo \"✅ Build successful\")"
+    ]
+  }
+}
