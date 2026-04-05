@@ -1,86 +1,156 @@
 [
   {
-    "id": "property-3108494",
-    "address": "6b Fair Road, Glenhazel, Johannesburg",
+    "id": "3108494",
+    "address": "6b Fair Road, Glenhazel",
     "price": 7000000,
-    "bedrooms": 5,
-    "bathrooms": 3,
+    "bedrooms": 0,
+    "bathrooms": 0,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=03e4a7a7-02c7-4752-a428-dc9db57538f1&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=266dfc3f-a6b2-403e-9a9a-abeab5432a78&userId=57314"
     ],
-    "description": "Double story, 5 bedrooms, 3.5 bathrooms, across the road from Ohr sameach. Including: gas fireplace, solar inverter, gas and solar geyser, jojo tank, heated pool, double garage, underfloor heating in bathrooms, maids room, outdoor gas braai, Chefs kitchen and more.",
+    "description": "Double story, 5 bedrooms, 3.5 bathrooms, across the road from Ohr sameach.\r\n\r\nIncluding: gas fireplace, solar inverter, gas and solar geyser, jojo tank, heated pool, double garage, underfloor heating in bathrooms, maids room, outdoor gas braai,\r\n\r\nChefs kitchen and more.",
     "agentName": "Property Agent",
-    "agentPhone": "+27 82 000 0000",
-    "agentEmail": "agent@example.com",
-    "features": ["Solar Inverter", "Gas Geyser", "Solar Geyser", "Heated Pool", "Double Garage", "Underfloor Heating", "Maids Room", "Chef's Kitchen"],
+    "agentPhone": "",
+    "agentEmail": "",
+    "features": [
+      "2",
+      "3",
+      "4",
+      "1",
+      "1"
+    ],
     "location": "Glenhazel",
     "propertyType": "House"
   },
   {
-    "id": "property-3108496",
-    "address": "95 Japonica Avenue, Môregloed, Pretoria",
+    "id": "3108496",
+    "address": "95 Japonica Avenue, Moregloed",
     "price": 495000,
-    "bedrooms": 1,
-    "bathrooms": 1,
+    "bedrooms": 0,
+    "bathrooms": 0,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=c134b2ca-f888-442b-8d7e-ae0e0d110561&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=da2920c5-29dc-4563-b78f-d4b25513bb57&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=6aaa9b7b-7e17-4a1b-af1d-c7f691f68253&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=ed097668-45e6-4a1a-9d81-a4c05578a7c9&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=81f4113b-b1c2-4f7a-8c14-bc2c29aedaca&userId=57314",
-      "https://server.exdev.propctrl-test.com/image.ashx?Id=5a3e0ac4-0385-4d64-bf14-fd2ce0a89ae6&userId=57314"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=5a3e0ac4-0385-4d64-bf14-fd2ce0a89ae6&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=f6ea8965-470b-4f19-8bb4-79619e622569&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=0fcdfccb-c7af-4de5-ae2e-95aa7af3e98c&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=510ce735-9816-4949-8ef2-5a7ec9a71084&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=aa001fb6-9d26-4939-80cf-2454d2ba8388&userId=57314"
     ],
-    "description": "Very neat, move-in-ready apartment situated in the popular Unigloed Apartment Complex in the well-established suburb of Môregloed. 1 spacious bedroom, 1 bathroom, neat kitchen, comfortable living area, prepaid electricity, lock-up garage.",
-    "agentName": "Martie Pelser",
-    "agentPhone": "+27 72 699 9255",
-    "agentEmail": "martie.pelser@example.com",
-    "features": ["Lock-up Garage", "Prepaid Electricity", "Communal Garden", "Braai Area", "Guest Parking", "Electric Gates", "CCTV Camera"],
-    "location": "Môregloed",
-    "propertyType": "Apartment"
+    "description": "This very neat, move-in-ready apartment is situated in the popular Unigloed Apartment Complex in the well-established suburb of Môregloed.\r\n\r\nThe 2nd floor unit offers:\r\n* 1 spacious bedroom\r\n* 1 bathroom\r\n* Neat kitchen\r\n* Comfortable living area\r\n* Prepaid electricity\r\n* Lock-up garage\r\n\r\nThe comp",
+    "agentName": "Property Agent",
+    "agentPhone": "",
+    "agentEmail": "",
+    "features": [
+      "Bedroom",
+      "Bathroom",
+      "Garage",
+      "with communal braai area",
+      "Kitchen",
+      "Parking",
+      "The apartment complex has a lift",
+      "SpecialFeature"
+    ],
+    "location": "Moregloed",
+    "propertyType": "FlatApartment"
   },
   {
-    "id": "property-3108497",
-    "address": "56B Sparrow Street, Ninapark, Akasia",
+    "id": "3108497",
+    "address": "56B Sparrow Street, Ninapark",
     "price": 1150000,
-    "bedrooms": 3,
-    "bathrooms": 2,
+    "bedrooms": 0,
+    "bathrooms": 0,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=96c2be19-38bb-4732-8c9c-042aa2bf0105&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=4d19492c-c7f1-4835-a300-97fbedb46140&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=121954b0-1bea-48d7-ae81-0b0182619907&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=ec5c5ffb-48a4-4f1a-bd78-35ac4f3d0583&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=ee7b9a22-5610-4c0e-b63e-658f884a9638&userId=57314",
-      "https://server.exdev.propctrl-test.com/image.ashx?Id=1ff5075a-a9ce-4a51-a75e-b9c931061bd1&userId=57314"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=1ff5075a-a9ce-4a51-a75e-b9c931061bd1&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=96b1f656-0927-4130-8cec-fbad5aa4a92f&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=24f596ab-634a-4ff9-8918-c7f95fd22960&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=79f5b92d-1ceb-40cf-ad81-24db5bfde52c&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=9d5d41bc-88d9-4f0f-b7ad-eadcf556d3f1&userId=57314"
     ],
-    "description": "This home offers comfortable family living in the sought-after area of Ninapark. Features 3 spacious bedrooms with main bedroom boasting private en-suite bathroom, along with a second bathroom. Neat kitchen with ample cupboard space, generous living spaces including welcoming living room and dining area.",
+    "description": "This home offers comfortable family living in the sought-after area of Ninapark, conveniently located near shopping centres and essential amenities.\r\n\r\nThe property features 3 spacious bedrooms, with the main bedroom boasting a private en-suite bathroom, along with a second bathroom to serve the res",
     "agentName": "Property Agent",
-    "agentPhone": "+27 83 000 0000",
-    "agentEmail": "agent@example.com",
-    "features": ["Double Garage", "Immaculate Garden", "Patio with Built-in Braai", "Double Garage", "Mature Garden"],
+    "agentPhone": "",
+    "agentEmail": "",
+    "features": [
+      "Bedroom",
+      "Bedroom",
+      "Bedroom",
+      "Bathroom",
+      "Bathroom",
+      "Double Lock-up Garage (3rd garage door for easy access to backyard)",
+      "Garage",
+      "Garden"
+    ],
     "location": "Ninapark",
-    "propertyType": "House"
+    "propertyType": "FlatApartment"
   },
   {
-    "id": "property-3108498",
-    "address": "110 Christiaan De Wet Road, Florida Park, Roodepoort",
+    "id": "3108498",
+    "address": "110 Christiaan De Wet Road, Florida Park",
     "price": 1150000,
-    "bedrooms": 3,
-    "bathrooms": 2,
+    "bedrooms": 0,
+    "bathrooms": 0,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=cb1709ce-330d-4797-92ac-6623a24664da&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=31204215-8bb5-44dd-b164-5a1fea7c3c30&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=5eb72b75-d832-4a6e-8036-1339b9a76434&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=277bcdaa-7cea-469a-ac45-c7a7b603a129&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=004851cd-348e-46d6-a7bd-ca8ce37e3f2a&userId=57314",
-      "https://server.exdev.propctrl-test.com/image.ashx?Id=82548d3f-2faa-4c0b-ad4d-5940fc26c502&userId=57314"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=82548d3f-2faa-4c0b-ad4d-5940fc26c502&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=e25db444-c6f6-4929-91df-a9afe53b5594&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=2e9f9746-b253-4bfd-a234-915ced3df171&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=79c63faa-9e39-4ebf-8ee3-e802ff7ba1a6&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=9bbf312b-4042-4453-899b-53cd3639efba&userId=57314"
     ],
-    "description": "Immaculate, well-maintained townhouse perfectly located in the sought-after Villarus Complex. Move-in ready and ideal for comfortable family living! Downstairs features beautiful modern kitchen with ample cupboard space, spacious dining area and two inviting living areas.",
-    "agentName": "Martie Pelser",
-    "agentPhone": "+27 72 699 9255",
-    "agentEmail": "martie.pelser@example.com",
-    "features": ["Double Lock-up Garage", "Immaculate Garden", "Patio with Built-in Braai", "Communal Pool", "Fibre Internet", "Electric Gates", "Security Bars"],
+    "description": "Discover this immaculate, well-maintained townhouse, perfectly located in the sought-after Villarus Complex. Move-in ready and ideal for comfortable family living!\r\n\r\nDownstairs features:\r\nA beautiful, modern kitchen with ample cupboard space, perfect for any home chef. The home offers a spacious di",
+    "agentName": "Property Agent",
+    "agentPhone": "",
+    "agentEmail": "",
+    "features": [
+      "Bedroom",
+      "Bedroom",
+      "Bedroom",
+      "Downstairs",
+      "Upstairs",
+      "Bath with shower head",
+      "DiningRoom",
+      "FamilyTVRoom"
+    ],
     "location": "Florida Park",
-    "propertyType": "Townhouse"
+    "propertyType": "FlatApartment"
+  },
+  {
+    "id": "3108499",
+    "address": "12 Fair Road, Glenhazel",
+    "price": 600000,
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "imageUrls": [
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=e69e94d4-149e-4ce4-a69a-316a1b9392ad&userId=57314"
+    ],
+    "description": "test 3 description",
+    "agentName": "Property Agent",
+    "agentPhone": "",
+    "agentEmail": "",
+    "features": [
+      "2",
+      "3",
+      "garage 1",
+      "garage 2",
+      "off street",
+      "Security",
+      "InternetAccess"
+    ],
+    "location": "Glenhazel",
+    "propertyType": "House"
   }
 ]

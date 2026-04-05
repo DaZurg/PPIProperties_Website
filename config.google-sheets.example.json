@@ -1,6 +1,15 @@
 {
-  "sheetId": "YOUR_SHEET_ID_HERE",
-  "sheetName": "Properties",
+  "sheetId": "1JJlAqdyeomo6JX868TVZAnpn5yF3T3o39Pv63kPeTbc",
+  "sheets": {
+    "properties": {
+      "sheetName": "Properties",
+      "suburbanKeyColumn": "suburb_id"
+    },
+    "suburbs": {
+      "sheetName": "Suburbs",
+      "keyColumn": "suburb_id"
+    }
+  },
   "serviceAccount": {
     "type": "service_account",
     "project_id": "YOUR_PROJECT_ID",
