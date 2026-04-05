@@ -61,8 +61,8 @@ jobs:
       - name: Install FTP client
         if: success()
         run: |
-          apt-get update
-          apt-get install -y lftp
+          sudo apt-get update
+          sudo apt-get install -y lftp
 
       - name: Deploy to cPanel via FTP
         if: success()
