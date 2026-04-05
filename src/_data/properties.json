@@ -6,9 +6,8 @@
     "bedrooms": 5,
     "bathrooms": 3,
     "imageUrls": [
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=640",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=640",
-      "https://images.unsplash.com/photo-1512917774080-9a485dc3006e?w=640"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=03e4a7a7-02c7-4752-a428-dc9db57538f1&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=266dfc3f-a6b2-403e-9a9a-abeab5432a78&userId=57314"
     ],
     "description": "Double story, 5 bedrooms, 3.5 bathrooms, across the road from Ohr sameach. Including: gas fireplace, solar inverter, gas and solar geyser, jojo tank, heated pool, double garage, underfloor heating in bathrooms, maids room, outdoor gas braai, Chefs kitchen and more.",
     "agentName": "Property Agent",
@@ -25,11 +24,12 @@
     "bedrooms": 1,
     "bathrooms": 1,
     "imageUrls": [
-      "https://images.unsplash.com/photo-1560448204-e02f7d3d3a9b?w=640",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640",
-      "https://images.unsplash.com/photo-1562070503-3f23a46e4fb1?w=640",
-      "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=640",
-      "https://images.unsplash.com/photo-1600210174714-e6996de4735c?w=640"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=c134b2ca-f888-442b-8d7e-ae0e0d110561&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=da2920c5-29dc-4563-b78f-d4b25513bb57&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=6aaa9b7b-7e17-4a1b-af1d-c7f691f68253&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=ed097668-45e6-4a1a-9d81-a4c05578a7c9&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=81f4113b-b1c2-4f7a-8c14-bc2c29aedaca&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=5a3e0ac4-0385-4d64-bf14-fd2ce0a89ae6&userId=57314"
     ],
     "description": "Very neat, move-in-ready apartment situated in the popular Unigloed Apartment Complex in the well-established suburb of Môregloed. 1 spacious bedroom, 1 bathroom, neat kitchen, comfortable living area, prepaid electricity, lock-up garage.",
     "agentName": "Martie Pelser",
@@ -46,12 +46,12 @@
     "bedrooms": 3,
     "bathrooms": 2,
     "imageUrls": [
-      "https://images.unsplash.com/photo-1570129477492-45ba003b002d?w=640",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640",
-      "https://images.unsplash.com/photo-1611003228941-450f63602022?w=640",
-      "https://images.unsplash.com/photo-1540932239986-310128078ceb?w=640",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=640",
-      "https://images.unsplash.com/photo-1600210174714-e6996de4735c?w=640"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=96c2be19-38bb-4732-8c9c-042aa2bf0105&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=4d19492c-c7f1-4835-a300-97fbedb46140&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=121954b0-1bea-48d7-ae81-0b0182619907&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=ec5c5ffb-48a4-4f1a-bd78-35ac4f3d0583&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=ee7b9a22-5610-4c0e-b63e-658f884a9638&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=1ff5075a-a9ce-4a51-a75e-b9c931061bd1&userId=57314"
     ],
     "description": "This home offers comfortable family living in the sought-after area of Ninapark. Features 3 spacious bedrooms with main bedroom boasting private en-suite bathroom, along with a second bathroom. Neat kitchen with ample cupboard space, generous living spaces including welcoming living room and dining area.",
     "agentName": "Property Agent",
@@ -68,12 +68,12 @@
     "bedrooms": 3,
     "bathrooms": 2,
     "imageUrls": [
-      "https://images.unsplash.com/photo-1564014957-40f79df5fdf0?w=640",
-      "https://images.unsplash.com/photo-1600693938480-ff8046cb3500?w=640",
-      "https://images.unsplash.com/photo-1600210174714-e6996de4735c?w=640",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=640",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=640",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=640"
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=cb1709ce-330d-4797-92ac-6623a24664da&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=31204215-8bb5-44dd-b164-5a1fea7c3c30&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=5eb72b75-d832-4a6e-8036-1339b9a76434&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=277bcdaa-7cea-469a-ac45-c7a7b603a129&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=004851cd-348e-46d6-a7bd-ca8ce37e3f2a&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=82548d3f-2faa-4c0b-ad4d-5940fc26c502&userId=57314"
     ],
     "description": "Immaculate, well-maintained townhouse perfectly located in the sought-after Villarus Complex. Move-in ready and ideal for comfortable family living! Downstairs features beautiful modern kitchen with ample cupboard space, spacious dining area and two inviting living areas.",
     "agentName": "Martie Pelser",
@@ -82,24 +82,5 @@
     "features": ["Double Lock-up Garage", "Immaculate Garden", "Patio with Built-in Braai", "Communal Pool", "Fibre Internet", "Electric Gates", "Security Bars"],
     "location": "Florida Park",
     "propertyType": "Townhouse"
-  },
-  {
-    "id": "property-3108499",
-    "address": "12 Fair Road, Glenhazel, Johannesburg",
-    "price": 600000,
-    "bedrooms": 2,
-    "bathrooms": 1,
-    "imageUrls": [
-      "https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=640",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640",
-      "https://images.unsplash.com/photo-1615800655877-fd8c5e6ee688?w=640"
-    ],
-    "description": "Charming 2 bedroom home in well-established suburb. Recently updated with modern kitchen and bathrooms. Peaceful setting with mature trees and landscaped gardens. Ideal for first-time buyers or small families.",
-    "agentName": "Property Agent",
-    "agentPhone": "+27 84 000 0000",
-    "agentEmail": "agent@example.com",
-    "features": ["Modern Kitchen", "Updated Bathrooms", "Mature Garden", "Landscaped Grounds", "Peaceful Location"],
-    "location": "Glenhazel",
-    "propertyType": "House"
   }
 ]
