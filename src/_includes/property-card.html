@@ -4,7 +4,7 @@
     {% if property.imageUrls and property.imageUrls.length > 0 %}
       <img
         src="{{ property.imageUrls[0] }}"
-        alt="Property image at {{ property.address }}"
+        alt="Property image{% if property.address %} at {{ property.address }}{% endif %}"
         class="w-full h-full object-cover"
         loading="lazy"
         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%239ca3af%22 font-family=%22sans-serif%22 font-size=%2218%22 text-anchor=%22middle%22 x=%22200%22 y=%22150%22%3EImage Not Available%3C/text%3E%3C/svg%3E';"
@@ -36,19 +36,19 @@
     <div class="flex flex-wrap gap-4 mb-4 text-gray-600 text-sm md:text-base">
       <!-- Bedrooms -->
       <div class="flex items-center gap-1">
-        <span class="text-lg">🛏️</span>
-        <span>{% if property.bedrooms > 0 %}{{ property.bedrooms }}{% else %}N/A{% endif %}</span>
+        <span class="text-lg" aria-hidden="true">🛏️</span>
+        <span>{% if property.bedrooms > 0 %}{{ property.bedrooms }} bed{% else %}N/A{% endif %}</span>
       </div>
 
       <!-- Bathrooms -->
       <div class="flex items-center gap-1">
-        <span class="text-lg">🚿</span>
-        <span>{% if property.bathrooms > 0 %}{{ property.bathrooms }}{% else %}N/A{% endif %}</span>
+        <span class="text-lg" aria-hidden="true">🚿</span>
+        <span>{% if property.bathrooms > 0 %}{{ property.bathrooms }} bath{% else %}N/A{% endif %}</span>
       </div>
 
       <!-- Parking (count garage-related features) -->
       <div class="flex items-center gap-1">
-        <span class="text-lg">🅿️</span>
+        <span class="text-lg" aria-hidden="true">🅿️</span>
         <span>
           {% if property.features %}
             {% set parkingCount = 0 %}
@@ -58,7 +58,7 @@
                 {% set parkingCount = parkingCount + 1 %}
               {% endif %}
             {% endfor %}
-            {% if parkingCount > 0 %}{{ parkingCount }}{% else %}N/A{% endif %}
+            {% if parkingCount > 0 %}{{ parkingCount }} parking{% else %}N/A{% endif %}
           {% else %}
             N/A
           {% endif %}
@@ -67,7 +67,7 @@
 
       <!-- Pet Friendly -->
       <div class="flex items-center gap-1">
-        <span class="text-lg">🐾</span>
+        <span class="text-lg" aria-hidden="true">🐾</span>
         <span>
           {% if property.features %}
             {% set hasPets = false %}
@@ -77,7 +77,7 @@
                 {% set hasPets = true %}
               {% endif %}
             {% endfor %}
-            {% if hasPets %}Yes{% else %}N/A{% endif %}
+            {% if hasPets %}Pets OK{% else %}N/A{% endif %}
           {% else %}
             N/A
           {% endif %}
