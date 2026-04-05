@@ -36,7 +36,7 @@ Follow these steps to get your service account JSON key:
 
 ## Step 3: Get Your Sheet Information
 
-You need three pieces of information:
+You need two pieces of information:
 
 1. **Sheet ID** - From your Google Sheet URL:
    ```
@@ -46,20 +46,7 @@ You need three pieces of information:
 
 2. **Sheet Name** - The tab name at the bottom (default is "Sheet1")
 
-3. **Column Names** - Open your sheet and note the exact header names for:
-   - Property ID
-   - Address
-   - Price
-   - Bedrooms
-   - Bathrooms
-   - Images (the column with image URLs)
-   - Description
-   - Agent Name
-   - Agent Phone
-   - Agent Email
-   - Features
-   - Location
-   - Property Type
+The script will automatically detect column names from your sheet's header row.
 
 ## Step 4: Create Config File
 
@@ -68,22 +55,15 @@ You need three pieces of information:
 3. Edit `config.google-sheets.json`:
    ```json
    {
-     "sheetsApiConfig": {
-       "sheetId": "PASTE_YOUR_SHEET_ID",
-       "sheetName": "Properties",
-       "propertyColumns": {
-         "id": "Property ID",
-         "address": "Address",
-         ...
-       }
-     },
+     "sheetId": "YOUR_SHEET_ID",
+     "sheetName": "Properties",
      "serviceAccount": {
        // PASTE ENTIRE JSON KEY FILE CONTENTS HERE
      }
    }
    ```
 
-4. Replace the placeholder values with your actual data and the service account JSON
+4. Replace the placeholder values with your actual sheet ID and service account JSON
 
 ## Step 5: Set GitHub Secret (for CI/CD)
 

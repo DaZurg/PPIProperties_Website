@@ -1,23 +1,6 @@
 {
-  "sheetsApiConfig": {
-    "sheetId": "YOUR_SHEET_ID_HERE",
-    "sheetName": "Properties",
-    "propertyColumns": {
-      "id": "Property ID",
-      "address": "Address",
-      "price": "Price",
-      "bedrooms": "Bedrooms",
-      "bathrooms": "Bathrooms",
-      "imageUrls": "Images",
-      "description": "Description",
-      "agentName": "Agent Name",
-      "agentPhone": "Agent Phone",
-      "agentEmail": "Agent Email",
-      "features": "Features",
-      "location": "Location",
-      "propertyType": "Property Type"
-    }
-  },
+  "sheetId": "YOUR_SHEET_ID_HERE",
+  "sheetName": "Properties",
   "serviceAccount": {
     "type": "service_account",
     "project_id": "YOUR_PROJECT_ID",
