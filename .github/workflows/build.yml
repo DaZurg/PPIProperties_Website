@@ -77,7 +77,7 @@ jobs:
             exit 0
           fi
           echo "🚀 Starting FTP deployment to $FTP_HOST"
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -e "mirror -R ./_site /public_html; quit" "$FTP_HOST" || {
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -e "set ssl:verify-certificate no; mirror -R ./_site /public_html; quit" "$FTP_HOST" || {
             echo "❌ Deployment failed"
             exit 1
           }
