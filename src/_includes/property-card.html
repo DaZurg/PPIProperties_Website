@@ -53,7 +53,8 @@
           {% if property.features %}
             {% set parkingCount = 0 %}
             {% for feature in property.features %}
-              {% if "Garage" in feature or "garage" in feature or "Parking" in feature or "parking" in feature %}
+              {% set featureLower = feature | lower %}
+              {% if "garage" in featureLower or "parking" in featureLower or "carport" in featureLower %}
                 {% set parkingCount = parkingCount + 1 %}
               {% endif %}
             {% endfor %}
@@ -71,7 +72,8 @@
           {% if property.features %}
             {% set hasPets = false %}
             {% for feature in property.features %}
-              {% if "Pet" in feature or "pet" in feature %}
+              {% set featureLower = feature | lower %}
+              {% if "pet" in featureLower %}
                 {% set hasPets = true %}
               {% endif %}
             {% endfor %}
