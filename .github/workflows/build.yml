@@ -84,6 +84,30 @@ jobs:
       - name: Deployment status report
         if: success()
         run: |
-          echo "✅ Build and deployment pipeline completed successfully"
-          echo "Website updated at: $(date)"
-          echo "Check your live site to verify changes"
+          echo "=========================================="
+          echo "✅ DEPLOYMENT COMPLETED SUCCESSFULLY"
+          echo "=========================================="
+          echo ""
+          echo "Build Status: ✅ Success"
+          echo "Deployment Status: ✅ Success"
+          echo "Timestamp: $(date)"
+          echo ""
+          echo "All files deployed to cPanel /public_html/ directory."
+          echo "Visit your website to verify the changes."
+          echo "=========================================="
+
+      - name: Deployment failure report
+        if: failure()
+        run: |
+          echo "=========================================="
+          echo "❌ DEPLOYMENT FAILED"
+          echo "=========================================="
+          echo ""
+          echo "Build Status: Check logs above"
+          echo "Deployment Status: ❌ Failed"
+          echo "Timestamp: $(date)"
+          echo ""
+          echo "Review the logs above for details."
+          echo "Check GitHub Secrets configuration if FTP error occurred."
+          echo "=========================================="
+          exit 1
