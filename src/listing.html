@@ -7,89 +7,24 @@ pagination:
 ---
 
 <h1>Find Your Property</h1>
-<p class="subtitle">Browse all available properties below</p>
+<p class="text-lg text-gray-600 mb-8">Browse all available properties below</p>
 
 <!-- Filter bar will go here (Story 3.1) -->
-<section id="filters" style="margin: 2rem 0; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-  <p style="color: #666;">Filters coming soon (Story 3.1)</p>
+<section id="filters" class="my-8 p-6 bg-white rounded-lg shadow-sm">
+  <p class="text-gray-600">Filters coming soon (Story 3.1)</p>
 </section>
 
 <!-- Property grid -->
 <section id="properties" class="property-grid" role="region" aria-label="Property listings">
-  <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #1f2937;">
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800">
     {{ properties.length }} Properties Available
   </h2>
 
-  <!-- Property cards will be rendered here (Story 2.2) -->
-  <div id="property-list" style="display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+  <!-- Property cards -->
+  <div id="property-list" class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {% for property in properties %}
-      <article class="property-card" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease;">
-        <!-- Image placeholder -->
-        <div style="background: #e5e7eb; height: 200px; display: flex; align-items: center; justify-content: center; color: #999;">
-          <p>Property Image (Story 2.2)</p>
-        </div>
-
-        <!-- Card content -->
-        <div style="padding: 1.5rem;">
-          <!-- Price -->
-          <div style="font-size: 1.5rem; font-weight: bold; color: #059669; margin-bottom: 0.5rem;">
-            R{{ property.price | toLocaleString }}
-          </div>
-
-          <!-- Address -->
-          <h3 style="font-size: 1.1rem; color: #1f2937; margin-bottom: 0.75rem;">
-            {{ property.address }}
-          </h3>
-
-          <!-- Bedrooms and Bathrooms -->
-          <div style="display: flex; gap: 1.5rem; margin-bottom: 1rem; color: #666; font-size: 0.95rem;">
-            <span>🛏️ {{ property.bedrooms }} Beds</span>
-            <span>🚿 {{ property.bathrooms }} Baths</span>
-          </div>
-
-          <!-- View Details button -->
-          <a href="/properties/{{ property.id }}/" style="display: inline-block; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 500; transition: background 0.3s ease;">
-            View Details
-          </a>
-        </div>
-      </article>
+      {% include "property-card.html" %}
     {% endfor %}
   </div>
 </section>
 
-<!-- Add Nunjucks filter for number formatting -->
-<script>
-  // Temporary filter for demo (will be replaced with proper Nunjucks filter in Story 2.4)
-  // This allows price display to work during development
-</script>
-
-<style>
-  .subtitle {
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 2rem;
-  }
-
-  .property-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 640px) {
-    #property-list {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (min-width: 641px) and (max-width: 1024px) {
-    #property-list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1025px) {
-    #property-list {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-</style>
