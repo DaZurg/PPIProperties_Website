@@ -1,64 +1,54 @@
 ---
-layout: null
+layout: layout.html
+title: Home
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPIProperties - Property Listing</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f5f5; }
-        header { background: white; padding: 20px; border-bottom: 1px solid #ddd; }
-        h1 { color: #333; margin: 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .property-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .property-image { width: 100%; height: 200px; overflow: hidden; background: #e5e7eb; }
-        picture { display: block; width: 100%; height: 100%; }
-        img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .property-content { padding: 15px; }
-        .property-price { font-size: 20px; font-weight: bold; color: #059669; margin: 10px 0; }
-        .property-address { font-size: 14px; color: #666; margin: 5px 0; }
-        .property-beds { font-size: 13px; color: #999; }
-        .responsive-image { display: block; width: 100%; height: 100%; }
-        .responsive-image__img { display: block; width: 100%; height: 100%; }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>🏠 PPIProperties</h1>
-        <p>Premium Property Listings</p>
-    </header>
 
-    <div class="container">
-        <h2>Featured Properties</h2>
-        <div class="property-grid">
-            {% for property in properties %}
-                <div class="property-card">
-                    <div class="property-image">
-                        {% set propertyId = property.id %}
-                        {% set alt = property.address %}
-                        {% include "responsive-image.njk" %}
-                    </div>
-                    <div class="property-content">
-                        <div class="property-price">R {{ property.price | toLocaleString }}</div>
-                        <div class="property-address">{{ property.address }}</div>
-                        <div class="property-beds">
-                            🛏️ {{ property.bedrooms }} | 🚿 {{ property.bathrooms }}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+<section style="text-align: center; padding: 3rem 0;">
+  <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #1f2937;">
+    Welcome to Property Listing
+  </h1>
 
-    <script>
-        // Format numbers with commas (for older browsers)
-        Nunjucks.filters.toLocaleString = function(num) {
-            return num ? num.toLocaleString() : '0';
-        };
-    </script>
-</body>
-</html>
+  <p style="font-size: 1.25rem; color: #666; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+    Discover your perfect property. Browse through our extensive collection of available properties with detailed information and beautiful images.
+  </p>
+
+  <a href="/listing.html" style="display: inline-block; background: #3b82f6; color: white; padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem; font-weight: 600; text-decoration: none; transition: background 0.3s ease;">
+    Browse Properties
+  </a>
+</section>
+
+<section style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+  <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #1f2937;">Why Choose Us?</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+    <article>
+      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">🏠 Wide Selection</h3>
+      <p style="color: #666;">Browse hundreds of properties from various locations and price ranges.</p>
+    </article>
+
+    <article>
+      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">📱 Easy to Use</h3>
+      <p style="color: #666;">Simple and intuitive interface designed for fast property discovery.</p>
+    </article>
+
+    <article>
+      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">📸 Quality Images</h3>
+      <p style="color: #666;">High-quality property images optimized for all devices and screen sizes.</p>
+    </article>
+
+    <article>
+      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">💬 Direct Contact</h3>
+      <p style="color: #666;">Connect directly with agents through phone, email, or contact form.</p>
+    </article>
+
+    <article>
+      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">⚡ Fast Search</h3>
+      <p style="color: #666;">Lightning-fast filtering and search across all available properties.</p>
+    </article>
+
+    <article>
+      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">🔍 Detailed Info</h3>
+      <p style="color: #666;">Comprehensive property details including features, location, and more.</p>
+    </article>
+  </div>
+</section>
