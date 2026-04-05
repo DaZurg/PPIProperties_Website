@@ -1,3 +1,4 @@
+import { fetchGoogleSheetsData } from './scripts/fetch-google-sheets-data.js';
 import { optimizeImages } from './scripts/optimize-images.js';
 import { validateProperties } from './scripts/validate-properties.js';
 
@@ -7,9 +8,11 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/images");
 
-  // Run validation and optimization before build
+  // Run data fetch, validation, and optimization before build
   eleventyConfig.on('eleventy.before', async () => {
-    // Validate data first (fast, catches errors early)
+    // Fetch live data from Google Sheets (if configured)
+    await fetchGoogleSheetsData();
+    // Validate data (fast, catches errors early)
     await validateProperties();
     // Then optimize images
     await optimizeImages();

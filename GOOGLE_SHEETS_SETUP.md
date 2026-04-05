@@ -92,18 +92,33 @@ git add config.google-sheets.example.json GOOGLE_SHEETS_SETUP.md .gitignore
 git commit -m "Add Google Sheets data sync setup"
 ```
 
-## Testing
+## Build Pipeline Flow
 
-Once set up, the build will automatically:
-1. Read configuration from `config.google-sheets.json` (local) or `GOOGLE_SHEETS_CONFIG` (GitHub Actions)
-2. Authenticate with Google Sheets API
-3. Fetch all properties from your configured sheet
-4. Validate each property
-5. Download and optimize images
-6. Generate the static site
-7. Deploy to cPanel
+Once set up, each build will:
 
-The properties will be live from your Google Sheet!
+1. **Fetch live data** - Reads configuration from `config.google-sheets.json` (local) or `GOOGLE_SHEETS_CONFIG` (GitHub Actions)
+2. **Authenticate** - Uses service account to connect to Google Sheets API
+3. **Fetch sheets** - Pulls Properties and Suburbs data from your configured sheets
+4. **Join data** - Links properties to suburbs via `suburb_id` key
+5. **Generate JSON** - Creates `src/_data/properties.json` with live property data
+6. **Validate** - Checks all properties pass validation rules
+7. **Optimize images** - Downloads and resizes property images
+8. **Build site** - Generates static HTML with 11ty
+9. **Deploy** - Uploads to cPanel via FTP
+
+Your site will always have the latest property data from Google Sheets!
+
+## Local Testing
+
+Before pushing to GitHub:
+
+1. Make sure `config.google-sheets.json` exists locally with your real sheet ID and service account key
+2. Run the build locally:
+   ```bash
+   npm run build
+   ```
+3. Check that `src/_data/properties.json` was generated with your properties
+4. Verify the image optimization completed successfully
 
 ## Troubleshooting
 
