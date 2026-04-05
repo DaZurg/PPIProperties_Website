@@ -48,6 +48,9 @@ function ensureDir(dir) {
  */
 function downloadImage(url, outputPath) {
   return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      reject(new Error('Download timeout'));
+    }, 15000); // 15 second timeout per image
     const file = fs.createWriteStream(outputPath);
 
     https.get(url, (response) => {
