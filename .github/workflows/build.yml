@@ -83,7 +83,7 @@ jobs:
           set ssl:verify-certificate no
           open $FTP_HOST
           login $FTP_USERNAME $FTP_PASSWORD
-          mirror -R ./_site /public_html
+          mirror -R ./_site /public_html/temp.ppiproperties.co.za
           quit
           LFTP_SCRIPT
 
@@ -105,8 +105,8 @@ jobs:
           echo "Deployment Status: ✅ Success"
           echo "Timestamp: $(date)"
           echo ""
-          echo "All files deployed to cPanel /public_html/ directory."
-          echo "Visit your website to verify the changes."
+          echo "All files deployed to temp.ppiproperties.co.za"
+          echo "Visit https://temp.ppiproperties.co.za to verify the changes."
           echo "=========================================="
 
       - name: Deployment failure report
