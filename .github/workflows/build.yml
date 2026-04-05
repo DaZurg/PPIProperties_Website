@@ -81,11 +81,12 @@ jobs:
           # Create lftp script to avoid shell parsing issues with credentials
           cat > /tmp/lftp-deploy.sh << LFTP_SCRIPT
           set ssl:verify-certificate no
-          set net:timeout 300
-          set net:max-retries 1
+          set net:timeout 60
+          set net:connection-limit 2
           open $FTP_HOST
           login $FTP_USERNAME $FTP_PASSWORD
-          mirror -R --parallel=3 ./_site /public_html/temp.ppiproperties.co.za
+          cd /public_html/temp.ppiproperties.co.za
+          mirror -R ./_site .
           quit
           LFTP_SCRIPT
 
