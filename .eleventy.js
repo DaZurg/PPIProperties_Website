@@ -27,6 +27,12 @@ export default function(eleventyConfig) {
     };
   });
 
+  // Add number formatting filter for prices
+  eleventyConfig.addNunjucksFilter('formatNumber', (value) => {
+    if (!value && value !== 0) return '';
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  });
+
   return {
     dir: {
       input: "src",
