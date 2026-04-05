@@ -7,6 +7,7 @@ credentials.json
 secrets.yaml
 *.key
 *.pem
+config.google-sheets.json
 
 # Node modules and dependencies
 node_modules/
