@@ -9,7 +9,7 @@ on:
 jobs:
   build-site:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout code
@@ -81,9 +81,11 @@ jobs:
           # Create lftp script to avoid shell parsing issues with credentials
           cat > /tmp/lftp-deploy.sh << LFTP_SCRIPT
           set ssl:verify-certificate no
+          set net:timeout 300
+          set net:max-retries 1
           open $FTP_HOST
           login $FTP_USERNAME $FTP_PASSWORD
-          mirror -R ./_site /public_html/temp.ppiproperties.co.za
+          mirror -R --parallel=3 ./_site /public_html/temp.ppiproperties.co.za
           quit
           LFTP_SCRIPT
 
