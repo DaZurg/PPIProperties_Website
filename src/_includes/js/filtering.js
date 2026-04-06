@@ -162,7 +162,22 @@
       return false;
     }
 
-    return features.some(feature => feature.toLowerCase().includes('pet'));
+    // Use word boundary regex to avoid false positives (e.g., "carpet" matching "pet")
+    const petRegex = /\bpet\b/i;
+    return features.some(feature => petRegex.test(feature));
+  }
+
+  /**
+   * Escape HTML special characters to prevent XSS
+   *
+   * @param {string} str - String to escape
+   * @returns {string} Escaped string safe for innerHTML
+   */
+  function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
   }
 
   /**
@@ -180,14 +195,18 @@
     const parkingDisplay = parkingCount > 0 ? `${parkingCount} parking` : 'N/A';
     const petDisplay = isPetFriendly(property.features) ? 'Pets OK' : 'N/A';
 
+    // Escape address for XSS protection and provide fallback
+    const addressDisplay = escapeHtml(property.address) || 'Address Not Available';
+    const altText = property.address ? ` at ${escapeHtml(property.address)}` : '';
+
     return `
-      <article class="property-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300" data-property-id="${property.id}">
+      <article class="property-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300" data-property-id="${escapeHtml(property.id)}">
         <!-- Property Image -->
         <div class="w-full h-48 md:h-56 lg:h-64 bg-gray-200 overflow-hidden">
           ${imageUrl ? `
             <img
               src="${imageUrl}"
-              alt="Property image${property.address ? ' at ' + property.address : ''}"
+              alt="Property image${altText}"
               class="w-full h-full object-cover"
               loading="lazy"
               onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%239ca3af%22 font-family=%22sans-serif%22 font-size=%2218%22 text-anchor=%22middle%22 x=%22200%22 y=%22150%22%3EImage Not Available%3C/text%3E%3C/svg%3E';"
@@ -208,7 +227,7 @@
 
           <!-- Address -->
           <h3 class="text-lg md:text-xl text-gray-900 mb-3 font-semibold">
-            ${property.address}
+            ${addressDisplay}
           </h3>
 
           <!-- Feature Icons -->
