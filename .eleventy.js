@@ -6,6 +6,7 @@ export default function(eleventyConfig) {
   // Copy static assets
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/js");
+  eleventyConfig.addPassthroughCopy({"src/_includes/js": "js"});
   eleventyConfig.addPassthroughCopy("src/images");
 
   // Run data fetch, validation, and optimization before build
