@@ -26,3 +26,11 @@ pagination:
   </div>
 </section>
 
+<!-- Serialize properties data for client-side filtering -->
+<script>
+  const allProperties = {{ properties | dump | safe }};
+</script>
+
+<!-- Load filtering JavaScript -->
+<script src="{{ '/js/filtering.js' | url }}" defer></script>
+
