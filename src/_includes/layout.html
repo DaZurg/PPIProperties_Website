@@ -170,8 +170,20 @@
       flex-wrap: wrap;
     }
 
+    .flex-1 {
+      flex: 1 1 0%;
+    }
+
+    .flex-shrink-0 {
+      flex-shrink: 0;
+    }
+
     .items-center {
       align-items: center;
+    }
+
+    .items-end {
+      align-items: flex-end;
     }
 
     .justify-center {
@@ -179,6 +191,22 @@
     }
 
     /* Spacing */
+    .block {
+      display: block;
+    }
+
+    .m-0 {
+      margin: 0;
+    }
+
+    .p-0 {
+      padding: 0;
+    }
+
+    .mb-1 {
+      margin-bottom: 0.25rem;
+    }
+
     .mb-2 {
       margin-bottom: 0.5rem;
     }
@@ -212,9 +240,19 @@
       padding: 1.5rem;
     }
 
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
     .px-6 {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
+    }
+
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
 
     .py-3 {
@@ -235,8 +273,16 @@
       height: 100%;
     }
 
-    .min-h-\\[48px\\] {
+    .min-h-\[48px\] {
       min-height: 48px;
+    }
+
+    .min-w-\[150px\] {
+      min-width: 150px;
+    }
+
+    .min-w-\[200px\] {
+      min-width: 200px;
     }
 
     /* Background Colors */
@@ -257,6 +303,10 @@
       background-color: #1d4ed8;
     }
 
+    .hover\\:bg-gray-300:hover {
+      background-color: #d1d5db;
+    }
+
     /* Text Colors */
     .text-white {
       color: #ffffff;
@@ -268,6 +318,10 @@
 
     .text-gray-600 {
       color: #4b5563;
+    }
+
+    .text-gray-700 {
+      color: #374151;
     }
 
     .text-gray-800 {
@@ -326,6 +380,20 @@
       font-weight: 700;
     }
 
+    /* Borders */
+    .border {
+      border-width: 1px;
+      border-style: solid;
+    }
+
+    .border-0 {
+      border-width: 0;
+    }
+
+    .border-gray-300 {
+      border-color: #d1d5db;
+    }
+
     /* Border Radius */
     .rounded-lg {
       border-radius: 0.5rem;
@@ -373,6 +441,19 @@
     /* Object Fit */
     .object-cover {
       object-fit: cover;
+    }
+
+    /* Screen Reader Only - Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
     }
 
     /* Focus States - CSS Variables for ring system */
