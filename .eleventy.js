@@ -29,7 +29,13 @@ export default function(eleventyConfig) {
     };
   });
 
-  // Add number formatting filter for prices
+  // Count properties by attribute value
+  eleventyConfig.addNunjucksFilter('countByAttribute', (collection, attribute, value) => {
+    if (!collection || !Array.isArray(collection)) return 0;
+    return collection.filter(item => item[attribute] === value).length;
+  });
+
+  // Number formatting filter for prices
   eleventyConfig.addNunjucksFilter('formatNumber', (value) => {
     if (!value && value !== 0) return '';
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
