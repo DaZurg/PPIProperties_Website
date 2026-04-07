@@ -1,54 +1,189 @@
 ---
 layout: layout.html
-title: Home
+title: Discover Your Dream Property | PPI Properties
 ---
 
-<section style="text-align: center; padding: 3rem 0;">
-  <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #1f2937;">
-    Welcome to Property Listing
-  </h1>
+<!-- Hero Section with Search -->
+<section class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 md:py-24 mb-12">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+        Find Your Dream Property
+      </h1>
+      <p class="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto">
+        Explore premium properties in the most sought-after locations. Start your property search today.
+      </p>
+    </div>
 
-  <p style="font-size: 1.25rem; color: #666; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-    Discover your perfect property. Browse through our extensive collection of available properties with detailed information and beautiful images.
-  </p>
+    <!-- Quick Search Bar -->
+    <div class="bg-white rounded-lg shadow-xl p-6 md:p-8">
+      <form action="/listing/" method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Location Search -->
+        <div>
+          <label for="hero-location" class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
+          <select id="hero-location" name="location" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">All Locations</option>
+            <option value="Florida Park">Florida Park</option>
+            <option value="Glenhazel">Glenhazel</option>
+            <option value="Moregloed">Moregloed</option>
+            <option value="Ninapark">Ninapark</option>
+          </select>
+        </div>
 
-  <a href="/listing/" style="display: inline-block; background: #3b82f6; color: white; padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem; font-weight: 600; text-decoration: none; transition: background 0.3s ease;">
-    Browse Properties
-  </a>
+        <!-- Property Type -->
+        <div>
+          <label for="hero-type" class="block text-sm font-semibold text-gray-700 mb-2">Property Type</label>
+          <select id="hero-type" name="propertyType" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">All Types</option>
+            <option value="House">House</option>
+            <option value="FlatApartment">Flat/Apartment</option>
+          </select>
+        </div>
+
+        <!-- Price Range -->
+        <div>
+          <label for="hero-price" class="block text-sm font-semibold text-gray-700 mb-2">Max Price</label>
+          <select id="hero-price" name="priceMax" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">Any Price</option>
+            <option value="500000">Up to R500K</option>
+            <option value="1000000">Up to R1M</option>
+            <option value="2000000">Up to R2M</option>
+            <option value="5000000">Up to R5M</option>
+            <option value="10000000">Up to R10M+</option>
+          </select>
+        </div>
+
+        <!-- Search Button -->
+        <div class="flex items-end">
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg">
+            Search Properties
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
 
-<section style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-  <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #1f2937;">Why Choose Us?</h2>
+<!-- Featured Properties Section -->
+<section class="mb-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Featured Properties</h2>
+      <p class="text-lg text-gray-600">Handpicked listings showcasing the finest properties available</p>
+    </div>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-    <article>
-      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">🏠 Wide Selection</h3>
-      <p style="color: #666;">Browse hundreds of properties from various locations and price ranges.</p>
-    </article>
+    <!-- Featured Property Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {%- for property in site.properties | slice(0, 6) %}
+        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+          <!-- Property Image -->
+          <div class="relative h-56 bg-gray-200 overflow-hidden group">
+            {%- if property.imageUrls and property.imageUrls.length > 0 %}
+              <img
+                src="{{ property.imageUrls[0] }}"
+                alt="{{ property.address }}"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              >
+              <!-- Image Count Badge -->
+              <span class="absolute top-3 right-3 bg-gray-900 bg-opacity-70 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                📷 {{ property.imageUrls.length }}
+              </span>
+            {%- else %}
+              <div class="w-full h-full flex items-center justify-center text-gray-400">
+                <span class="text-4xl">🏠</span>
+              </div>
+            {%- endif %}
+          </div>
 
-    <article>
-      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">📱 Easy to Use</h3>
-      <p style="color: #666;">Simple and intuitive interface designed for fast property discovery.</p>
-    </article>
+          <!-- Property Details -->
+          <div class="p-6">
+            <!-- Price -->
+            <div class="mb-3">
+              <p class="text-3xl font-bold text-green-600">
+                R{{ property.price | formatNumber }}
+              </p>
+            </div>
 
-    <article>
-      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">📸 Quality Images</h3>
-      <p style="color: #666;">High-quality property images optimized for all devices and screen sizes.</p>
-    </article>
+            <!-- Address -->
+            <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+              {{ property.address }}
+            </h3>
 
-    <article>
-      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">💬 Direct Contact</h3>
-      <p style="color: #666;">Connect directly with agents through phone, email, or contact form.</p>
-    </article>
+            <!-- Location -->
+            <p class="text-sm text-gray-600 mb-4">
+              📍 {{ property.location }}
+            </p>
 
-    <article>
-      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">⚡ Fast Search</h3>
-      <p style="color: #666;">Lightning-fast filtering and search across all available properties.</p>
-    </article>
+            <!-- Quick Specs -->
+            <div class="flex gap-4 mb-4 text-sm text-gray-700 pb-4 border-b border-gray-200">
+              {%- if property.bedrooms > 0 %}
+                <span>🛏️ {{ property.bedrooms }} Bed</span>
+              {%- endif %}
+              {%- if property.bathrooms > 0 %}
+                <span>🚿 {{ property.bathrooms }} Bath</span>
+              {%- endif %}
+              <span class="capitalize">{{ property.propertyType }}</span>
+            </div>
 
-    <article>
-      <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #3b82f6;">🔍 Detailed Info</h3>
-      <p style="color: #666;">Comprehensive property details including features, location, and more.</p>
-    </article>
+            <!-- View Details Button -->
+            <a href="/properties/{{ property.id }}/" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-200">
+              View Details
+            </a>
+          </div>
+        </div>
+      {%- endfor %}
+    </div>
+
+    <!-- View All Properties Button -->
+    <div class="text-center mt-12">
+      <a href="/listing/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
+        View All Properties →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="bg-gray-50 py-16 mb-12">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">Why Choose PPI Properties?</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white rounded-lg p-8 shadow-sm">
+        <div class="text-4xl mb-4">🏡</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Premium Listings</h3>
+        <p class="text-gray-600">Curated selection of quality properties in sought-after locations</p>
+      </div>
+
+      <div class="bg-white rounded-lg p-8 shadow-sm">
+        <div class="text-4xl mb-4">📸</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Professional Photos</h3>
+        <p class="text-gray-600">High-quality images optimized for all devices, showcasing each property beautifully</p>
+      </div>
+
+      <div class="bg-white rounded-lg p-8 shadow-sm">
+        <div class="text-4xl mb-4">🔍</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Advanced Search</h3>
+        <p class="text-gray-600">Powerful filtering tools to find exactly what you're looking for</p>
+      </div>
+
+      <div class="bg-white rounded-lg p-8 shadow-sm">
+        <div class="text-4xl mb-4">📱</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Mobile Friendly</h3>
+        <p class="text-gray-600">Seamless experience across all devices and screen sizes</p>
+      </div>
+
+      <div class="bg-white rounded-lg p-8 shadow-sm">
+        <div class="text-4xl mb-4">💬</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Direct Contact</h3>
+        <p class="text-gray-600">Connect with agents directly through phone, email, or contact form</p>
+      </div>
+
+      <div class="bg-white rounded-lg p-8 shadow-sm">
+        <div class="text-4xl mb-4">⚡</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Instant Updates</h3>
+        <p class="text-gray-600">Real-time property listings and instant filter feedback</p>
+      </div>
+    </div>
   </div>
 </section>
