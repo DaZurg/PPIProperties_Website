@@ -278,7 +278,7 @@
   function updatePropertyGrid(filteredProperties, totalProperties) {
     try {
       const propertyList = document.getElementById('property-list');
-      const resultsHeader = document.querySelector('#properties h2');
+      const resultsHeader = document.getElementById('results-counter');
 
       if (!propertyList) {
         console.error('Property list container not found');
