@@ -1,29 +1,5 @@
 [
   {
-    "id": "3108494",
-    "address": "6b Fair Road, Glenhazel",
-    "price": 7000000,
-    "bedrooms": 0,
-    "bathrooms": 0,
-    "imageUrls": [
-      "https://server.exdev.propctrl-test.com/image.ashx?Id=03e4a7a7-02c7-4752-a428-dc9db57538f1&userId=57314",
-      "https://server.exdev.propctrl-test.com/image.ashx?Id=266dfc3f-a6b2-403e-9a9a-abeab5432a78&userId=57314"
-    ],
-    "description": "Double story, 5 bedrooms, 3.5 bathrooms, across the road from Ohr sameach.\r\n\r\nIncluding: gas fireplace, solar inverter, gas and solar geyser, jojo tank, heated pool, double garage, underfloor heating in bathrooms, maids room, outdoor gas braai,\r\n\r\nChefs kitchen and more.",
-    "agentName": "Property Agent",
-    "agentPhone": "",
-    "agentEmail": "",
-    "features": [
-      "2",
-      "3",
-      "4",
-      "1",
-      "1"
-    ],
-    "location": "Glenhazel",
-    "propertyType": "House"
-  },
-  {
     "id": "3108496",
     "address": "95 Japonica Avenue, Moregloed",
     "price": 495000,
