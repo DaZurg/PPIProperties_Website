@@ -5,9 +5,9 @@
 -->
 
 {%- if property.imageUrls and property.imageUrls.length > 0 %}
-  <div class="carousel-container mb-12 relative">
+  <div class="carousel-container mb-12 relative w-full">
     <!-- Main carousel with thumbnails -->
-    <div class="flex gap-4 h-96 md:h-screen lg:h-96">
+    <div class="flex gap-3 w-full" style="height: 600px;">
 
       <!-- Main Image Section -->
       <div class="flex-1 relative bg-gray-100 rounded-lg overflow-hidden group">
@@ -54,11 +54,12 @@
         {%- endif %}
       </div>
 
-      <!-- Thumbnails Strip - Right Side (4 visible) -->
+      <!-- Thumbnails Strip - Right Side -->
       {%- if property.imageUrls.length > 1 %}
         <div
           id="carousel-thumbnails-wrapper"
-          class="flex flex-col gap-3 w-24 md:w-28 overflow-y-auto pb-2"
+          class="flex flex-col gap-3 pb-2"
+          style="width: 120px; overflow-y: auto; flex-shrink: 0;"
         >
           <nav
             id="carousel-thumbnails"
@@ -67,9 +68,10 @@
           >
             {%- for url in property.imageUrls %}
               <button
-                class="carousel-thumbnail flex-shrink-0 w-full aspect-square rounded border-3 border-gray-300 hover:border-blue-600 hover:scale-105 transition-all duration-200 overflow-hidden cursor-pointer"
+                class="carousel-thumbnail flex-shrink-0 rounded border-3 border-gray-300 hover:border-blue-600 transition-all duration-200 overflow-hidden cursor-pointer hover:scale-105"
                 data-index="{{ loop.index0 }}"
                 aria-label="View image {{ loop.index }} of {{ property.imageUrls.length }}"
+                style="width: 100%; aspect-ratio: 1; min-height: 100px;"
                 {%- if loop.index0 == 0 %} aria-current="true" {%- endif %}
               >
                 <img
