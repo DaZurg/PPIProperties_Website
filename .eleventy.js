@@ -8,6 +8,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy({"src/_includes/js": "js"});
   eleventyConfig.addPassthroughCopy("src/images");
+  eleventyConfig.addPassthroughCopy("src/robots.txt");
 
   // Run data fetch, validation, and optimization before build
   eleventyConfig.on('eleventy.before', async () => {
@@ -33,6 +34,23 @@ export default function(eleventyConfig) {
     if (!value && value !== 0) return '';
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   });
+
+  // Add date filter for formatting dates
+  eleventyConfig.addNunjucksFilter('dateFilter', (date, format) => {
+    if (!date) {
+      date = new Date();
+    }
+    if (format === '%Y-%m-%d') {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return date.toISOString();
+  });
+
+  // Add global for current date
+  eleventyConfig.addNunjucksGlobal('now', new Date());
 
   return {
     dir: {

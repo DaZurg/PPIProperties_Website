@@ -1,0 +1,24 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Listing Page -->
+  <url>
+    <loc>https://ppiproperties.com/</loc>
+    <lastmod>{{ now | dateFilter('%Y-%m-%d') }}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Property Detail Pages -->
+  {%- for property in properties %}
+  <url>
+    <loc>https://ppiproperties.com/properties/{{ property.id }}/</loc>
+    <lastmod>{{ now | dateFilter('%Y-%m-%d') }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  {%- endfor %}
+</urlset>
