@@ -1,0 +1,5282 @@
+[
+  {
+    "id": "test-1",
+    "propertyType": "Apartment",
+    "price": 3880881,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "1 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-2",
+    "propertyType": "Townhouse",
+    "price": 3832523,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "2 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-3",
+    "propertyType": "Villa",
+    "price": 3256466,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "3 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-4",
+    "propertyType": "Condo",
+    "price": 1637732,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "4 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-5",
+    "propertyType": "House",
+    "price": 514754,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "5 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-6",
+    "propertyType": "Apartment",
+    "price": 2685293,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "6 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-7",
+    "propertyType": "Townhouse",
+    "price": 675111,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "7 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-8",
+    "propertyType": "Villa",
+    "price": 3331960,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "8 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-9",
+    "propertyType": "Condo",
+    "price": 4976387,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "9 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-10",
+    "propertyType": "House",
+    "price": 4535797,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "10 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-11",
+    "propertyType": "Apartment",
+    "price": 4531343,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "11 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-12",
+    "propertyType": "Townhouse",
+    "price": 3264697,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "12 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-13",
+    "propertyType": "Villa",
+    "price": 2404367,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "13 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-14",
+    "propertyType": "Condo",
+    "price": 5085399,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "14 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-15",
+    "propertyType": "House",
+    "price": 4062741,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "15 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-16",
+    "propertyType": "Apartment",
+    "price": 3563067,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "16 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-17",
+    "propertyType": "Townhouse",
+    "price": 1294864,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "17 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-18",
+    "propertyType": "Villa",
+    "price": 3894014,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "18 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-19",
+    "propertyType": "Condo",
+    "price": 4101375,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "19 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-20",
+    "propertyType": "House",
+    "price": 2372004,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "20 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-21",
+    "propertyType": "Apartment",
+    "price": 4144957,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "21 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-22",
+    "propertyType": "Townhouse",
+    "price": 2872490,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "22 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-23",
+    "propertyType": "Villa",
+    "price": 592221,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "23 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-24",
+    "propertyType": "Condo",
+    "price": 1741750,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "24 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-25",
+    "propertyType": "House",
+    "price": 601329,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "25 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-26",
+    "propertyType": "Apartment",
+    "price": 5005047,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb B",
+    "address": "26 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-27",
+    "propertyType": "Townhouse",
+    "price": 2530809,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "27 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-28",
+    "propertyType": "Villa",
+    "price": 1324257,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "28 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-29",
+    "propertyType": "Condo",
+    "price": 5029477,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "29 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-30",
+    "propertyType": "House",
+    "price": 5469158,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "30 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-31",
+    "propertyType": "Apartment",
+    "price": 5304544,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "31 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-32",
+    "propertyType": "Townhouse",
+    "price": 3301755,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "South",
+    "address": "32 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-33",
+    "propertyType": "Villa",
+    "price": 3288518,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "33 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-34",
+    "propertyType": "Condo",
+    "price": 672901,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "34 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-35",
+    "propertyType": "House",
+    "price": 2244466,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "35 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-36",
+    "propertyType": "Apartment",
+    "price": 1028144,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb B",
+    "address": "36 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-37",
+    "propertyType": "Townhouse",
+    "price": 4764879,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "37 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-38",
+    "propertyType": "Villa",
+    "price": 3460240,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "38 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-39",
+    "propertyType": "Condo",
+    "price": 5128809,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "39 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-40",
+    "propertyType": "House",
+    "price": 4249430,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "40 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-41",
+    "propertyType": "Apartment",
+    "price": 5033583,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "41 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-42",
+    "propertyType": "Townhouse",
+    "price": 2977308,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "42 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-43",
+    "propertyType": "Villa",
+    "price": 3060583,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "43 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-44",
+    "propertyType": "Condo",
+    "price": 5366183,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "44 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-45",
+    "propertyType": "House",
+    "price": 4416001,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "45 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-46",
+    "propertyType": "Apartment",
+    "price": 1258825,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "46 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-47",
+    "propertyType": "Townhouse",
+    "price": 565666,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "47 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-48",
+    "propertyType": "Villa",
+    "price": 3237688,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "48 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-49",
+    "propertyType": "Condo",
+    "price": 2869760,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "49 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-50",
+    "propertyType": "House",
+    "price": 2453445,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "50 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-51",
+    "propertyType": "Apartment",
+    "price": 2855017,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "51 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-52",
+    "propertyType": "Townhouse",
+    "price": 2564586,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "52 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-53",
+    "propertyType": "Villa",
+    "price": 3860150,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "53 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-54",
+    "propertyType": "Condo",
+    "price": 1460126,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "54 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-55",
+    "propertyType": "House",
+    "price": 786069,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "55 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-56",
+    "propertyType": "Apartment",
+    "price": 4502538,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "56 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-57",
+    "propertyType": "Townhouse",
+    "price": 2895376,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb C",
+    "address": "57 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-58",
+    "propertyType": "Villa",
+    "price": 938866,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "58 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-59",
+    "propertyType": "Condo",
+    "price": 5233711,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "59 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-60",
+    "propertyType": "House",
+    "price": 3223438,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "60 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-61",
+    "propertyType": "Apartment",
+    "price": 2483005,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "61 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-62",
+    "propertyType": "Townhouse",
+    "price": 3738204,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "62 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-63",
+    "propertyType": "Villa",
+    "price": 2585984,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "63 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-64",
+    "propertyType": "Condo",
+    "price": 5446328,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "64 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-65",
+    "propertyType": "House",
+    "price": 2513494,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "65 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-66",
+    "propertyType": "Apartment",
+    "price": 2579857,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "66 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-67",
+    "propertyType": "Townhouse",
+    "price": 2196019,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "67 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-68",
+    "propertyType": "Villa",
+    "price": 3531518,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "68 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-69",
+    "propertyType": "Condo",
+    "price": 1479961,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "69 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-70",
+    "propertyType": "House",
+    "price": 580171,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "70 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-71",
+    "propertyType": "Apartment",
+    "price": 4319736,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "71 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-72",
+    "propertyType": "Townhouse",
+    "price": 2044328,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "72 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-73",
+    "propertyType": "Villa",
+    "price": 3822280,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "73 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-74",
+    "propertyType": "Condo",
+    "price": 654940,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "74 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-75",
+    "propertyType": "House",
+    "price": 5005900,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "75 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-76",
+    "propertyType": "Apartment",
+    "price": 2179497,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "76 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-77",
+    "propertyType": "Townhouse",
+    "price": 2930085,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "77 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-78",
+    "propertyType": "Villa",
+    "price": 1577885,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "78 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-79",
+    "propertyType": "Condo",
+    "price": 3679213,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "79 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-80",
+    "propertyType": "House",
+    "price": 2236857,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "80 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-81",
+    "propertyType": "Apartment",
+    "price": 702287,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "81 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-82",
+    "propertyType": "Townhouse",
+    "price": 4238582,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "82 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-83",
+    "propertyType": "Villa",
+    "price": 3370254,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "83 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-84",
+    "propertyType": "Condo",
+    "price": 3550149,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "84 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-85",
+    "propertyType": "House",
+    "price": 4304989,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "85 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-86",
+    "propertyType": "Apartment",
+    "price": 2528793,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb B",
+    "address": "86 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-87",
+    "propertyType": "Townhouse",
+    "price": 2316227,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "87 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-88",
+    "propertyType": "Villa",
+    "price": 2348308,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "88 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-89",
+    "propertyType": "Condo",
+    "price": 3442717,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "89 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-90",
+    "propertyType": "House",
+    "price": 2158690,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "90 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-91",
+    "propertyType": "Apartment",
+    "price": 2479664,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "91 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-92",
+    "propertyType": "Townhouse",
+    "price": 2071131,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "92 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-93",
+    "propertyType": "Villa",
+    "price": 1497099,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "93 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-94",
+    "propertyType": "Condo",
+    "price": 647398,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "94 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-95",
+    "propertyType": "House",
+    "price": 2414851,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "95 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-96",
+    "propertyType": "Apartment",
+    "price": 2911912,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "96 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-97",
+    "propertyType": "Townhouse",
+    "price": 1537406,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "97 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-98",
+    "propertyType": "Villa",
+    "price": 2961147,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "98 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-99",
+    "propertyType": "Condo",
+    "price": 3950043,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "99 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-100",
+    "propertyType": "House",
+    "price": 4776551,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "100 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-101",
+    "propertyType": "Apartment",
+    "price": 1574425,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "101 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-102",
+    "propertyType": "Townhouse",
+    "price": 512169,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "102 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-103",
+    "propertyType": "Villa",
+    "price": 5497569,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "103 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-104",
+    "propertyType": "Condo",
+    "price": 4317365,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "104 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-105",
+    "propertyType": "House",
+    "price": 4314583,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "105 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-106",
+    "propertyType": "Apartment",
+    "price": 4320315,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "106 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-107",
+    "propertyType": "Townhouse",
+    "price": 1900414,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "107 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-108",
+    "propertyType": "Villa",
+    "price": 763769,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "108 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-109",
+    "propertyType": "Condo",
+    "price": 2269498,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "109 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-110",
+    "propertyType": "House",
+    "price": 4321997,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "110 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-111",
+    "propertyType": "Apartment",
+    "price": 1608418,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "111 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-112",
+    "propertyType": "Townhouse",
+    "price": 5209120,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "112 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-113",
+    "propertyType": "Villa",
+    "price": 3903188,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "113 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-114",
+    "propertyType": "Condo",
+    "price": 1897953,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "114 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-115",
+    "propertyType": "House",
+    "price": 3168955,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "115 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-116",
+    "propertyType": "Apartment",
+    "price": 2446638,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "116 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-117",
+    "propertyType": "Townhouse",
+    "price": 891355,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "117 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-118",
+    "propertyType": "Villa",
+    "price": 3439064,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "118 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-119",
+    "propertyType": "Condo",
+    "price": 4266617,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "119 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-120",
+    "propertyType": "House",
+    "price": 1354850,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "120 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-121",
+    "propertyType": "Apartment",
+    "price": 833037,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "121 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-122",
+    "propertyType": "Townhouse",
+    "price": 1680079,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "122 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-123",
+    "propertyType": "Villa",
+    "price": 1766349,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "123 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-124",
+    "propertyType": "Condo",
+    "price": 2461682,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "124 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-125",
+    "propertyType": "House",
+    "price": 5397120,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "125 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-126",
+    "propertyType": "Apartment",
+    "price": 1042641,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "126 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-127",
+    "propertyType": "Townhouse",
+    "price": 5111085,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "127 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-128",
+    "propertyType": "Villa",
+    "price": 1411698,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "128 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-129",
+    "propertyType": "Condo",
+    "price": 1134409,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "129 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-130",
+    "propertyType": "House",
+    "price": 3157856,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "130 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-131",
+    "propertyType": "Apartment",
+    "price": 1334907,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "131 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-132",
+    "propertyType": "Townhouse",
+    "price": 3110185,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "132 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-133",
+    "propertyType": "Villa",
+    "price": 4422132,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "133 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-134",
+    "propertyType": "Condo",
+    "price": 2876600,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "134 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-135",
+    "propertyType": "House",
+    "price": 5217857,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "135 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-136",
+    "propertyType": "Apartment",
+    "price": 1713534,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "136 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-137",
+    "propertyType": "Townhouse",
+    "price": 4058314,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "137 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-138",
+    "propertyType": "Villa",
+    "price": 4693557,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "138 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-139",
+    "propertyType": "Condo",
+    "price": 688462,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "139 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-140",
+    "propertyType": "House",
+    "price": 2064599,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "140 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-141",
+    "propertyType": "Apartment",
+    "price": 1763968,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "141 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-142",
+    "propertyType": "Townhouse",
+    "price": 2504790,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "142 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-143",
+    "propertyType": "Villa",
+    "price": 5318361,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "143 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-144",
+    "propertyType": "Condo",
+    "price": 1554662,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "144 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-145",
+    "propertyType": "House",
+    "price": 2910787,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "145 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-146",
+    "propertyType": "Apartment",
+    "price": 2018108,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "146 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-147",
+    "propertyType": "Townhouse",
+    "price": 2616671,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "147 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-148",
+    "propertyType": "Villa",
+    "price": 4032734,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "148 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-149",
+    "propertyType": "Condo",
+    "price": 1852540,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "149 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-150",
+    "propertyType": "House",
+    "price": 4299680,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "150 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-151",
+    "propertyType": "Apartment",
+    "price": 2638622,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "151 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-152",
+    "propertyType": "Townhouse",
+    "price": 3437222,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "152 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-153",
+    "propertyType": "Villa",
+    "price": 2485998,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "153 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-154",
+    "propertyType": "Condo",
+    "price": 3028857,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "154 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-155",
+    "propertyType": "House",
+    "price": 3902895,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "155 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-156",
+    "propertyType": "Apartment",
+    "price": 2328613,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "156 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-157",
+    "propertyType": "Townhouse",
+    "price": 2272126,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb C",
+    "address": "157 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-158",
+    "propertyType": "Villa",
+    "price": 4267792,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "158 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-159",
+    "propertyType": "Condo",
+    "price": 2618163,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "159 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-160",
+    "propertyType": "House",
+    "price": 2024627,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "160 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-161",
+    "propertyType": "Apartment",
+    "price": 3004784,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "161 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-162",
+    "propertyType": "Townhouse",
+    "price": 3102735,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "162 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-163",
+    "propertyType": "Villa",
+    "price": 1206120,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "163 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-164",
+    "propertyType": "Condo",
+    "price": 4442579,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "164 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-165",
+    "propertyType": "House",
+    "price": 4103037,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "165 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-166",
+    "propertyType": "Apartment",
+    "price": 5154461,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "166 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-167",
+    "propertyType": "Townhouse",
+    "price": 4765122,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb C",
+    "address": "167 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-168",
+    "propertyType": "Villa",
+    "price": 1791205,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "168 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-169",
+    "propertyType": "Condo",
+    "price": 4317651,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "169 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-170",
+    "propertyType": "House",
+    "price": 4898351,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "170 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-171",
+    "propertyType": "Apartment",
+    "price": 4618484,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "171 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-172",
+    "propertyType": "Townhouse",
+    "price": 3093333,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "172 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-173",
+    "propertyType": "Villa",
+    "price": 2684727,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "173 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-174",
+    "propertyType": "Condo",
+    "price": 4985338,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "174 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-175",
+    "propertyType": "House",
+    "price": 4356681,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "175 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-176",
+    "propertyType": "Apartment",
+    "price": 4428047,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "176 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-177",
+    "propertyType": "Townhouse",
+    "price": 3842590,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "177 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-178",
+    "propertyType": "Villa",
+    "price": 5291885,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "178 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-179",
+    "propertyType": "Condo",
+    "price": 2450333,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "179 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-180",
+    "propertyType": "House",
+    "price": 4556066,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "180 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-181",
+    "propertyType": "Apartment",
+    "price": 2442005,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "181 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-182",
+    "propertyType": "Townhouse",
+    "price": 2198632,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "182 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-183",
+    "propertyType": "Villa",
+    "price": 1934377,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "183 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-184",
+    "propertyType": "Condo",
+    "price": 2564217,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "184 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-185",
+    "propertyType": "House",
+    "price": 4057305,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "185 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-186",
+    "propertyType": "Apartment",
+    "price": 1549902,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "186 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-187",
+    "propertyType": "Townhouse",
+    "price": 2881149,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "187 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-188",
+    "propertyType": "Villa",
+    "price": 3708126,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "188 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-189",
+    "propertyType": "Condo",
+    "price": 5320136,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "189 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-190",
+    "propertyType": "House",
+    "price": 506804,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "190 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-191",
+    "propertyType": "Apartment",
+    "price": 3105498,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "191 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-192",
+    "propertyType": "Townhouse",
+    "price": 1508575,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "192 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-193",
+    "propertyType": "Villa",
+    "price": 1990596,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "193 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-194",
+    "propertyType": "Condo",
+    "price": 2437517,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "194 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-195",
+    "propertyType": "House",
+    "price": 5163088,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "195 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-196",
+    "propertyType": "Apartment",
+    "price": 2878013,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "196 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-197",
+    "propertyType": "Townhouse",
+    "price": 1490078,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "197 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-198",
+    "propertyType": "Villa",
+    "price": 4544611,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "198 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-199",
+    "propertyType": "Condo",
+    "price": 1480337,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "199 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-200",
+    "propertyType": "House",
+    "price": 3699864,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "200 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-201",
+    "propertyType": "Apartment",
+    "price": 3455267,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "201 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-202",
+    "propertyType": "Townhouse",
+    "price": 4150565,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "South",
+    "address": "202 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-203",
+    "propertyType": "Villa",
+    "price": 1490535,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "203 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-204",
+    "propertyType": "Condo",
+    "price": 3543654,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "204 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-205",
+    "propertyType": "House",
+    "price": 4123400,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "205 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-206",
+    "propertyType": "Apartment",
+    "price": 1998919,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "206 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-207",
+    "propertyType": "Townhouse",
+    "price": 2862397,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb C",
+    "address": "207 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-208",
+    "propertyType": "Villa",
+    "price": 3922561,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "208 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-209",
+    "propertyType": "Condo",
+    "price": 1956615,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "209 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-210",
+    "propertyType": "House",
+    "price": 601449,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "210 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-211",
+    "propertyType": "Apartment",
+    "price": 3848234,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "211 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-212",
+    "propertyType": "Townhouse",
+    "price": 3209108,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "South",
+    "address": "212 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-213",
+    "propertyType": "Villa",
+    "price": 2826636,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "213 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-214",
+    "propertyType": "Condo",
+    "price": 3258355,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "214 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-215",
+    "propertyType": "House",
+    "price": 2645504,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "215 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-216",
+    "propertyType": "Apartment",
+    "price": 4333002,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "216 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-217",
+    "propertyType": "Townhouse",
+    "price": 557581,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "217 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-218",
+    "propertyType": "Villa",
+    "price": 2896158,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "218 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-219",
+    "propertyType": "Condo",
+    "price": 4845859,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "219 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-220",
+    "propertyType": "House",
+    "price": 2475413,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "220 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-221",
+    "propertyType": "Apartment",
+    "price": 1989675,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "221 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-222",
+    "propertyType": "Townhouse",
+    "price": 1840612,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "222 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-223",
+    "propertyType": "Villa",
+    "price": 1195718,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "223 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-224",
+    "propertyType": "Condo",
+    "price": 4827948,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "224 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-225",
+    "propertyType": "House",
+    "price": 1636638,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "225 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-226",
+    "propertyType": "Apartment",
+    "price": 4334472,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "226 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-227",
+    "propertyType": "Townhouse",
+    "price": 879733,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "227 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-228",
+    "propertyType": "Villa",
+    "price": 4189761,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "228 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-229",
+    "propertyType": "Condo",
+    "price": 3782914,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "229 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-230",
+    "propertyType": "House",
+    "price": 4825020,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "230 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-231",
+    "propertyType": "Apartment",
+    "price": 2105248,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "231 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-232",
+    "propertyType": "Townhouse",
+    "price": 677253,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "232 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-233",
+    "propertyType": "Villa",
+    "price": 4880667,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "233 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-234",
+    "propertyType": "Condo",
+    "price": 1748741,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "234 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-235",
+    "propertyType": "House",
+    "price": 874410,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "235 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-236",
+    "propertyType": "Apartment",
+    "price": 4970976,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "236 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-237",
+    "propertyType": "Townhouse",
+    "price": 4517707,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb C",
+    "address": "237 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-238",
+    "propertyType": "Villa",
+    "price": 2087187,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "238 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-239",
+    "propertyType": "Condo",
+    "price": 5417546,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "239 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-240",
+    "propertyType": "House",
+    "price": 4963234,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "240 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-241",
+    "propertyType": "Apartment",
+    "price": 5117884,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "241 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-242",
+    "propertyType": "Townhouse",
+    "price": 4493845,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "242 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-243",
+    "propertyType": "Villa",
+    "price": 4469792,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "243 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-244",
+    "propertyType": "Condo",
+    "price": 779719,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "244 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-245",
+    "propertyType": "House",
+    "price": 3624671,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "245 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-246",
+    "propertyType": "Apartment",
+    "price": 2183959,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "246 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-247",
+    "propertyType": "Townhouse",
+    "price": 3454068,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "247 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-248",
+    "propertyType": "Villa",
+    "price": 1180785,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "248 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-249",
+    "propertyType": "Condo",
+    "price": 4050836,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "249 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-250",
+    "propertyType": "House",
+    "price": 3423634,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "250 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-251",
+    "propertyType": "Apartment",
+    "price": 3044791,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "251 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-252",
+    "propertyType": "Townhouse",
+    "price": 1466519,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "252 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-253",
+    "propertyType": "Villa",
+    "price": 2055555,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "253 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-254",
+    "propertyType": "Condo",
+    "price": 3091148,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "254 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-255",
+    "propertyType": "House",
+    "price": 1496626,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "255 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-256",
+    "propertyType": "Apartment",
+    "price": 4666741,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "256 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-257",
+    "propertyType": "Townhouse",
+    "price": 3823594,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "257 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-258",
+    "propertyType": "Villa",
+    "price": 3844503,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "258 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-259",
+    "propertyType": "Condo",
+    "price": 4692356,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "259 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-260",
+    "propertyType": "House",
+    "price": 647570,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "260 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-261",
+    "propertyType": "Apartment",
+    "price": 2578474,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "261 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-262",
+    "propertyType": "Townhouse",
+    "price": 1467276,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "South",
+    "address": "262 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-263",
+    "propertyType": "Villa",
+    "price": 5328035,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "263 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-264",
+    "propertyType": "Condo",
+    "price": 3378093,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "264 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-265",
+    "propertyType": "House",
+    "price": 5178861,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb A",
+    "address": "265 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-266",
+    "propertyType": "Apartment",
+    "price": 3624160,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "266 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-267",
+    "propertyType": "Townhouse",
+    "price": 2780915,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "267 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-268",
+    "propertyType": "Villa",
+    "price": 4308834,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "location": "Suburb D",
+    "address": "268 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-269",
+    "propertyType": "Condo",
+    "price": 1578201,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "269 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-270",
+    "propertyType": "House",
+    "price": 535942,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "270 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-271",
+    "propertyType": "Apartment",
+    "price": 2078604,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "North",
+    "address": "271 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-272",
+    "propertyType": "Townhouse",
+    "price": 1100096,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "272 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-273",
+    "propertyType": "Villa",
+    "price": 4615719,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "East",
+    "address": "273 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-274",
+    "propertyType": "Condo",
+    "price": 4208837,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "location": "West",
+    "address": "274 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-275",
+    "propertyType": "House",
+    "price": 1651988,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Suburb A",
+    "address": "275 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-276",
+    "propertyType": "Apartment",
+    "price": 1848898,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb B",
+    "address": "276 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-277",
+    "propertyType": "Townhouse",
+    "price": 3651162,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "277 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-278",
+    "propertyType": "Villa",
+    "price": 4441328,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "278 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-279",
+    "propertyType": "Condo",
+    "price": 4901482,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "location": "Suburb E",
+    "address": "279 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-280",
+    "propertyType": "House",
+    "price": 2650004,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Central",
+    "address": "280 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-281",
+    "propertyType": "Apartment",
+    "price": 4567272,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "North",
+    "address": "281 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-282",
+    "propertyType": "Townhouse",
+    "price": 5172017,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "South",
+    "address": "282 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-283",
+    "propertyType": "Villa",
+    "price": 3949277,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "East",
+    "address": "283 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-284",
+    "propertyType": "Condo",
+    "price": 1218599,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "West",
+    "address": "284 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-285",
+    "propertyType": "House",
+    "price": 3023208,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "285 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-286",
+    "propertyType": "Apartment",
+    "price": 3473022,
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "location": "Suburb B",
+    "address": "286 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-287",
+    "propertyType": "Townhouse",
+    "price": 5120674,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "Suburb C",
+    "address": "287 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-288",
+    "propertyType": "Villa",
+    "price": 2441058,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "location": "Suburb D",
+    "address": "288 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-289",
+    "propertyType": "Condo",
+    "price": 1282412,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "Suburb E",
+    "address": "289 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-290",
+    "propertyType": "House",
+    "price": 1580766,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "Central",
+    "address": "290 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-291",
+    "propertyType": "Apartment",
+    "price": 5441556,
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "location": "North",
+    "address": "291 Test Street, North",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-292",
+    "propertyType": "Townhouse",
+    "price": 5166369,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "location": "South",
+    "address": "292 Test Street, South",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-293",
+    "propertyType": "Villa",
+    "price": 2209322,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "location": "East",
+    "address": "293 Test Street, East",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-294",
+    "propertyType": "Condo",
+    "price": 4165104,
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "location": "West",
+    "address": "294 Test Street, West",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-295",
+    "propertyType": "House",
+    "price": 3985679,
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "location": "Suburb A",
+    "address": "295 Test Street, Suburb A",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-296",
+    "propertyType": "Apartment",
+    "price": 1814002,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb B",
+    "address": "296 Test Street, Suburb B",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Gym",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-297",
+    "propertyType": "Townhouse",
+    "price": 4254135,
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "location": "Suburb C",
+    "address": "297 Test Street, Suburb C",
+    "features": [
+      "Carport",
+      "Garden",
+      "Security",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-298",
+    "propertyType": "Villa",
+    "price": 4468964,
+    "bedrooms": 5,
+    "bathrooms": 1,
+    "location": "Suburb D",
+    "address": "298 Test Street, Suburb D",
+    "features": [
+      "Garage",
+      "Pool",
+      "Pet Friendly"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-299",
+    "propertyType": "Condo",
+    "price": 3692323,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "location": "Suburb E",
+    "address": "299 Test Street, Suburb E",
+    "features": [
+      "Parking",
+      "Balcony",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  },
+  {
+    "id": "test-300",
+    "propertyType": "House",
+    "price": 4187275,
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "location": "Central",
+    "address": "300 Test Street, Central",
+    "features": [
+      "Garage",
+      "Garden",
+      "Pool",
+      "Security"
+    ],
+    "imageUrls": [
+      "https://via.placeholder.com/400x300"
+    ]
+  }
+]

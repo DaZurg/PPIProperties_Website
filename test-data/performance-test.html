@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtering Performance Test - 300 Properties</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .performance-metrics {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #1f2937;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      z-index: 1000;
+    }
+    .performance-metrics h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .metric {
+      margin: 5px 0;
+    }
+    .metric-value {
+      color: #10b981;
+      font-weight: bold;
+    }
+    .metric-warning {
+      color: #fbbf24;
+    }
+    .metric-error {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Filtering Performance Test</h1>
+    <p class="text-lg text-gray-600 mb-8">Testing with 300 properties - Target: &lt;500ms filtering time</p>
+
+    <!-- Performance Metrics Panel -->
+    <div class="performance-metrics">
+      <h3>Performance Metrics</h3>
+      <div class="metric">Total Properties: <span id="total-count" class="metric-value">0</span></div>
+      <div class="metric">Filtered Properties: <span id="filtered-count" class="metric-value">0</span></div>
+      <div class="metric">Last Filter Time: <span id="filter-time" class="metric-value">0ms</span></div>
+      <div class="metric">Avg Filter Time: <span id="avg-filter-time" class="metric-value">0ms</span></div>
+      <div class="metric">Max Filter Time: <span id="max-filter-time" class="metric-value">0ms</span></div>
+      <div class="metric">Filter Count: <span id="filter-count" class="metric-value">0</span></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Filter Properties</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <!-- Property Type Filter -->
+        <div>
+          <label for="filter-type" class="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+          <select
+            id="filter-type"
+            data-filter="type"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">All Types</option>
+            <option value="House">House</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Townhouse">Townhouse</option>
+            <option value="Villa">Villa</option>
+            <option value="Condo">Condo</option>
+          </select>
+        </div>
+
+        <!-- Price Min Filter -->
+        <div>
+          <label for="filter-price-min" class="block text-sm font-medium text-gray-700 mb-2">Min Price</label>
+          <input
+            type="number"
+            id="filter-price-min"
+            data-filter="price-min"
+            placeholder="Min"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <!-- Price Max Filter -->
+        <div>
+          <label for="filter-price-max" class="block text-sm font-medium text-gray-700 mb-2">Max Price</label>
+          <input
+            type="number"
+            id="filter-price-max"
+            data-filter="price-max"
+            placeholder="Max"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <!-- Bedrooms Filter -->
+        <div>
+          <label for="filter-bedrooms" class="block text-sm font-medium text-gray-700 mb-2">Bedrooms</label>
+          <select
+            id="filter-bedrooms"
+            data-filter="bedrooms"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">Any</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+            <option value="5">5+</option>
+          </select>
+        </div>
+
+        <!-- Location Filter -->
+        <div>
+          <label for="filter-location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+          <select
+            id="filter-location"
+            data-filter="location"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">All Locations</option>
+            <option value="Central">Central</option>
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+            <option value="Suburb A">Suburb A</option>
+            <option value="Suburb B">Suburb B</option>
+            <option value="Suburb C">Suburb C</option>
+            <option value="Suburb D">Suburb D</option>
+            <option value="Suburb E">Suburb E</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Clear Filters Button -->
+      <div class="mt-4">
+        <button
+          data-filter-action="clear"
+          class="bg-gray-600 hover:bg-gray-700 text-white font-medium px-6 py-2 rounded-md transition-colors duration-200"
+        >
+          Clear All Filters
+        </button>
+      </div>
+    </section>
+
+    <!-- Property Grid -->
+    <section id="properties" class="property-grid" role="region" aria-label="Property listings">
+      <h2 id="results-counter" class="text-2xl font-semibold mb-6 text-gray-800" aria-live="polite" aria-atomic="true">
+        Loading properties...
+      </h2>
+
+      <div id="property-list" class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Properties will be loaded here -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Load test data and filtering script -->
+  <script>
+    // Performance tracking
+    const performanceMetrics = {
+      filterTimes: [],
+      filterCount: 0
+    };
+
+    function updateMetrics(filterTime) {
+      performanceMetrics.filterTimes.push(filterTime);
+      performanceMetrics.filterCount++;
+
+      const avgTime = performanceMetrics.filterTimes.reduce((a, b) => a + b, 0) / performanceMetrics.filterTimes.length;
+      const maxTime = Math.max(...performanceMetrics.filterTimes);
+
+      document.getElementById('filter-time').textContent = filterTime.toFixed(2) + 'ms';
+      document.getElementById('avg-filter-time').textContent = avgTime.toFixed(2) + 'ms';
+      document.getElementById('max-filter-time').textContent = maxTime.toFixed(2) + 'ms';
+      document.getElementById('filter-count').textContent = performanceMetrics.filterCount;
+
+      // Color code based on performance
+      const filterTimeElement = document.getElementById('filter-time');
+      if (filterTime < 100) {
+        filterTimeElement.className = 'metric-value';
+      } else if (filterTime < 500) {
+        filterTimeElement.className = 'metric-warning';
+      } else {
+        filterTimeElement.className = 'metric-error';
+      }
+    }
+
+    // Load test properties
+    fetch('./test-properties-300.json')
+      .then(response => response.json())
+      .then(data => {
+        window.allProperties = data;
+        document.getElementById('total-count').textContent = data.length;
+        document.getElementById('filtered-count').textContent = data.length;
+        console.log('Loaded', data.length, 'test properties');
+        // Inline instrumented filtering code below handles the actual filtering
+      })
+      .catch(error => {
+        console.error('Error loading test properties:', error);
+      });
+  </script>
+
+  <!-- Modified filtering.js with performance instrumentation -->
+  <script>
+    (function() {
+      'use strict';
+
+      function getFilterValues() {
+        const typeElement = document.querySelector('[data-filter="type"]');
+        const priceMinElement = document.querySelector('[data-filter="price-min"]');
+        const priceMaxElement = document.querySelector('[data-filter="price-max"]');
+        const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
+        const locationElement = document.querySelector('[data-filter="location"]');
+
+        const type = typeElement ? typeElement.value : '';
+        const priceMinStr = priceMinElement ? priceMinElement.value : '';
+        const priceMaxStr = priceMaxElement ? priceMaxElement.value : '';
+        const bedroomsStr = bedroomsElement ? bedroomsElement.value : '';
+        const location = locationElement ? locationElement.value : '';
+
+        const priceMin = priceMinStr ? parseFloat(priceMinStr) : null;
+        const priceMax = priceMaxStr ? parseFloat(priceMaxStr) : null;
+        const bedrooms = bedroomsStr ? parseInt(bedroomsStr, 10) : null;
+
+        return {
+          type: type || null,
+          priceMin: (priceMin !== null && !isNaN(priceMin) && priceMin >= 0) ? priceMin : null,
+          priceMax: (priceMax !== null && !isNaN(priceMax) && priceMax >= 0) ? priceMax : null,
+          bedrooms: (bedrooms !== null && !isNaN(bedrooms) && bedrooms >= 0) ? bedrooms : null,
+          location: location || null
+        };
+      }
+
+      function filterProperties(properties, filters) {
+        if (!properties || properties.length === 0) {
+          return [];
+        }
+
+        if (!filters.type && !filters.priceMin && !filters.priceMax && !filters.bedrooms && !filters.location) {
+          return properties;
+        }
+
+        return properties.filter(property => {
+          if (filters.type && property.propertyType) {
+            if (property.propertyType.toLowerCase() !== filters.type.toLowerCase()) {
+              return false;
+            }
+          } else if (filters.type && !property.propertyType) {
+            return false;
+          }
+
+          if (filters.priceMin !== null && property.price !== undefined && property.price !== null) {
+            if (property.price < filters.priceMin) {
+              return false;
+            }
+          } else if (filters.priceMin !== null && (property.price === undefined || property.price === null)) {
+            return false;
+          }
+
+          if (filters.priceMax !== null && property.price !== undefined && property.price !== null) {
+            if (property.price > filters.priceMax) {
+              return false;
+            }
+          } else if (filters.priceMax !== null && (property.price === undefined || property.price === null)) {
+            return false;
+          }
+
+          if (filters.bedrooms !== null && property.bedrooms !== undefined && property.bedrooms !== null) {
+            if (property.bedrooms < filters.bedrooms) {
+              return false;
+            }
+          } else if (filters.bedrooms !== null && (property.bedrooms === undefined || property.bedrooms === null || property.bedrooms === 0)) {
+            return false;
+          }
+
+          if (filters.location && property.location) {
+            if (property.location.toLowerCase() !== filters.location.toLowerCase()) {
+              return false;
+            }
+          } else if (filters.location && !property.location) {
+            return false;
+          }
+
+          return true;
+        });
+      }
+
+      function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function createPropertyCardHTML(property) {
+        const priceDisplay = property.price ? `R${formatNumber(property.price)}` : 'POA';
+        const addressDisplay = escapeHtml(property.address) || 'Address Not Available';
+
+        return `
+          <article class="property-card bg-white rounded-lg overflow-hidden shadow-sm" data-property-id="${escapeHtml(property.id)}">
+            <div class="p-4">
+              <div class="text-xl font-bold text-green-600 mb-2">${priceDisplay}</div>
+              <h3 class="text-lg text-gray-900 mb-2">${addressDisplay}</h3>
+              <div class="text-sm text-gray-600">
+                ${property.bedrooms} bed | ${property.bathrooms} bath | ${property.location}
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function updatePropertyGrid(filteredProperties, totalProperties) {
+        try {
+          const propertyList = document.getElementById('property-list');
+          const resultsHeader = document.getElementById('results-counter');
+
+          if (!propertyList) {
+            console.error('Property list container not found');
+            return;
+          }
+
+          propertyList.innerHTML = '';
+
+          if (filteredProperties.length === 0) {
+            propertyList.innerHTML = `
+              <div class="col-span-full text-center py-8 text-gray-600">
+                <p class="text-lg mb-2">No properties match your criteria.</p>
+                <p class="text-sm">Try adjusting your filters or clearing all filters.</p>
+              </div>
+            `;
+
+            if (resultsHeader) {
+              resultsHeader.textContent = '0 Properties Found';
+            }
+
+            document.getElementById('filtered-count').textContent = '0';
+            return;
+          }
+
+          const cardsHTML = filteredProperties.map(property => createPropertyCardHTML(property)).join('');
+          propertyList.innerHTML = cardsHTML;
+
+          if (resultsHeader) {
+            const countText = filteredProperties.length === totalProperties
+              ? `${filteredProperties.length} Properties Available`
+              : `${filteredProperties.length} Properties Found`;
+            resultsHeader.textContent = countText;
+          }
+
+          document.getElementById('filtered-count').textContent = filteredProperties.length;
+        } catch (error) {
+          console.error('Error updating property grid:', error);
+        }
+      }
+
+      function handleFilterChange() {
+        try {
+          if (typeof allProperties === 'undefined') {
+            console.error('Properties data not available');
+            return;
+          }
+
+          // Measure performance
+          const startTime = performance.now();
+
+          const filters = getFilterValues();
+          const filtered = filterProperties(allProperties, filters);
+
+          const filterEndTime = performance.now();
+          const filterTime = filterEndTime - startTime;
+
+          updatePropertyGrid(filtered, allProperties.length);
+
+          const endTime = performance.now();
+          const totalTime = endTime - startTime;
+
+          // Update metrics
+          updateMetrics(totalTime);
+
+          console.log(`Filter time: ${filterTime.toFixed(2)}ms, Total time: ${totalTime.toFixed(2)}ms, Results: ${filtered.length}/${allProperties.length}`);
+        } catch (error) {
+          console.error('Error handling filter change:', error);
+        }
+      }
+
+      function clearAllFilters() {
+        try {
+          const typeElement = document.querySelector('[data-filter="type"]');
+          const priceMinElement = document.querySelector('[data-filter="price-min"]');
+          const priceMaxElement = document.querySelector('[data-filter="price-max"]');
+          const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
+          const locationElement = document.querySelector('[data-filter="location"]');
+
+          if (typeElement) typeElement.value = '';
+          if (priceMinElement) priceMinElement.value = '';
+          if (priceMaxElement) priceMaxElement.value = '';
+          if (bedroomsElement) bedroomsElement.value = '';
+          if (locationElement) locationElement.value = '';
+
+          handleFilterChange();
+        } catch (error) {
+          console.error('Error clearing filters:', error);
+        }
+      }
+
+      function initFiltering() {
+        try {
+          if (typeof allProperties === 'undefined') {
+            console.error('Properties data not available');
+            return;
+          }
+
+          const typeElement = document.querySelector('[data-filter="type"]');
+          const priceMinElement = document.querySelector('[data-filter="price-min"]');
+          const priceMaxElement = document.querySelector('[data-filter="price-max"]');
+          const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
+          const locationElement = document.querySelector('[data-filter="location"]');
+          const clearButton = document.querySelector('[data-filter-action="clear"]');
+
+          if (typeElement) typeElement.addEventListener('change', handleFilterChange);
+          if (priceMinElement) priceMinElement.addEventListener('input', handleFilterChange);
+          if (priceMaxElement) priceMaxElement.addEventListener('input', handleFilterChange);
+          if (bedroomsElement) bedroomsElement.addEventListener('change', handleFilterChange);
+          if (locationElement) locationElement.addEventListener('change', handleFilterChange);
+          if (clearButton) clearButton.addEventListener('click', clearAllFilters);
+
+          updatePropertyGrid(allProperties, allProperties.length);
+        } catch (error) {
+          console.error('Error initializing filtering:', error);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFiltering);
+      } else {
+        initFiltering();
+      }
+
+    })();
+  </script>
+</body>
+</html>
