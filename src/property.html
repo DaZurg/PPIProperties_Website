@@ -246,27 +246,19 @@ title: "Property Details"
           </div>
         {%- endif %}
 
-        <!-- Solar Panels -->
-        {%- if property.hasSolar is not none %}
+        <!-- Solar Panels - Only show if true -->
+        {%- if property.hasSolar %}
           <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
             <span aria-hidden="true" class="text-3xl mb-2">☀️</span>
-            {%- if property.hasSolar %}
-              <p class="text-sm font-semibold text-gray-700">Solar Panels</p>
-            {%- else %}
-              <p class="text-sm font-semibold text-gray-700">No Solar</p>
-            {%- endif %}
+            <p class="text-sm font-semibold text-gray-700">Solar Panels</p>
           </div>
         {%- endif %}
 
-        <!-- Security System -->
-        {%- if property.hasSecurity is not none %}
+        <!-- Security System - Only show if true -->
+        {%- if property.hasSecurity %}
           <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
             <span aria-hidden="true" class="text-3xl mb-2">🔒</span>
-            {%- if property.hasSecurity %}
-              <p class="text-sm font-semibold text-gray-700">Security System</p>
-            {%- else %}
-              <p class="text-sm font-semibold text-gray-700">No Security</p>
-            {%- endif %}
+            <p class="text-sm font-semibold text-gray-700">Security System</p>
           </div>
         {%- endif %}
 

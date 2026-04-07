@@ -70,7 +70,9 @@
       "Bash(lsof:*)",
       "Bash(git rev-parse:*)",
       "Skill(bmad-review-edge-case-hunter)",
-      "WebFetch(domain:www.temp.ppiproperties.co.za)"
+      "WebFetch(domain:www.temp.ppiproperties.co.za)",
+      "WebFetch(domain:www.ppiproperties.co.za)",
+      "Bash(curl:*)"
     ]
   }
 }
