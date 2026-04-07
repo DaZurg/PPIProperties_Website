@@ -12,6 +12,29 @@
   'use strict';
 
   /**
+   * Storage key for filter persistence
+   * @const {string}
+   */
+  const FILTER_STATE_KEY = 'ppiproperties-filter-state';
+
+  /**
+   * Check if localStorage is available
+   * Feature detection for localStorage support with error handling
+   *
+   * @returns {boolean} True if localStorage is available and writable
+   */
+  function isLocalStorageAvailable() {
+    try {
+      const test = '__test__';
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
    * Get current filter values from form controls
    *
    * @returns {Object} Filter object with type, priceMin, priceMax, bedrooms, location
@@ -43,6 +66,154 @@
       bedrooms: (bedrooms !== null && !isNaN(bedrooms) && bedrooms >= 0) ? bedrooms : null,
       location: location || null
     };
+  }
+
+  /**
+   * Get filter state as a clean object (only including non-null values)
+   * Used for persistence - excludes empty filter values
+   *
+   * @returns {Object} Filter state object ready for storage
+   */
+  function getFilterState() {
+    const filters = getFilterValues();
+    // Create clean state object - only include filters that are actually set (non-null)
+    const state = {};
+
+    if (filters.type !== null) state.type = filters.type;
+    if (filters.priceMin !== null) state.priceMin = filters.priceMin;
+    if (filters.priceMax !== null) state.priceMax = filters.priceMax;
+    if (filters.bedrooms !== null) state.bedrooms = filters.bedrooms;
+    if (filters.location !== null) state.location = filters.location;
+
+    return state;
+  }
+
+  /**
+   * Save filter state to localStorage
+   * Stores current filter selections for restoration on return
+   *
+   * @param {Object} filterState - Filter state object to save
+   */
+  function saveFilterState(filterState) {
+    // Validate input parameter
+    if (!filterState || typeof filterState !== 'object') {
+      return; // Invalid state, do not save
+    }
+
+    if (!isLocalStorageAvailable()) {
+      return; // Silently fail if localStorage unavailable
+    }
+
+    try {
+      const stateJson = JSON.stringify(filterState);
+      localStorage.setItem(FILTER_STATE_KEY, stateJson);
+    } catch (e) {
+      // Handle storage quota exceeded or other errors
+      console.warn('Failed to save filter state:', e);
+    }
+  }
+
+  /**
+   * Load filter state from localStorage
+   * Retrieves previously saved filter selections
+   *
+   * @returns {Object|null} Filter state object or null if no state saved
+   */
+  function loadFilterState() {
+    if (!isLocalStorageAvailable()) {
+      return null;
+    }
+
+    try {
+      const stateJson = localStorage.getItem(FILTER_STATE_KEY);
+      if (!stateJson) {
+        return null;
+      }
+
+      const state = JSON.parse(stateJson);
+
+      // Validate loaded state (basic validation)
+      if (typeof state === 'object' && state !== null) {
+        return state;
+      }
+
+      return null;
+    } catch (e) {
+      // Handle JSON parse errors or other issues
+      console.warn('Failed to load filter state:', e);
+      return null;
+    }
+  }
+
+  /**
+   * Restore filter state by applying saved values to form controls
+   * Called on page load to restore previous filter selections
+   */
+  function restoreFilterState() {
+    const state = loadFilterState();
+    if (!state) {
+      return; // No saved state, nothing to restore
+    }
+
+    try {
+      // Apply each saved filter value to corresponding form control
+      // Use consistent type validation for all fields
+      if (typeof state.type === 'string' && state.type) {
+        const typeElement = document.querySelector('[data-filter="type"]');
+        if (typeElement) {
+          typeElement.value = state.type;
+        }
+      }
+
+      if (typeof state.priceMin === 'number') {
+        const priceMinElement = document.querySelector('[data-filter="price-min"]');
+        if (priceMinElement) {
+          priceMinElement.value = String(state.priceMin);
+        }
+      }
+
+      if (typeof state.priceMax === 'number') {
+        const priceMaxElement = document.querySelector('[data-filter="price-max"]');
+        if (priceMaxElement) {
+          priceMaxElement.value = String(state.priceMax);
+        }
+      }
+
+      if (typeof state.bedrooms === 'number') {
+        const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
+        if (bedroomsElement) {
+          bedroomsElement.value = String(state.bedrooms);
+        }
+      }
+
+      if (typeof state.location === 'string' && state.location) {
+        const locationElement = document.querySelector('[data-filter="location"]');
+        if (locationElement) {
+          locationElement.value = state.location;
+        }
+      }
+
+      // Trigger filtering to show correct results based on restored filters
+      handleFilterChange();
+    } catch (e) {
+      console.warn('Error restoring filter state:', e);
+    }
+  }
+
+  /**
+   * Clear filter state from localStorage
+   * Used when user explicitly clicks "Clear All Filters"
+   */
+  function clearFilterState() {
+    if (!isLocalStorageAvailable()) {
+      return;
+    }
+
+    try {
+      localStorage.removeItem(FILTER_STATE_KEY);
+    } catch (e) {
+      console.warn('Failed to clear filter state:', e);
+    }
   }
 
   /**
@@ -321,7 +492,7 @@
 
   /**
    * Handle filter change event
-   * Reads current filter values, filters properties, and updates the DOM
+   * Reads current filter values, filters properties, updates the DOM, and saves state
    */
   function handleFilterChange() {
     try {
@@ -333,6 +504,10 @@
       const filters = getFilterValues();
       const filtered = filterProperties(allProperties, filters);
       updatePropertyGrid(filtered, allProperties.length);
+
+      // Save filter state for persistence across navigation
+      const state = getFilterState();
+      saveFilterState(state);
     } catch (error) {
       console.error('Error handling filter change:', error);
     }
@@ -356,6 +531,9 @@
       if (bedroomsElement) bedroomsElement.value = '';
       if (locationElement) locationElement.value = '';
 
+      // Clear persisted filter state
+      clearFilterState();
+
       // Show all properties
       handleFilterChange();
     } catch (error) {
@@ -365,7 +543,7 @@
 
   /**
    * Initialize filtering on page load
-   * Sets up event listeners and displays initial property list
+   * Sets up event listeners, restores filter state, and displays initial property list
    */
   function initFiltering() {
     try {
@@ -390,8 +568,14 @@
       if (locationElement) locationElement.addEventListener('change', handleFilterChange);
       if (clearButton) clearButton.addEventListener('click', clearAllFilters);
 
-      // Show all properties initially (no filters active)
-      updatePropertyGrid(allProperties, allProperties.length);
+      // Restore filter state if available (will trigger handleFilterChange internally)
+      const savedState = loadFilterState();
+      if (savedState) {
+        restoreFilterState();
+      } else {
+        // No filter state was restored, show all properties initially
+        updatePropertyGrid(allProperties, allProperties.length);
+      }
     } catch (error) {
       console.error('Error initializing filtering:', error);
     }

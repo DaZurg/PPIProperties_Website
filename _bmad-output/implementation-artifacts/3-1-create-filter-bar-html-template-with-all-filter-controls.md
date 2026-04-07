@@ -1,6 +1,6 @@
 # Story 3.1: Create Filter Bar HTML Template with All Filter Controls
 
-**Status:** review
+**Status:** done
 
 **Epic:** 3 - Smart Property Filtering
 
@@ -597,5 +597,21 @@ Files referenced:
 - `src/_data/properties.json` - Referenced for location and propertyType values
 - `src/_includes/layout.html` - Used existing Tailwind CSS utility classes
 - `src/_includes/property-card.html` - Referenced for component pattern
+
+### Review Findings
+
+Code review completed on 2026-04-06. All findings dismissed - no actionable issues found.
+
+**Dismissed (4 total):**
+- [x] [Review][Dismiss] Hardcoded location options — Values match current properties.json; dynamic generation is enhancement not required for Story 3.1
+- [x] [Review][Dismiss] Missing inputmode attribute on number inputs — Enhancement for mobile UX, not a bug
+- [x] [Review][Dismiss] CSS selector escaping change — The change from double to single backslash is a fix (single backslash is correct CSS syntax)
+- [x] [Review][Dismiss] Both aria-label and fieldset legend present — Valid accessibility pattern; form aria-label for landmark navigation, legend for fieldset grouping
+
+**Review Summary:**
+- Decision needed: 0
+- Patches: 0
+- Deferred: 0
+- Dismissed: 4
 
 ---
