@@ -69,7 +69,8 @@
       "Bash(powershell -Command \"Remove-Item -Path ''.worktrees\\\\story-3.2-Implement-Vanilla-JavaScript-Filtering-Logic'' -Recurse -Force\")",
       "Bash(lsof:*)",
       "Bash(git rev-parse:*)",
-      "Skill(bmad-review-edge-case-hunter)"
+      "Skill(bmad-review-edge-case-hunter)",
+      "WebFetch(domain:www.temp.ppiproperties.co.za)"
     ]
   }
 }
