@@ -1,168 +1,90 @@
 <!--
-  Image Carousel Component
-  Used in: src/property.html (Story 4.1)
-
-  Uses variables from parent context:
-  - property.imageUrls: array of image URLs
-  - property.address: property address for alt text
-
-  Features:
-  - Main image display with responsive sizing
-  - Left/right arrow navigation buttons
-  - Thumbnail row (5-6 visible, scrollable for 6+)
-  - Image counter display ("Image X of Y")
-  - Keyboard navigation (arrow keys)
-  - Full accessibility (ARIA labels, semantic HTML)
-  - Edge case handling (1, 2-5, 6+ images)
+  Image Carousel Component - Professional Real Estate Style
+  Large main image carousel with vertical thumbnail strip on the right
+  Navigation arrows overlaid on the main image
 -->
 
 {%- if property.imageUrls and property.imageUrls.length > 0 %}
-  <figure class="carousel-container mb-8">
-    <!-- Main Image Display -->
-    <div class="carousel-main-wrapper mb-6 relative bg-gray-100 rounded-lg overflow-hidden">
-      <img
-        id="carousel-main-image"
-        src="{{ property.imageUrls[0] }}"
-        alt="Property at {{ property.address }} - Image 1 of {{ property.imageUrls.length }}"
-        class="carousel-main-image w-full h-auto rounded-lg object-cover aspect-video transition-opacity duration-300 ease-in-out"
-        loading="lazy"
-      >
+  <div class="carousel-container mb-12 relative">
+    <!-- Main carousel with thumbnails -->
+    <div class="flex gap-4 h-96 md:h-screen lg:h-96">
 
-      <!-- Arrow Navigation Buttons - Hide if only 1 image -->
+      <!-- Main Image Section -->
+      <div class="flex-1 relative bg-gray-100 rounded-lg overflow-hidden group">
+        <img
+          id="carousel-main-image"
+          src="{{ property.imageUrls[0] }}"
+          alt="Property at {{ property.address }} - Image 1 of {{ property.imageUrls.length }}"
+          class="carousel-main-image w-full h-full object-cover"
+          loading="eager"
+        >
+
+        <!-- Image Counter (Top Right) -->
+        {%- if property.imageUrls.length > 1 %}
+          <div
+            id="carousel-counter"
+            class="absolute top-4 right-4 bg-black bg-opacity-60 text-white px-4 py-2 rounded text-sm font-semibold z-10"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <span id="carousel-current-num">1</span> / {{ property.imageUrls.length }}
+          </div>
+
+          <!-- Navigation Arrows - OVERLAID ON IMAGE -->
+          <div class="absolute inset-0 flex items-center justify-between pointer-events-none">
+            <!-- Previous Button -->
+            <button
+              id="carousel-prev-btn"
+              class="carousel-nav-btn carousel-prev pointer-events-auto flex items-center justify-center w-14 h-14 bg-white hover:bg-gray-200 text-gray-800 rounded-full transition-all duration-200 ml-4 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+              aria-label="Previous image"
+              disabled
+            >
+              <span class="text-2xl font-bold">‹</span>
+            </button>
+
+            <!-- Next Button -->
+            <button
+              id="carousel-next-btn"
+              class="carousel-nav-btn carousel-next pointer-events-auto flex items-center justify-center w-14 h-14 bg-white hover:bg-gray-200 text-gray-800 rounded-full transition-all duration-200 mr-4 shadow-lg hover:shadow-xl"
+              aria-label="Next image"
+            >
+              <span class="text-2xl font-bold">›</span>
+            </button>
+          </div>
+        {%- endif %}
+      </div>
+
+      <!-- Thumbnails Strip - Right Side (4 visible) -->
       {%- if property.imageUrls.length > 1 %}
-        <nav
-          class="carousel-nav-buttons absolute inset-0 flex items-center justify-between pointer-events-none"
-          aria-label="Image navigation"
-        >
-          <!-- Previous Button -->
-          <button
-            id="carousel-prev-btn"
-            class="carousel-nav-btn carousel-prev pointer-events-auto flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-blue-600 hover:bg-blue-700 hover:shadow-xl hover:scale-105 active:scale-95 text-white rounded-full transition-all duration-200 ml-2 md:ml-4 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:opacity-50 disabled:hover:shadow-none shadow-lg flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-label="Previous image"
-            disabled
-          >
-            <span class="text-2xl font-bold">←</span>
-          </button>
-
-          <!-- Next Button -->
-          <button
-            id="carousel-next-btn"
-            class="carousel-nav-btn carousel-next pointer-events-auto flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-blue-600 hover:bg-blue-700 hover:shadow-xl hover:scale-105 active:scale-95 text-white rounded-full transition-all duration-200 mr-2 md:mr-4 shadow-lg flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-label="Next image"
-          >
-            <span class="text-2xl font-bold">→</span>
-          </button>
-        </nav>
-
-        <!-- Image Counter - Positioned in top-right corner -->
         <div
-          id="carousel-counter"
-          class="absolute top-2 right-2 md:top-4 md:right-4 bg-black bg-opacity-60 text-white px-3 py-1 md:px-4 md:py-2 rounded text-sm md:text-base font-semibold z-10 pointer-events-none"
-          aria-live="polite"
-          aria-atomic="true"
+          id="carousel-thumbnails-wrapper"
+          class="flex flex-col gap-3 w-24 md:w-28 overflow-y-auto pb-2"
         >
-          Image <span id="carousel-current-num">1</span> of {{ property.imageUrls.length }}
+          <nav
+            id="carousel-thumbnails"
+            class="carousel-thumbnails flex flex-col gap-3"
+            aria-label="Image thumbnails"
+          >
+            {%- for url in property.imageUrls %}
+              <button
+                class="carousel-thumbnail flex-shrink-0 w-full aspect-square rounded border-3 border-gray-300 hover:border-blue-600 hover:scale-105 transition-all duration-200 overflow-hidden cursor-pointer"
+                data-index="{{ loop.index0 }}"
+                aria-label="View image {{ loop.index }} of {{ property.imageUrls.length }}"
+                {%- if loop.index0 == 0 %} aria-current="true" {%- endif %}
+              >
+                <img
+                  src="{{ url }}"
+                  alt="Thumbnail {{ loop.index }}"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                >
+              </button>
+            {%- endfor %}
+          </nav>
         </div>
       {%- endif %}
     </div>
-
-    <!-- Thumbnail Row - Hide if only 1 image -->
-    {%- if property.imageUrls.length > 1 %}
-      <div
-        id="carousel-thumbnails-wrapper"
-        class="carousel-thumbnails-wrapper overflow-x-auto mb-4"
-      >
-        <nav
-          id="carousel-thumbnails"
-          class="carousel-thumbnails flex gap-2 md:gap-3 pb-2"
-          aria-label="Image thumbnails"
-        >
-          {%- for url in property.imageUrls %}
-            <button
-              class="carousel-thumbnail flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded border-2 border-gray-300 hover:border-blue-600 hover:scale-105 hover:shadow-md transition-all duration-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
-              data-index="{{ loop.index0 }}"
-              aria-label="View image {{ loop.index }} of {{ property.imageUrls.length }}"
-              {%- if loop.index0 == 0 %} aria-current="true" {%- endif %}
-            >
-              <img
-                src="{{ url }}"
-                alt="Thumbnail {{ loop.index }}"
-                class="w-full h-full object-cover"
-                loading="lazy"
-              >
-            </button>
-          {%- endfor %}
-        </nav>
-      </div>
-
-      <!-- Image information caption -->
-      <figcaption class="text-center text-sm text-gray-600 mt-2">
-        Click thumbnails or use arrows to browse images
-      </figcaption>
-    {%- else %}
-      <!-- Single image - no carousel UI -->
-      <figcaption class="text-center text-sm text-gray-600 mt-2">
-        Featured property image
-      </figcaption>
-    {%- endif %}
-  </figure>
-
-  <!-- Zoom Modal for Image Magnification (Story 4.3) -->
-  <div
-    id="carousel-zoom-modal"
-    class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Zoomed image view"
-  >
-    <div class="carousel-zoom-container relative max-w-4xl max-h-96 overflow-hidden rounded-lg bg-gray-900">
-      <!-- Zoomed Image -->
-      <img
-        id="carousel-zoom-image"
-        src=""
-        alt=""
-        class="max-w-full max-h-full cursor-grab active:cursor-grabbing"
-        style="display: block; margin: 0 auto;"
-      >
-
-      <!-- Close Button -->
-      <button
-        id="carousel-zoom-close"
-        class="absolute top-4 right-4 bg-white hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center text-gray-800 font-bold text-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        aria-label="Close image zoom"
-        type="button"
-      >
-        ✕
-      </button>
-
-      <!-- Zoom Instructions (Screen reader only) -->
-      <div class="sr-only" aria-live="polite" id="carousel-zoom-instructions">
-        Image zoomed. Use mouse to drag, or press Escape to close.
-      </div>
-    </div>
   </div>
-
-  <!-- Accessibility: Respect prefers-reduced-motion preference -->
-  <style>
-    @media (prefers-reduced-motion: reduce) {
-      .carousel-main-image {
-        transition: opacity 0.01ms ease-in-out !important;
-      }
-    }
-
-    /* Utility class for screen reader only content -->
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-  </style>
 
   <!-- Carousel JavaScript Logic -->
   <script>
@@ -181,7 +103,6 @@
       }
 
       let currentImageIndex = 0;
-      let isFirstLoad = true; // Track initial load for fade transition
 
       // DOM Elements
       const mainImage = document.getElementById('carousel-main-image');
@@ -192,7 +113,6 @@
 
       /**
        * Update carousel display for given image index
-       * @param {number} index - The image index to display
        */
       function showImage(index) {
         // Boundary check
@@ -204,61 +124,32 @@
         const imageUrl = imageUrls[index];
         const propertyAddress = '{{ property.address }}';
 
-        // Smooth fade transition: fade out current image, update src, fade in
-        // Respect prefers-reduced-motion preference
-        // Apply fade on: 1) initial load, OR 2) changing between images, AND not prefers-reduced-motion
-        const shouldFade = (isFirstLoad || currentImageIndex !== index) && !prefersReducedMotion;
-
-        if (shouldFade) {
-          // Fade out effect (skip if user prefers reduced motion)
+        // Update main image with fade effect if not prefers-reduced-motion
+        if (!prefersReducedMotion) {
           mainImage.classList.add('opacity-0');
-
-          // Change image after fade starts (150ms is half of 300ms duration)
           setTimeout(() => {
             mainImage.src = imageUrl;
             mainImage.alt = `Property at ${propertyAddress} - Image ${index + 1} of ${imageUrls.length}`;
-
-            // Fade in effect
             mainImage.classList.remove('opacity-0');
-
-            // Mark first load as complete (only do fade transition once on initial)
-            if (isFirstLoad) {
-              isFirstLoad = false;
-            }
           }, 150);
         } else {
-          // If user prefers reduced motion, just set the image without fade
           mainImage.src = imageUrl;
           mainImage.alt = `Property at ${propertyAddress} - Image ${index + 1} of ${imageUrls.length}`;
-
-          // Mark first load as complete
-          if (isFirstLoad) {
-            isFirstLoad = false;
-          }
         }
-
-        // Add error handling for failed image loads
-        mainImage.onerror = () => {
-          mainImage.alt = `Image ${index + 1} failed to load`;
-          mainImage.classList.add('opacity-50');
-        };
-        mainImage.onload = () => {
-          mainImage.classList.remove('opacity-50');
-        };
 
         // Update counter
         if (counterNum) {
           counterNum.textContent = index + 1;
         }
 
-        // Update thumbnail highlights - apply Tailwind classes for active state
+        // Update thumbnail highlights
         thumbnails.forEach((thumb, idx) => {
           if (idx === index) {
-            thumb.classList.add('border-blue-600', 'bg-blue-50', 'ring-2', 'ring-blue-500');
+            thumb.classList.add('border-blue-600', 'bg-blue-50');
             thumb.classList.remove('border-gray-300');
             thumb.setAttribute('aria-current', 'true');
           } else {
-            thumb.classList.remove('border-blue-600', 'bg-blue-50', 'ring-2', 'ring-blue-500');
+            thumb.classList.remove('border-blue-600', 'bg-blue-50');
             thumb.classList.add('border-gray-300');
             thumb.removeAttribute('aria-current');
           }
@@ -270,8 +161,8 @@
           nextBtn.disabled = index === imageUrls.length - 1;
         }
 
-        // Auto-scroll thumbnail into view (for thumbnail row) - skip during initialization
-        if (thumbnails[index] && currentImageIndex !== 0) {
+        // Auto-scroll thumbnail into view
+        if (thumbnails[index]) {
           thumbnails[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
       }
@@ -296,13 +187,8 @@
 
       /**
        * Navigate to image by index (from thumbnail click)
-       * @param {number} index - The image index to navigate to
        */
       function goToImage(index) {
-        // Force scroll into view on manual thumbnail click
-        if (index !== 0 && thumbnails[index]) {
-          thumbnails[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
         showImage(index);
       }
 
@@ -318,280 +204,46 @@
       thumbnails.forEach((thumbnail, index) => {
         thumbnail.addEventListener('click', () => {
           goToImage(index);
-          // Set focus to the clicked thumbnail for accessibility
           thumbnail.focus();
         });
       });
 
       // Keyboard Navigation - Arrow Keys
       document.addEventListener('keydown', (event) => {
-        // Only handle arrow keys if carousel is in view and has focus
-        if (!carouselContainer) return;
-
-        // Check if any carousel element has focus
-        const activeElement = document.activeElement;
-        const isCarouselFocused = carouselContainer.contains(activeElement);
-
-        if (!isCarouselFocused && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+        if (!carouselContainer || !carouselContainer.contains(document.activeElement)) {
           return;
         }
 
-        if (event.key === 'ArrowLeft' && isCarouselFocused) {
+        if (event.key === 'ArrowLeft') {
           event.preventDefault();
           previousImage();
-        } else if (event.key === 'ArrowRight' && isCarouselFocused) {
+        } else if (event.key === 'ArrowRight') {
           event.preventDefault();
           nextImage();
         }
       });
 
-      // ========== ZOOM FUNCTIONALITY (Story 4.3) ==========
-
-      // Zoom Modal Elements
-      const zoomModal = document.getElementById('carousel-zoom-modal');
-      const zoomImage = document.getElementById('carousel-zoom-image');
-      const zoomCloseBtn = document.getElementById('carousel-zoom-close');
-      const zoomInstructions = document.getElementById('carousel-zoom-instructions');
-
-      // Zoom/Pan State
-      let isZoomOpen = false;
-      let isPanning = false;
-      let panStartX = 0, panStartY = 0;
-      let panTranslateX = 0, panTranslateY = 0;
-
-      /**
-       * Open zoom modal for current image
-       */
-      function openZoom() {
-        if (!mainImage || !zoomModal) return;
-
-        isZoomOpen = true;
-        zoomImage.src = mainImage.src;
-        zoomImage.alt = mainImage.alt;
-
-        // Show modal
-        zoomModal.classList.remove('hidden');
-
-        // Update instructions for screen readers
-        if (zoomInstructions) {
-          zoomInstructions.textContent = 'Image zoomed at 2x scale. Use mouse to drag around, or press Escape to close.';
-        }
-
-        // Focus close button for keyboard users
-        zoomCloseBtn.focus();
-
-        // Prevent body scroll when zoom is open
-        document.body.style.overflow = 'hidden';
-
-        // Reset pan position
-        panTranslateX = 0;
-        panTranslateY = 0;
-        zoomImage.style.transform = 'scale(2) translate(0, 0)';
-      }
-
-      /**
-       * Close zoom modal
-       */
-      function closeZoom() {
-        if (!zoomModal) return;
-
-        isZoomOpen = false;
-        zoomModal.classList.add('hidden');
-
-        // Restore body scroll
-        document.body.style.overflow = '';
-
-        // Reset pan
-        panTranslateX = 0;
-        panTranslateY = 0;
-        zoomImage.style.transform = 'scale(1)';
-
-        // Update instructions for screen readers
-        if (zoomInstructions) {
-          zoomInstructions.textContent = 'Image zoom closed.';
-        }
-
-        // Return focus to main image
-        mainImage.focus();
-      }
-
-      /**
-       * Pan/Drag zoomed image to see different areas
-       */
-      function initPanHandler() {
-        if (!zoomImage || !zoomModal) return;
-
-        /**
-         * Calculate maximum pan bounds based on container and image size
-         * Prevents image from being dragged completely off-screen
-         */
-        function getMaxPan() {
-          const zoomContainer = document.querySelector('.carousel-zoom-container');
-          if (!zoomContainer || !zoomImage) return { maxX: 200, maxY: 200 };
-
-          const containerRect = zoomContainer.getBoundingClientRect();
-          const imageRect = zoomImage.getBoundingClientRect();
-
-          // For 2x scaled image, calculate maximum safe pan distance
-          // Allow panning up to half the scaled image size in each direction
-          const maxX = Math.max(0, (imageRect.width - containerRect.width) / 2);
-          const maxY = Math.max(0, (imageRect.height - containerRect.height) / 2);
-
-          return { maxX, maxY };
-        }
-
-        // Mouse down: start panning
-        zoomImage.addEventListener('mousedown', (e) => {
-          if (!isZoomOpen) return;
-          isPanning = true;
-          panStartX = e.clientX - panTranslateX;
-          panStartY = e.clientY - panTranslateY;
-          zoomImage.style.cursor = 'grabbing';
-        });
-
-        // Mouse move: update pan position WITH BOUNDARY CONSTRAINTS
-        document.addEventListener('mousemove', (e) => {
-          if (!isPanning || !isZoomOpen) return;
-
-          const { maxX, maxY } = getMaxPan();
-
-          // Calculate new position
-          let newTranslateX = e.clientX - panStartX;
-          let newTranslateY = e.clientY - panStartY;
-
-          // Constrain pan to bounds (prevent dragging off-screen)
-          panTranslateX = Math.max(-maxX, Math.min(maxX, newTranslateX));
-          panTranslateY = Math.max(-maxY, Math.min(maxY, newTranslateY));
-
-          // Apply transform: scale first, then translate (with bounds applied)
-          zoomImage.style.transform = `scale(2) translate(${panTranslateX / 2}px, ${panTranslateY / 2}px)`;
-        });
-
-        // Mouse up: stop panning
-        document.addEventListener('mouseup', () => {
-          if (!isPanning) return;
-          isPanning = false;
-          zoomImage.style.cursor = 'grab';
-        });
-
-        // Touch support for panning
-        zoomImage.addEventListener('touchstart', (e) => {
-          if (!isZoomOpen) return;
-          isPanning = true;
-          const touch = e.touches[0];
-          panStartX = touch.clientX - panTranslateX;
-          panStartY = touch.clientY - panTranslateY;
-        });
-
-        document.addEventListener('touchmove', (e) => {
-          if (!isPanning || !isZoomOpen) return;
-          e.preventDefault(); // Prevent page scroll during pan
-
-          const { maxX, maxY } = getMaxPan();
-
-          const touch = e.touches[0];
-          // Calculate new position
-          let newTranslateX = touch.clientX - panStartX;
-          let newTranslateY = touch.clientY - panStartY;
-
-          // Constrain pan to bounds (prevent dragging off-screen)
-          panTranslateX = Math.max(-maxX, Math.min(maxX, newTranslateX));
-          panTranslateY = Math.max(-maxY, Math.min(maxY, newTranslateY));
-
-          zoomImage.style.transform = `scale(2) translate(${panTranslateX / 2}px, ${panTranslateY / 2}px)`;
-        });
-
-        document.addEventListener('touchend', () => {
-          if (!isPanning) return;
-          isPanning = false;
-        });
-      }
-
-      /**
-       * Swipe gesture support for mobile image navigation
-       */
-      function initSwipeHandler() {
-        if (!carouselContainer || imageUrls.length < 2) return;
-
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        carouselContainer.addEventListener('touchstart', (e) => {
-          // Don't swipe if zoom is open
-          if (isZoomOpen) return;
-
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-        }, false);
-
-        carouselContainer.addEventListener('touchend', (e) => {
-          // Don't swipe if zoom is open
-          if (isZoomOpen) return;
-
-          const touchEndX = e.changedTouches[0].clientX;
-          const touchEndY = e.changedTouches[0].clientY;
-
-          const deltaX = touchEndX - touchStartX;
-          const deltaY = touchEndY - touchStartY;
-
-          // Only trigger swipe if horizontal movement > 50px and more horizontal than vertical
-          if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
-            if (deltaX < 0) {
-              // Swipe left → next image
-              nextImage();
-            } else if (deltaX > 0) {
-              // Swipe right → previous image
-              previousImage();
-            }
-          }
-        }, false);
-      }
-
-      /**
-       * Zoom modal event listeners
-       */
-      function initZoomHandlers() {
-        if (!mainImage || !zoomModal || !zoomCloseBtn) return;
-
-        // Click main image to zoom
-        mainImage.addEventListener('click', openZoom);
-
-        // Close button
-        zoomCloseBtn.addEventListener('click', closeZoom);
-
-        // Click outside modal to close
-        zoomModal.addEventListener('click', (e) => {
-          if (e.target === zoomModal) {
-            closeZoom();
-          }
-        });
-
-        // Pan handlers
-        initPanHandler();
-
-        // Swipe handlers for mobile
-        initSwipeHandler();
-      }
-
-      // Enhanced keyboard navigation: Escape closes zoom
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && isZoomOpen) {
-          event.preventDefault();
-          closeZoom();
-        }
-      });
-
-      // Initialize carousel (show first image, set button states)
+      // Initialize carousel
       showImage(0);
-
-      // Initialize zoom functionality
-      initZoomHandlers();
     })();
   </script>
 
+  <!-- Fade transition styling -->
+  <style>
+    .carousel-main-image {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .carousel-main-image {
+        transition: opacity 0.01ms ease-in-out !important;
+      }
+    }
+  </style>
+
 {%- else %}
   <!-- No images available -->
-  <div class="mb-8 p-6 bg-gray-100 rounded-lg text-center text-gray-600">
+  <div class="mb-12 p-8 bg-gray-100 rounded-lg text-center text-gray-600">
     <p class="text-lg font-semibold mb-2">No images available</p>
     <p class="text-sm">Images for this property will be displayed here.</p>
   </div>
