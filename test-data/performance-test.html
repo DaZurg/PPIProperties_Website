@@ -202,21 +202,7 @@
         document.getElementById('total-count').textContent = data.length;
         document.getElementById('filtered-count').textContent = data.length;
         console.log('Loaded', data.length, 'test properties');
-
-        // Load and execute filtering script
-        const script = document.createElement('script');
-        script.src = '../src/_includes/js/filtering.js';
-        script.onload = () => {
-          console.log('Filtering script loaded');
-
-          // Wrap handleFilterChange to measure performance
-          const originalHandleFilterChange = window.handleFilterChange;
-          if (typeof originalHandleFilterChange === 'undefined') {
-            console.error('handleFilterChange not found - script may be in IIFE');
-            // The filtering.js is in an IIFE, so we'll need to instrument it differently
-          }
-        };
-        document.body.appendChild(script);
+        // Inline instrumented filtering code below handles the actual filtering
       })
       .catch(error => {
         console.error('Error loading test properties:', error);
