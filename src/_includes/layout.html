@@ -3,8 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {%- if property %}
+  {%- set trimmedAddress = property.address | trim if property.address else 'Property' %}
+  {%- set trimmedDescription = property.description | trim if property.description else '' %}
+  {%- set bedroomsText = property.bedrooms ~ " bed" if property.bedrooms else "" %}
+  {%- set priceFormatted = property.price | formatNumber if property.price else "" %}
+  {%- set dynamicTitle = (priceFormatted + " " if priceFormatted else "") + bedroomsText + " " + trimmedAddress + " | PPIProperties" %}
+  {%- set descSnippet = (trimmedDescription | truncate(80, true, "")) if trimmedDescription else "Property for sale" %}
+  {%- set descBase = trimmedAddress + " — " + bedroomsText + " property in " + (property.location or trimmedAddress) + ". " + descSnippet %}
+  {%- set dynamicDescription = (descBase | truncate(160, true, "")) %}
+  {%- set dynamicKeywords = "property for sale, " + (property.location or "") + ", " + bedroomsText + " bedroom" %}
+  {%- set dynamicOgImage = property.imageUrls[0] if property.imageUrls and property.imageUrls.length > 0 else "" %}
+  <meta name="description" content="{{ dynamicDescription }}">
+  <meta name="keywords" content="{{ dynamicKeywords }}">
+  <title>{{ dynamicTitle }}</title>
+
+  <!-- Open Graph Tags for Social Sharing -->
+  <meta property="og:title" content="{{ dynamicTitle }}">
+  <meta property="og:description" content="{{ dynamicDescription }}">
+  {%- if dynamicOgImage %}
+  <meta property="og:image" content="{{ dynamicOgImage }}">
+  {%- endif %}
+  <meta property="og:url" content="https://ppiproperties.com/properties/{{ property.id }}/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ dynamicTitle }}">
+  <meta name="twitter:description" content="{{ dynamicDescription }}">
+  {%- if dynamicOgImage %}
+  <meta name="twitter:image" content="{{ dynamicOgImage }}">
+  {%- endif %}
+
+  <!-- Canonical Tag -->
+  <link rel="canonical" href="https://ppiproperties.com/properties/{{ property.id }}/">
+
+  <!-- Language Meta Tag -->
+  <meta name="language" content="English">
+  {%- else %}
   <meta name="description" content="Find your perfect property. Browse available properties with detailed information and images.">
   <title>{{ title or "Property Listing" }} | Find Your Home</title>
+  <link rel="canonical" href="https://ppiproperties.com/">
+  {%- endif %}
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%233b82f6'>🏠</text></svg>">
@@ -548,6 +587,51 @@
       }
     }
   </style>
+
+  {%- if property %}
+  <!-- JSON-LD Structured Data for Property Schema.org -->
+  {%- set trimmedAddress = property.address | trim if property.address else 'Property' %}
+  {%- set trimmedDescription = property.description | trim if property.description else 'Property for sale' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Property",
+    "name": "{{ trimmedAddress }}",
+    "description": "{{ trimmedDescription | replace('"', '\"') }}",
+    "image": {{ property.imageUrls | dump | safe if property.imageUrls else '[]' }},
+    "url": "https://ppiproperties.com/properties/{{ property.id }}/",
+    {%- if property.price %}
+    "price": {{ property.price }},
+    "priceCurrency": "ZAR",
+    {%- endif %}
+    {%- if property.bedrooms %}
+    "numberOfBedrooms": {{ property.bedrooms }},
+    {%- endif %}
+    {%- if property.bathrooms %}
+    "numberOfBathrooms": {{ property.bathrooms }},
+    {%- endif %}
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ trimmedAddress }}",
+      "addressLocality": "{{ property.location or trimmedAddress }}",
+      "addressRegion": "{{ property.location or 'South Africa' }}",
+      "addressCountry": "ZA"
+    }
+    {%- if property.agentName %},
+    "agent": {
+      "@type": "Person",
+      "name": "{{ property.agentName }}"
+      {%- if property.agentPhone %},
+      "telephone": "{{ property.agentPhone }}"
+      {%- endif %}
+      {%- if property.agentEmail %},
+      "email": "{{ property.agentEmail }}"
+      {%- endif %}
+    }
+    {%- endif %}
+  }
+  </script>
+  {%- endif %}
 </head>
 <body>
   <!-- Skip to main content link for accessibility -->
