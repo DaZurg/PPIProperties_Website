@@ -247,28 +247,44 @@ title: "Property Details"
       <p class="text-gray-500 italic mb-4">Agent information not available</p>
     {%- endif %}
 
-    <!-- Agent Contact Info (Phone & Email) -->
-    <div class="mb-6 space-y-2">
+    <!-- Agent Contact Info (Phone & Email) - Story 5.1 -->
+    <div class="mb-6 space-y-3">
       {%- if property.agentPhone %}
-        <div>
-          <span class="font-semibold text-gray-700">Phone: </span>
-          <a href="tel:{{ property.agentPhone }}" class="text-blue-600 hover:underline">
-            {{ property.agentPhone }}
-          </a>
+        <div class="flex items-center min-h-[48px] px-3 py-2 rounded-lg hover:bg-blue-100 transition-colors">
+          <span aria-hidden="true" class="text-xl mr-3">📞</span>
+          <div class="flex flex-col">
+            <span class="text-xs font-semibold text-gray-600 uppercase">Phone</span>
+            <a href="tel:{{ property.agentPhone }}"
+               class="text-blue-700 font-semibold hover:text-blue-900 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1"
+               aria-label="Call {{ property.agentName }} at {{ property.agentPhone }}">
+              {{ property.agentPhone }}
+            </a>
+          </div>
         </div>
       {%- else %}
-        <div class="text-gray-500">Phone not available</div>
+        <div class="flex items-center min-h-[48px] px-3 py-2 text-gray-400">
+          <span aria-hidden="true" class="text-xl mr-3">📞</span>
+          <span class="text-sm">Phone not available</span>
+        </div>
       {%- endif %}
 
       {%- if property.agentEmail %}
-        <div>
-          <span class="font-semibold text-gray-700">Email: </span>
-          <a href="mailto:{{ property.agentEmail }}" class="text-blue-600 hover:underline">
-            {{ property.agentEmail }}
-          </a>
+        <div class="flex items-center min-h-[48px] px-3 py-2 rounded-lg hover:bg-blue-100 transition-colors">
+          <span aria-hidden="true" class="text-xl mr-3">✉️</span>
+          <div class="flex flex-col">
+            <span class="text-xs font-semibold text-gray-600 uppercase">Email</span>
+            <a href="mailto:{{ property.agentEmail }}"
+               class="text-blue-700 font-semibold hover:text-blue-900 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1"
+               aria-label="Send email to {{ property.agentName }} at {{ property.agentEmail }}">
+              {{ property.agentEmail }}
+            </a>
+          </div>
         </div>
       {%- else %}
-        <div class="text-gray-500">Email not available</div>
+        <div class="flex items-center min-h-[48px] px-3 py-2 text-gray-400">
+          <span aria-hidden="true" class="text-xl mr-3">✉️</span>
+          <span class="text-sm">Email not available</span>
+        </div>
       {%- endif %}
     </div>
 
