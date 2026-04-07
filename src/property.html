@@ -8,7 +8,7 @@ layout: layout.html
 title: "Property Details"
 ---
 
-<article class="mb-8">
+<article class="mb-8" data-property-id="{{ property.id }}">
   <!-- Navigation Section - Back to Results -->
   <nav class="mb-8" aria-label="Page navigation">
     <div class="flex flex-wrap gap-4 items-center">
@@ -18,22 +18,34 @@ title: "Property Details"
 
       <!-- Previous/Next Property Navigation -->
       <div class="flex gap-2 items-center">
-        {%- if pagination.pageNumber > 0 %}
+        {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber > 0 %}
           {%- set prevProperty = pagination.pages[pagination.pageNumber - 1] %}
-          <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" aria-label="View previous property">
-            Previous Property
-          </a>
+          {%- if prevProperty and prevProperty.id %}
+            <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" aria-label="View previous property">
+              Previous Property
+            </a>
+          {%- else %}
+            <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
+              Previous Property
+            </button>
+          {%- endif %}
         {%- else %}
           <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
             Previous Property
           </button>
         {%- endif %}
 
-        {%- if pagination.pageNumber < pagination.pages.length - 1 %}
+        {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber < pagination.pages.length - 1 %}
           {%- set nextProperty = pagination.pages[pagination.pageNumber + 1] %}
-          <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" aria-label="View next property">
-            Next Property
-          </a>
+          {%- if nextProperty and nextProperty.id %}
+            <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" aria-label="View next property">
+              Next Property
+            </a>
+          {%- else %}
+            <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
+              Next Property
+            </button>
+          {%- endif %}
         {%- else %}
           <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
             Next Property
@@ -46,12 +58,14 @@ title: "Property Details"
   <!-- Header Section with Address -->
   <section class="mb-8">
     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-      {%- if property.address %}{{ property.address }}{%- else %}Address Not Available{%- endif %}
+      {%- set trimmedAddress = property.address | trim if property.address else '' %}
+      {%- if trimmedAddress %}{{ trimmedAddress }}{%- else %}Address Not Available{%- endif %}
     </h1>
 
-    {%- if property.location %}
+    {%- set trimmedLocation = property.location | trim if property.location else '' %}
+    {%- if trimmedLocation %}
       <p class="text-xl text-gray-600 mb-4">
-        {{ property.location }}
+        {{ trimmedLocation }}
       </p>
     {%- endif %}
 
@@ -129,9 +143,9 @@ title: "Property Details"
     <!-- Extended Features (8 Icons) - Story 4.4 -->
     <div class="mt-6">
       <h3 class="text-lg font-semibold text-gray-800 mb-4">Property Features</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
         <!-- Bedrooms -->
-        {%- if property.bedrooms %}
+        {%- if property.bedrooms is not none and property.bedrooms >= 0 %}
           <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
             <span aria-hidden="true" class="text-3xl mb-2">🛏️</span>
             {%- if property.bedrooms == 1 %}
@@ -143,7 +157,7 @@ title: "Property Details"
         {%- endif %}
 
         <!-- Bathrooms -->
-        {%- if property.bathrooms %}
+        {%- if property.bathrooms is not none and property.bathrooms >= 0 %}
           <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
             <span aria-hidden="true" class="text-3xl mb-2">🚿</span>
             {%- if property.bathrooms == 1 %}
@@ -155,7 +169,7 @@ title: "Property Details"
         {%- endif %}
 
         <!-- Parking Spaces -->
-        {%- if property.parkingSpaces %}
+        {%- if property.parkingSpaces is not none and property.parkingSpaces >= 0 %}
           <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
             <span aria-hidden="true" class="text-3xl mb-2">🅿️</span>
             {%- if property.parkingSpaces == 1 %}
@@ -337,23 +351,29 @@ title: "Property Details"
         Back to Results
       </a>
 
-      <div class="text-sm text-gray-600">
-        Viewing property {{ pagination.pageNumber + 1 }} of {{ pagination.pages.length }}
-      </div>
+      {%- if pagination.pages and pagination.pageNumber is defined %}
+        <div class="text-sm text-gray-600">
+          Viewing property {{ pagination.pageNumber + 1 }} of {{ pagination.pages.length }}
+        </div>
+      {%- endif %}
 
       <div class="flex gap-2">
-        {%- if pagination.pageNumber > 0 %}
+        {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber > 0 %}
           {%- set prevProperty = pagination.pages[pagination.pageNumber - 1] %}
-          <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-            Previous
-          </a>
+          {%- if prevProperty and prevProperty.id %}
+            <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+              Previous
+            </a>
+          {%- endif %}
         {%- endif %}
 
-        {%- if pagination.pageNumber < pagination.pages.length - 1 %}
+        {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber < pagination.pages.length - 1 %}
           {%- set nextProperty = pagination.pages[pagination.pageNumber + 1] %}
-          <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-            Next
-          </a>
+          {%- if nextProperty and nextProperty.id %}
+            <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+              Next
+            </a>
+          {%- endif %}
         {%- endif %}
       </div>
     </div>
@@ -366,7 +386,7 @@ title: "Property Details"
   const messageField = document.getElementById('form-message');
   const charCountDisplay = document.getElementById('char-count');
 
-  if (messageField) {
+  if (messageField && charCountDisplay) {
     messageField.addEventListener('input', function() {
       charCountDisplay.textContent = this.value.length;
     });
@@ -375,15 +395,28 @@ title: "Property Details"
   // Form validation and submission
   const contactForm = document.getElementById('agent-contact-form');
   const successMessage = document.getElementById('form-success');
+  let successMessageTimeout = null;
 
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
+      // Get form fields
+      const nameField = document.getElementById('form-name');
+      const emailField = document.getElementById('form-email');
+      const messageField = document.getElementById('form-message');
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+
+      // Validate all form elements exist
+      if (!nameField || !emailField || !messageField) {
+        alert('Form elements not found.');
+        return;
+      }
+
       // Get field values
-      const name = document.getElementById('form-name').value.trim();
-      const email = document.getElementById('form-email').value.trim();
-      const message = document.getElementById('form-message').value.trim();
+      const name = nameField.value.trim();
+      const email = emailField.value.trim();
+      const message = messageField.value.trim();
 
       // Validate required fields
       if (!name || !email || !message) {
@@ -391,28 +424,74 @@ title: "Property Details"
         return;
       }
 
-      // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // Validate email format (improved regex: at least 2-char TLD)
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (!emailRegex.test(email)) {
         alert('Please enter a valid email address.');
         return;
       }
 
-      // Show success message
-      if (successMessage) {
-        successMessage.classList.remove('hidden');
+      // Disable submit button to prevent race condition
+      if (submitButton) {
+        submitButton.disabled = true;
       }
 
-      // Reset form
-      contactForm.reset();
-      charCountDisplay.textContent = '0';
+      // Clear any existing timeout
+      if (successMessageTimeout) {
+        clearTimeout(successMessageTimeout);
+      }
 
-      // Hide success message after 5 seconds
-      setTimeout(function() {
-        if (successMessage) {
-          successMessage.classList.add('hidden');
+      // Submit form to backend
+      const propertyId = document.querySelector('article').getAttribute('data-property-id') || 'unknown';
+      const formData = {
+        propertyId: propertyId,
+        name: name,
+        email: email,
+        message: message,
+        submittedAt: new Date().toISOString()
+      };
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          // Show success message
+          if (successMessage) {
+            successMessage.classList.remove('hidden');
+            successMessage.setAttribute('aria-live', 'polite');
+          }
+
+          // Reset form
+          contactForm.reset();
+          if (charCountDisplay) {
+            charCountDisplay.textContent = '0';
+          }
+
+          // Hide success message after 5 seconds
+          successMessageTimeout = setTimeout(function() {
+            if (successMessage) {
+              successMessage.classList.add('hidden');
+            }
+          }, 5000);
+        } else {
+          alert('Failed to submit form. Please try again.');
         }
-      }, 5000);
+      })
+      .catch(error => {
+        console.error('Form submission error:', error);
+        alert('An error occurred. Please try again.');
+      })
+      .finally(() => {
+        // Re-enable submit button
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
+      });
     });
   }
 </script>
