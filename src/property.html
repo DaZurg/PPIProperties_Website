@@ -9,46 +9,59 @@ title: "Property Details"
 ---
 
 <article class="mb-8" data-property-id="{{ property.id }}">
-  <!-- Navigation Section - Back to Results -->
-  <nav class="mb-8" aria-label="Page navigation">
-    <div class="flex flex-wrap gap-4 items-center">
-      <a href="/" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200" aria-label="Back to property listing">
-        Back to Results
+  <!-- Navigation Section - Back to Results & Property Navigation - Story 5.2 -->
+  <nav class="mb-8 pb-6 border-b border-gray-200" aria-label="Page navigation">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <!-- Back to Results Button (Primary) -->
+      <a href="/" class="inline-flex items-center justify-center min-h-[48px] px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+         aria-label="Back to property listing">
+        <span>← Back to Results</span>
       </a>
 
-      <!-- Previous/Next Property Navigation -->
-      <div class="flex gap-2 items-center">
+      <!-- Property Counter -->
+      {%- if pagination.pages and pagination.pageNumber is defined %}
+        <div class="text-center text-sm font-medium text-gray-600">
+          Property <span class="text-blue-600 font-bold">{{ pagination.pageNumber + 1 }}</span> of <span class="text-blue-600 font-bold">{{ pagination.pages.length }}</span>
+        </div>
+      {%- endif %}
+
+      <!-- Previous/Next Property Navigation (Secondary) -->
+      <div class="flex gap-2 items-center justify-end">
         {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber > 0 %}
           {%- set prevProperty = pagination.pages[pagination.pageNumber - 1] %}
           {%- if prevProperty and prevProperty.id %}
-            <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" aria-label="View previous property">
-              Previous Property
+            <a href="/properties/{{ prevProperty.id }}/"
+               class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+               aria-label="View previous property">
+              <span>‹ Previous</span>
             </a>
           {%- else %}
-            <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
-              Previous Property
+            <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
+              <span>‹ Previous</span>
             </button>
           {%- endif %}
         {%- else %}
-          <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
-            Previous Property
+          <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
+            <span>‹ Previous</span>
           </button>
         {%- endif %}
 
         {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber < pagination.pages.length - 1 %}
           {%- set nextProperty = pagination.pages[pagination.pageNumber + 1] %}
           {%- if nextProperty and nextProperty.id %}
-            <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" aria-label="View next property">
-              Next Property
+            <a href="/properties/{{ nextProperty.id }}/"
+               class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+               aria-label="View next property">
+              <span>Next ›</span>
             </a>
           {%- else %}
-            <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
-              Next Property
+            <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
+              <span>Next ›</span>
             </button>
           {%- endif %}
         {%- else %}
-          <button disabled class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed" aria-disabled="true">
-            Next Property
+          <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
+            <span>Next ›</span>
           </button>
         {%- endif %}
       </div>
