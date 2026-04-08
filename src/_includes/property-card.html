@@ -1,115 +1,509 @@
-<article class="property-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300" data-property-id="{{ property.id }}">
-  <!-- Property Image Gallery Preview - Story UX Redesign -->
-  <div class="w-full bg-gray-900 overflow-hidden relative group" style="aspect-ratio: 4/3;">
-    {% if property.imageUrls and property.imageUrls.length > 0 %}
-      <!-- Main Display Image -->
-      <img
-        src="{{ property.imageUrls[0] }}"
-        alt="Property image{% if property.address %} at {{ property.address }}{% endif %}"
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        loading="lazy"
-      />
+<!--
+  OneRoof-style Property Card
+  Layout: [Main cycling image] [2x2 thumbnail grid] [Property info with agency badge]
+-->
+<article class="property-card" data-property-id="{{ property.id }}">
+  <a href="/properties/{{ property.id }}/" class="property-card-link">
+    <div class="property-card-inner">
 
-      <!-- Image Count Badge -->
-      <div class="absolute top-3 right-3 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded">
-        {{ property.imageUrls.length }} photos
-      </div>
+      <!-- IMAGE SECTION: Main + Thumbnails -->
+      <div class="property-card-images">
 
-      <!-- Mini Gallery Thumbnails (Bottom) -->
-      {% if property.imageUrls.length > 1 %}
-        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          {% for url in property.imageUrls | slice(0, 4) %}
-            <img src="{{ url }}" alt="" class="w-12 h-12 object-cover rounded cursor-pointer hover:ring-2 hover:ring-white transition-all" />
-          {% endfor %}
-          {% if property.imageUrls.length > 4 %}
-            <div class="w-12 h-12 bg-gray-600/80 rounded flex items-center justify-center text-white text-xs font-bold">
-              +{{ property.imageUrls.length - 4 }}
+        <!-- MAIN IMAGE (Cycling Carousel) -->
+        <div class="property-card-main-image">
+          {% if property.imageUrls and property.imageUrls.length > 0 %}
+            <!-- Carousel Images Container -->
+            <div class="carousel-container" data-card-id="{{ property.id }}">
+              {% set maxSlides = 5 %}
+              {% set slideCount = property.imageUrls.length if property.imageUrls.length <= maxSlides else maxSlides %}
+
+              {% for url in property.imageUrls %}
+                {% if loop.index0 < maxSlides %}
+                  <img
+                    src="{{ url }}"
+                    alt="Property image {{ loop.index }}"
+                    class="carousel-slide {% if loop.index0 == 0 %}active{% endif %}"
+                    data-slide="{{ loop.index0 }}"
+                    loading="lazy"
+                  />
+                {% endif %}
+              {% endfor %}
+
+              <!-- Heart/Save Icon -->
+              <button type="button" class="property-card-save" onclick="event.preventDefault(); event.stopPropagation(); toggleSave('{{ property.id }}')" aria-label="Save property">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+
+              <!-- Dot Indicators -->
+              {% if slideCount > 1 %}
+                <div class="carousel-dots">
+                  {% for i in range(0, slideCount) %}
+                    <button
+                      type="button"
+                      class="carousel-dot {% if i == 0 %}active{% endif %}"
+                      data-dot="{{ i }}"
+                      onclick="event.preventDefault(); event.stopPropagation(); window.goToSlide('{{ property.id }}', {{ i }});"
+                    ></button>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <!-- Navigation Arrows (show on hover) -->
+              {% if slideCount > 1 %}
+                <button type="button" class="carousel-arrow carousel-prev" onclick="event.preventDefault(); event.stopPropagation(); window.changeSlide('{{ property.id }}', -1);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button type="button" class="carousel-arrow carousel-next" onclick="event.preventDefault(); event.stopPropagation(); window.changeSlide('{{ property.id }}', 1);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="property-card-no-image">
+              <span>No Image</span>
             </div>
           {% endif %}
         </div>
-      {% endif %}
-    {% else %}
-      <div class="w-full h-full flex items-center justify-center text-gray-400">
-        <span class="text-sm">No Image Available</span>
-      </div>
-    {% endif %}
-  </div>
 
-  <!-- Card Content -->
-  <div class="p-4 md:p-6">
-    <!-- Price -->
-    <div class="text-2xl md:text-3xl font-bold text-green-600 mb-2">
-      {% if property.price %}
-        R{{ property.price | formatNumber }}
-      {% else %}
-        POA
-      {% endif %}
-    </div>
-
-    <!-- Address -->
-    <h3 class="text-lg md:text-xl text-gray-900 mb-3 font-semibold">
-      {{ property.address }}
-    </h3>
-
-    <!-- Feature Icons -->
-    <div class="flex flex-wrap gap-4 mb-4 text-gray-600 text-sm md:text-base">
-      <!-- Bedrooms -->
-      <div class="flex items-center gap-1">
-        <span class="text-lg" aria-hidden="true">🛏️</span>
-        <span>{% if property.bedrooms > 0 %}{{ property.bedrooms }} bed{% else %}N/A{% endif %}</span>
-      </div>
-
-      <!-- Bathrooms -->
-      <div class="flex items-center gap-1">
-        <span class="text-lg" aria-hidden="true">🚿</span>
-        <span>{% if property.bathrooms > 0 %}{{ property.bathrooms }} bath{% else %}N/A{% endif %}</span>
-      </div>
-
-      <!-- Parking (count garage-related features) -->
-      <div class="flex items-center gap-1">
-        <span class="text-lg" aria-hidden="true">🅿️</span>
-        <span>
-          {% if property.features %}
-            {% set parkingCount = 0 %}
-            {% for feature in property.features %}
-              {% set featureLower = feature | lower %}
-              {% if "garage" in featureLower or "parking" in featureLower or "carport" in featureLower %}
-                {% set parkingCount = parkingCount + 1 %}
+        <!-- 2x2 THUMBNAIL GRID -->
+        {% if property.imageUrls and property.imageUrls.length > 1 %}
+          <div class="property-card-thumbs">
+            {% for url in property.imageUrls %}
+              {% if loop.index0 >= 1 and loop.index0 <= 4 %}
+                <div class="property-card-thumb">
+                  <img src="{{ url }}" alt="Thumbnail {{ loop.index }}" loading="lazy" />
+                  {% if loop.index0 == 4 and property.imageUrls.length > 5 %}
+                    <div class="property-card-thumb-more">+{{ property.imageUrls.length - 5 }}</div>
+                  {% endif %}
+                </div>
               {% endif %}
             {% endfor %}
-            {% if parkingCount > 0 %}{{ parkingCount }} parking{% else %}N/A{% endif %}
-          {% else %}
-            N/A
-          {% endif %}
-        </span>
+            {% set thumbCount = property.imageUrls.length - 1 %}
+            {% if thumbCount < 4 %}
+              {% for i in range(thumbCount, 4) %}
+                <div class="property-card-thumb property-card-thumb-empty"></div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
 
-      <!-- Pet Friendly -->
-      <div class="flex items-center gap-1">
-        <span class="text-lg" aria-hidden="true">🐾</span>
-        <span>
-          {% if property.features %}
-            {% set hasPets = false %}
-            {% for feature in property.features %}
-              {% set featureLower = feature | lower %}
-              {% if "pet" in featureLower %}
-                {% set hasPets = true %}
-              {% endif %}
-            {% endfor %}
-            {% if hasPets %}Pets OK{% else %}N/A{% endif %}
+      <!-- PROPERTY INFO (Right Side) -->
+      <div class="property-card-info">
+        <!-- Price with Label -->
+        <div class="property-card-price">
+          {% if property.price %}
+            <span class="property-card-price-label">Asking Price</span>
+            <span class="property-card-price-value">R{{ property.price | formatNumber }}</span>
           {% else %}
-            N/A
+            <span class="property-card-price-label">Price</span>
+            <span class="property-card-price-value">By Negotiation</span>
           {% endif %}
-        </span>
+        </div>
+
+        <!-- Address -->
+        <h3 class="property-card-address">
+          {{ property.address }}{% if property.location %}, {{ property.location }}{% endif %}
+        </h3>
+
+        <!-- Feature Icons Row -->
+        <div class="property-card-features">
+          {% if property.bedrooms is not none and property.bedrooms >= 0 %}
+            <div class="property-card-feature">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/>
+                <path d="M3 15h18"/>
+                <path d="M3 11h18"/>
+              </svg>
+              <span>{{ property.bedrooms }}</span>
+            </div>
+          {% endif %}
+
+          {% if property.bathrooms is not none and property.bathrooms >= 0 %}
+            <div class="property-card-feature">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 12h16a1 1 0 011 1v3a4 4 0 01-4 4H7a4 4 0 01-4-4v-3a1 1 0 011-1z"/>
+                <path d="M6 12V5a2 2 0 012-2h1"/>
+              </svg>
+              <span>{{ property.bathrooms }}</span>
+            </div>
+          {% endif %}
+
+          {% if property.parkingSpaces is not none and property.parkingSpaces >= 0 %}
+            <div class="property-card-feature">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="6" width="18" height="12" rx="2"/>
+                <circle cx="7" cy="15" r="1.5"/>
+                <circle cx="17" cy="15" r="1.5"/>
+                <path d="M5 10h4l1-2h4l1 2h4"/>
+              </svg>
+              <span>{{ property.parkingSpaces }}</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Agent Info with Agency Badge -->
+        <div class="property-card-agent">
+          {% if property.agentName %}
+            <div class="property-card-agent-info">
+              <div class="property-card-agent-avatar">
+                {{ property.agentName[0] | upper if property.agentName else '?' }}
+              </div>
+              <div class="property-card-agent-details">
+                <p class="property-card-agent-name">{{ property.agentName }}</p>
+              </div>
+            </div>
+          {% endif %}
+          <!-- Agency Badge -->
+          <div class="property-card-agency-badge">
+            PPI Properties
+          </div>
+        </div>
       </div>
+
     </div>
-
-    <!-- View Details Button -->
-    <a
-      href="/properties/{{ property.id }}/"
-      class="inline-flex items-center justify-center w-full md:w-auto text-center bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[48px]"
-    >
-      View Details
-    </a>
-  </div>
+  </a>
 </article>
+
+<style>
+/* Property Card - OneRoof Style */
+.property-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s ease;
+}
+
+.property-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.property-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.property-card-link:hover {
+  text-decoration: none;
+}
+
+.property-card-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .property-card-inner {
+    flex-direction: row;
+  }
+}
+
+/* Image Section */
+.property-card-images {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.property-card-main-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #1a1a1a;
+}
+
+@media (min-width: 768px) {
+  .property-card-main-image {
+    width: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .property-card-main-image {
+    width: 320px;
+  }
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+/* Heart/Save Button */
+.property-card-save {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.property-card-save:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.property-card-save svg {
+  color: #6b7280;
+}
+
+.property-card-save.saved svg {
+  fill: #ef4444;
+  stroke: #ef4444;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.carousel-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Carousel Arrows */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.property-card:hover .carousel-arrow {
+  opacity: 1;
+}
+
+.carousel-arrow:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev { left: 8px; }
+.carousel-next { right: 8px; }
+
+/* Thumbnail Grid */
+.property-card-thumbs {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  width: 160px;
+  background: #e5e7eb;
+}
+
+@media (min-width: 1024px) {
+  .property-card-thumbs {
+    display: grid;
+  }
+}
+
+.property-card-thumb {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.property-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.property-card-thumb:hover img {
+  transform: scale(1.05);
+}
+
+.property-card-thumb-more {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.property-card-thumb-empty {
+  background: #f3f4f6;
+}
+
+.property-card-no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Property Info */
+.property-card-info {
+  flex: 1;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Price */
+.property-card-price {
+  margin-bottom: 8px;
+}
+
+.property-card-price-label {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.property-card-price-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Address */
+.property-card-address {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Features */
+.property-card-features {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.property-card-feature {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.property-card-feature svg {
+  color: #9ca3af;
+}
+
+/* Agent Info */
+.property-card-agent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.property-card-agent-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.property-card-agent-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.property-card-agent-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
+/* Agency Badge */
+.property-card-agency-badge {
+  padding: 6px 12px;
+  background: #f97316;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+</style>

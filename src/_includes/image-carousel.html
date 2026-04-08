@@ -1,252 +1,685 @@
 <!--
-  Image Carousel Component - Professional Real Estate Style
-  Large main image carousel with vertical thumbnail strip on the right
-  Navigation arrows overlaid on the main image
+  OneRoof-style Property Details Gallery
+  Layout: [Large main image] [2x2 thumbnail grid on right]
+  Fullscreen lightbox on click
 -->
 
 {%- if property.imageUrls and property.imageUrls.length > 0 %}
-  <div class="carousel-container mb-12 relative w-full">
-    <!-- Main carousel with thumbnails -->
-    <div class="flex gap-3 w-full" style="height: 600px;">
 
-      <!-- Main Image Section -->
-      <div class="flex-1 relative bg-gray-100 rounded-lg overflow-hidden group">
-        <img
-          id="carousel-main-image"
-          src="{{ property.imageUrls[0] }}"
-          alt="Property at {{ property.address }} - Image 1 of {{ property.imageUrls.length }}"
-          class="carousel-main-image w-full h-full object-cover"
-          loading="eager"
-        >
+<!-- Gallery Container - OneRoof Layout -->
+<div class="gallery-oneroof">
+  <!-- Main Image (Left - Large) -->
+  <div class="gallery-main" id="gallery-main-container">
+    <img id="main-image" src="{{ property.imageUrls[0] }}" alt="Property main image" onclick="openLightbox(currentIndex)">
 
-        <!-- Image Counter (Top Right) -->
-        {%- if property.imageUrls.length > 1 %}
-          <div
-            id="carousel-counter"
-            class="absolute top-4 right-4 bg-black bg-opacity-60 text-white px-4 py-2 rounded text-sm font-semibold z-10"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <span id="carousel-current-num">1</span> / {{ property.imageUrls.length }}
-          </div>
+    <!-- Pictures Tab -->
+    <button type="button" class="gallery-tab active" onclick="openLightbox(0)">
+      <span class="gallery-tab-count">{{ property.imageUrls.length }}</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
+      Pictures
+    </button>
 
-          <!-- Navigation Arrows - OVERLAID ON IMAGE -->
-          <div class="absolute inset-0 flex items-center justify-between pointer-events-none">
-            <!-- Previous Button -->
-            <button
-              id="carousel-prev-btn"
-              class="carousel-nav-btn carousel-prev pointer-events-auto flex items-center justify-center w-14 h-14 bg-white hover:bg-gray-200 text-gray-800 rounded-full transition-all duration-200 ml-4 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
-              aria-label="Previous image"
-              disabled
-            >
-              <span class="text-2xl font-bold">‹</span>
-            </button>
-
-            <!-- Next Button -->
-            <button
-              id="carousel-next-btn"
-              class="carousel-nav-btn carousel-next pointer-events-auto flex items-center justify-center w-14 h-14 bg-white hover:bg-gray-200 text-gray-800 rounded-full transition-all duration-200 mr-4 shadow-lg hover:shadow-xl"
-              aria-label="Next image"
-            >
-              <span class="text-2xl font-bold">›</span>
-            </button>
-          </div>
-        {%- endif %}
-      </div>
-
-      <!-- Thumbnails Strip - Right Side -->
-      {%- if property.imageUrls.length > 1 %}
-        <div
-          id="carousel-thumbnails-wrapper"
-          class="flex flex-col gap-3 pb-2"
-          style="width: 120px; overflow-y: auto; flex-shrink: 0;"
-        >
-          <nav
-            id="carousel-thumbnails"
-            class="carousel-thumbnails flex flex-col gap-3"
-            aria-label="Image thumbnails"
-          >
-            {%- for url in property.imageUrls %}
-              <button
-                class="carousel-thumbnail flex-shrink-0 rounded border-3 border-gray-300 hover:border-blue-600 transition-all duration-200 overflow-hidden cursor-pointer hover:scale-105"
-                data-index="{{ loop.index0 }}"
-                aria-label="View image {{ loop.index }} of {{ property.imageUrls.length }}"
-                style="width: 100%; aspect-ratio: 1; min-height: 100px;"
-                {%- if loop.index0 == 0 %} aria-current="true" {%- endif %}
-              >
-                <img
-                  src="{{ url }}"
-                  alt="Thumbnail {{ loop.index }}"
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                >
-              </button>
-            {%- endfor %}
-          </nav>
-        </div>
-      {%- endif %}
+    <!-- Share & Save Icons (OneRoof style) -->
+    <div class="gallery-actions">
+      <button type="button" class="gallery-action-btn" onclick="shareProperty()" aria-label="Share property">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+      </button>
+      <button type="button" class="gallery-action-btn" onclick="saveProperty()" aria-label="Save property">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
     </div>
+
+    <!-- Navigation Arrows -->
+    <button type="button" class="gallery-arrow gallery-arrow-prev" id="gallery-prev-btn" aria-label="Previous image">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button type="button" class="gallery-arrow gallery-arrow-next" id="gallery-next-btn" aria-label="Next image">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
   </div>
 
-  <!-- Carousel JavaScript Logic -->
-  <script>
-    (function() {
-      // Carousel State
-      const imageUrls = {{ property.imageUrls | dump }};
-      const carouselContainer = document.querySelector('.carousel-container');
+  <!-- Thumbnail Grid (Right - 2x2) -->
+  <div class="gallery-thumbs" id="gallery-thumbs-container">
+    {%- for url in property.imageUrls %}
+      {%- if loop.index0 >= 1 and loop.index0 <= 4 %}
+        <button
+          type="button"
+          class="gallery-thumb{% if loop.index0 == 1 %} active{% endif %}"
+          data-index="{{ loop.index0 }}"
+        >
+          <img src="{{ url }}" alt="Thumbnail {{ loop.index }}">
+          {%- if loop.index0 == 4 and property.imageUrls.length > 5 %}
+            <div class="gallery-thumb-more">
+              +{{ property.imageUrls.length - 5 }}
+            </div>
+          {%- endif %}
+        </button>
+      {%- endif %}
+    {%- endfor %}
+    <!-- Fill empty slots if fewer than 4 thumbnails -->
+    {%- set thumbCount = property.imageUrls.length - 1 %}
+    {%- if thumbCount < 4 %}
+      {%- for i in range(thumbCount, 4) %}
+        <div class="gallery-thumb-empty"></div>
+      {%- endfor %}
+    {%- endif %}
+  </div>
+</div>
 
-      // Check if user prefers reduced motion
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<!-- FULLSCREEN LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close gallery">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
 
-      // Guard: Ensure we have images
-      if (!imageUrls || imageUrls.length === 0) {
-        console.warn('Carousel: No images provided');
-        return;
-      }
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <img id="lightbox-image" src="" alt="Property image fullscreen">
+  </div>
 
-      let currentImageIndex = 0;
+  <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); changeLightboxImage(-1)" aria-label="Previous">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
 
-      // DOM Elements
-      const mainImage = document.getElementById('carousel-main-image');
-      const prevBtn = document.getElementById('carousel-prev-btn');
-      const nextBtn = document.getElementById('carousel-next-btn');
-      const counterNum = document.getElementById('carousel-current-num');
-      const thumbnails = document.querySelectorAll('.carousel-thumbnail');
+  <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); changeLightboxImage(1)" aria-label="Next">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
 
-      /**
-       * Update carousel display for given image index
-       */
-      function showImage(index) {
-        // Boundary check
-        if (index < 0 || index >= imageUrls.length) {
-          return;
-        }
+  <div class="lightbox-counter">
+    <span id="lightbox-counter">1</span> / {{ property.imageUrls.length }}
+  </div>
 
-        currentImageIndex = index;
-        const imageUrl = imageUrls[index];
-        const propertyAddress = '{{ property.address }}';
+  <!-- Lightbox Thumbnail Strip -->
+  <div class="lightbox-thumbnails">
+    {%- for url in property.imageUrls %}
+      <button
+        class="lightbox-thumb{% if loop.index0 == 0 %} active{% endif %}"
+        data-index="{{ loop.index0 }}"
+        onclick="event.stopPropagation(); goToLightboxImage({{ loop.index0 }})"
+      >
+        <img src="{{ url }}" alt="Thumbnail {{ loop.index }}">
+      </button>
+    {%- endfor %}
+  </div>
+</div>
 
-        // Update main image with fade effect if not prefers-reduced-motion
-        if (!prefersReducedMotion) {
-          mainImage.classList.add('opacity-0');
-          setTimeout(() => {
-            mainImage.src = imageUrl;
-            mainImage.alt = `Property at ${propertyAddress} - Image ${index + 1} of ${imageUrls.length}`;
-            mainImage.classList.remove('opacity-0');
-          }, 150);
-        } else {
-          mainImage.src = imageUrl;
-          mainImage.alt = `Property at ${propertyAddress} - Image ${index + 1} of ${imageUrls.length}`;
-        }
+<style>
+/* ========== ONEROOF GALLERY LAYOUT ========== */
+.gallery-oneroof {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
 
-        // Update counter
-        if (counterNum) {
-          counterNum.textContent = index + 1;
-        }
+@media (min-width: 768px) {
+  .gallery-oneroof {
+    grid-template-columns: 2fr 1fr;
+    height: 450px;
+  }
+}
 
-        // Update thumbnail highlights
-        thumbnails.forEach((thumb, idx) => {
-          if (idx === index) {
-            thumb.classList.add('border-blue-600', 'bg-blue-50');
-            thumb.classList.remove('border-gray-300');
-            thumb.setAttribute('aria-current', 'true');
-          } else {
-            thumb.classList.remove('border-blue-600', 'bg-blue-50');
-            thumb.classList.add('border-gray-300');
-            thumb.removeAttribute('aria-current');
+@media (min-width: 1024px) {
+  .gallery-oneroof {
+    height: 500px;
+  }
+}
+
+/* Main Image */
+.gallery-main {
+  position: relative;
+  background: #1a1a1a;
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+@media (min-width: 768px) {
+  .gallery-main {
+    min-height: auto;
+  }
+}
+
+.gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-main:hover img {
+  transform: scale(1.02);
+}
+
+/* Pictures Tab */
+.gallery-tab {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: white;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  cursor: pointer;
+  border-top: 3px solid #f97316;
+  z-index: 10;
+}
+
+.gallery-tab:hover {
+  background: #f9fafb;
+}
+
+.gallery-tab-count {
+  background: #f97316;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+/* Share & Save Actions */
+.gallery-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.gallery-action-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.gallery-action-btn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.gallery-action-btn svg {
+  color: #374151;
+}
+
+/* Navigation Arrows */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.gallery-main:hover .gallery-arrow {
+  opacity: 1;
+}
+
+.gallery-arrow:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-arrow-prev { left: 12px; }
+.gallery-arrow-next { right: 12px; }
+
+.gallery-arrow svg {
+  color: #1a1a1a;
+}
+
+/* Thumbnail Grid */
+.gallery-thumbs {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+}
+
+@media (min-width: 768px) {
+  .gallery-thumbs {
+    display: grid;
+  }
+}
+
+.gallery-thumb {
+  position: relative;
+  background: #f3f4f6;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-thumb:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-thumb.active {
+  outline: 3px solid #2563eb;
+  outline-offset: -3px;
+}
+
+.gallery-thumb-more {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gallery-thumb-more:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.gallery-thumb-empty {
+  background: #f3f4f6;
+}
+
+/* ========== LIGHTBOX STYLES ========== */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.visible {
+  opacity: 1;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+.lightbox-counter {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Lightbox Thumbnails */
+.lightbox-thumbnails {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  max-width: 90vw;
+  overflow-x: auto;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.lightbox-thumb {
+  flex-shrink: 0;
+  width: 60px;
+  height: 45px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.lightbox-thumb:hover {
+  opacity: 0.8;
+}
+
+.lightbox-thumb.active {
+  border-color: white;
+  opacity: 1;
+}
+
+.lightbox-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
+
+<script>
+(function() {
+  const imageUrls = {{ property.imageUrls | dump }};
+  let currentIndex = 0;
+  let lightboxOpen = false;
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', function() {
+    initGallery();
+  });
+
+  function initGallery() {
+    // Gallery navigation arrows
+    const prevBtn = document.getElementById('gallery-prev-btn');
+    const nextBtn = document.getElementById('gallery-next-btn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        changeImage(-1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        changeImage(1);
+      });
+    }
+
+    // Thumbnail clicks
+    const thumbsContainer = document.getElementById('gallery-thumbs-container');
+    if (thumbsContainer) {
+      thumbsContainer.querySelectorAll('.gallery-thumb').forEach(function(thumb) {
+        thumb.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const index = parseInt(this.dataset.index);
+          if (!isNaN(index)) {
+            goToImage(index);
           }
         });
-
-        // Update button states
-        if (prevBtn && nextBtn) {
-          prevBtn.disabled = index === 0;
-          nextBtn.disabled = index === imageUrls.length - 1;
-        }
-
-        // Auto-scroll thumbnail into view
-        if (thumbnails[index]) {
-          thumbnails[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      }
-
-      /**
-       * Navigate to next image
-       */
-      function nextImage() {
-        if (currentImageIndex < imageUrls.length - 1) {
-          showImage(currentImageIndex + 1);
-        }
-      }
-
-      /**
-       * Navigate to previous image
-       */
-      function previousImage() {
-        if (currentImageIndex > 0) {
-          showImage(currentImageIndex - 1);
-        }
-      }
-
-      /**
-       * Navigate to image by index (from thumbnail click)
-       */
-      function goToImage(index) {
-        showImage(index);
-      }
-
-      // Event Listeners - Arrow Buttons
-      if (prevBtn) {
-        prevBtn.addEventListener('click', previousImage);
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', nextImage);
-      }
-
-      // Event Listeners - Thumbnails
-      thumbnails.forEach((thumbnail, index) => {
-        thumbnail.addEventListener('click', () => {
-          goToImage(index);
-          thumbnail.focus();
-        });
       });
-
-      // Keyboard Navigation - Arrow Keys
-      document.addEventListener('keydown', (event) => {
-        if (!carouselContainer || !carouselContainer.contains(document.activeElement)) {
-          return;
-        }
-
-        if (event.key === 'ArrowLeft') {
-          event.preventDefault();
-          previousImage();
-        } else if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          nextImage();
-        }
-      });
-
-      // Initialize carousel
-      showImage(0);
-    })();
-  </script>
-
-  <!-- Fade transition styling -->
-  <style>
-    .carousel-main-image {
-      transition: opacity 0.3s ease-in-out;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .carousel-main-image {
-        transition: opacity 0.01ms ease-in-out !important;
-      }
+    // Lightbox navigation
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
+
+    if (lightboxPrev) {
+      lightboxPrev.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        changeLightboxImage(-1);
+      });
     }
-  </style>
+
+    if (lightboxNext) {
+      lightboxNext.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        changeLightboxImage(1);
+      });
+    }
+
+    // Lightbox thumbnails
+    document.querySelectorAll('.lightbox-thumb').forEach(function(thumb) {
+      thumb.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const index = parseInt(this.dataset.index);
+        if (!isNaN(index)) {
+          goToLightboxImage(index);
+        }
+      });
+    });
+
+    // Initialize first image
+    goToImage(0);
+  }
+
+  // Make functions globally available
+  window.changeImage = function(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = imageUrls.length - 1;
+    if (newIndex >= imageUrls.length) newIndex = 0;
+    goToImage(newIndex);
+  };
+
+  window.goToImage = goToImage;
+  function goToImage(index) {
+    currentIndex = index;
+
+    // Update main image
+    const mainImg = document.getElementById('main-image');
+    if (mainImg) {
+      mainImg.src = imageUrls[index];
+    }
+
+    // Update thumbnail highlights (indices 1-4 in the grid)
+    const thumbnails = document.querySelectorAll('.gallery-thumb');
+    thumbnails.forEach(function(thumb) {
+      const thumbIndex = parseInt(thumb.dataset.index);
+      if (thumbIndex === index) {
+        thumb.classList.add('active');
+      } else {
+        thumb.classList.remove('active');
+      }
+    });
+  }
+
+  // ========== LIGHTBOX FUNCTIONS ==========
+  window.openLightbox = function(index) {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    lightbox.classList.add('active');
+    lightbox.offsetHeight; // Trigger reflow
+    lightbox.classList.add('visible');
+    lightboxOpen = true;
+    document.body.style.overflow = 'hidden';
+    goToLightboxImage(index);
+  };
+
+  window.closeLightbox = function(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    lightbox.classList.remove('visible');
+    setTimeout(function() {
+      lightbox.classList.remove('active');
+    }, 300);
+    lightboxOpen = false;
+    document.body.style.overflow = '';
+  };
+
+  window.changeLightboxImage = function(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = imageUrls.length - 1;
+    if (newIndex >= imageUrls.length) newIndex = 0;
+    goToLightboxImage(newIndex);
+  };
+
+  window.goToLightboxImage = goToLightboxImage;
+  function goToLightboxImage(index) {
+    currentIndex = index;
+
+    // Update lightbox image
+    const lightboxImg = document.getElementById('lightbox-image');
+    if (lightboxImg) {
+      lightboxImg.src = imageUrls[index];
+    }
+
+    // Update lightbox counter
+    const counter = document.getElementById('lightbox-counter');
+    if (counter) {
+      counter.textContent = index + 1;
+    }
+
+    // Update lightbox thumbnails
+    const thumbs = document.querySelectorAll('.lightbox-thumb');
+    thumbs.forEach(function(thumb, idx) {
+      if (idx === index) {
+        thumb.classList.add('active');
+        thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } else {
+        thumb.classList.remove('active');
+      }
+    });
+
+    // Also update main gallery
+    goToImage(index);
+  }
+
+  // Share & Save placeholder functions
+  window.shareProperty = function() {
+    if (navigator.share) {
+      navigator.share({
+        title: document.title,
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  };
+
+  window.saveProperty = function() {
+    alert('Property saved to your favorites!');
+  };
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (lightboxOpen) {
+      if (e.key === 'Escape') window.closeLightbox();
+      if (e.key === 'ArrowLeft') window.changeLightboxImage(-1);
+      if (e.key === 'ArrowRight') window.changeLightboxImage(1);
+    } else {
+      if (e.key === 'ArrowLeft') window.changeImage(-1);
+      if (e.key === 'ArrowRight') window.changeImage(1);
+    }
+  });
+})();
+</script>
 
 {%- else %}
-  <!-- No images available -->
-  <div class="mb-12 p-8 bg-gray-100 rounded-lg text-center text-gray-600">
-    <p class="text-lg font-semibold mb-2">No images available</p>
-    <p class="text-sm">Images for this property will be displayed here.</p>
-  </div>
+<div style="background: #f3f4f6; border-radius: 8px; padding: 60px; text-align: center; margin-bottom: 1rem;">
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" style="margin: 0 auto 16px;">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+    <polyline points="21 15 16 10 5 21"></polyline>
+  </svg>
+  <p style="color: #6b7280; font-size: 16px;">No images available</p>
+</div>
 {%- endif %}

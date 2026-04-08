@@ -1,230 +1,416 @@
-<form role="search" aria-label="Filter properties" class="my-8 p-6 bg-white rounded-lg shadow-sm">
-  <fieldset class="border-0 p-0 m-0">
-    <legend class="sr-only">Property Search Filters</legend>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-
-      <!-- Property Type Filter with Counts - Story UX Redesign -->
-      <div>
-        <div class="flex items-center gap-2 mb-2">
-          <label for="filter-type" class="block text-sm font-medium text-gray-700">
-            Property Type
-          </label>
-          <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
-            {{ properties.length }}
-          </span>
-        </div>
-        <select
-          id="filter-type"
-          name="propertyType"
-          data-filter="type"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[48px]">
-          <option value="">All Types ({{ properties.length }})</option>
-          <option value="House">House ({{ properties | countByAttribute('propertyType', 'House') }})</option>
-          <option value="FlatApartment">Flat/Apartment ({{ properties | countByAttribute('propertyType', 'FlatApartment') }})</option>
-          <option value="Sectional Title Unit">Sectional Title Unit (0)</option>
-          <option value="Land">Land (0)</option>
-        </select>
-      </div>
-
-      <!-- Price Range Slider - Professional UX like OneRoof -->
-      <div class="lg:col-span-2">
-        <label class="block text-sm font-medium text-gray-700 mb-2">
-          Price Range
+<!-- OneRoof-style Filter Bar - Horizontal dropdown buttons -->
+<div class="filter-bar-oneroof">
+  <div class="filter-bar-row">
+    <!-- Location Dropdown -->
+    <div class="filter-dropdown">
+      <button type="button" class="filter-btn" data-dropdown="location">
+        <span class="filter-btn-label">All South Africa</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="filter-dropdown-menu" id="dropdown-location">
+        <div class="filter-dropdown-header">Location</div>
+        <label class="filter-option">
+          <input type="radio" name="location" value="" checked data-filter="location"> All Locations
         </label>
-        <div class="space-y-4">
-          <!-- Range Inputs -->
-          <div class="space-y-2">
-            <div class="flex gap-3">
-              <div class="flex-1">
-                <label for="filter-price-min" class="text-xs text-gray-600 mb-1 block">Min Price</label>
-                <input
-                  type="range"
-                  id="filter-price-min"
-                  name="priceMin"
-                  data-filter="price-min"
-                  min="0"
-                  max="10000000"
-                  step="50000"
-                  value="0"
-                  class="price-slider w-full h-2 bg-gradient-to-r from-blue-200 to-blue-400 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                  aria-label="Minimum price">
-              </div>
-              <div class="flex-1">
-                <label for="filter-price-max" class="text-xs text-gray-600 mb-1 block">Max Price</label>
-                <input
-                  type="range"
-                  id="filter-price-max"
-                  name="priceMax"
-                  data-filter="price-max"
-                  min="0"
-                  max="10000000"
-                  step="50000"
-                  value="10000000"
-                  class="price-slider w-full h-2 bg-gradient-to-r from-blue-200 to-blue-400 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                  aria-label="Maximum price">
-              </div>
-            </div>
-          </div>
-
-          <!-- Price Display -->
-          <div class="bg-blue-50 rounded-lg p-3 border border-blue-200 flex justify-between items-center">
-            <div>
-              <p class="text-xs text-gray-600">From</p>
-              <p class="text-lg font-bold text-blue-600" id="price-min-display">R0</p>
-            </div>
-            <div class="text-gray-400">to</div>
-            <div class="text-right">
-              <p class="text-xs text-gray-600">To</p>
-              <p class="text-lg font-bold text-blue-600" id="price-max-display">R10M+</p>
-            </div>
-          </div>
-        </div>
+        {%- for location in ['Florida Park', 'Glenhazel', 'Moregloed', 'Ninapark'] %}
+        <label class="filter-option">
+          <input type="radio" name="location" value="{{ location }}" data-filter="location"> {{ location }}
+        </label>
+        {%- endfor %}
       </div>
-
-      <!-- Bedrooms Filter with Counts -->
-      <div>
-        <div class="flex items-center gap-2 mb-2">
-          <label for="filter-bedrooms" class="block text-sm font-medium text-gray-700">
-            Bedrooms
-          </label>
-          <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
-            {{ properties.length }}
-          </span>
-        </div>
-        <select
-          id="filter-bedrooms"
-          name="bedrooms"
-          data-filter="bedrooms"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[48px]">
-          <option value="">Any</option>
-          <option value="1">1+ (0)</option>
-          <option value="2">2+ (0)</option>
-          <option value="3">3+ (0)</option>
-          <option value="4">4+ (0)</option>
-          <option value="5">5+ (0)</option>
-        </select>
-      </div>
-
-      <!-- Location Filter with Counts -->
-      <div>
-        <div class="flex items-center gap-2 mb-2">
-          <label for="filter-location" class="block text-sm font-medium text-gray-700">
-            Location
-          </label>
-          <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
-            {{ properties.length }}
-          </span>
-        </div>
-        <select
-          id="filter-location"
-          name="location"
-          data-filter="location"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[48px]">
-          <option value="">All Locations ({{ properties.length }})</option>
-          {%- for location in ['Florida Park', 'Glenhazel', 'Moregloed', 'Ninapark'] %}
-            <option value="{{ location }}">{{ location }} ({{ properties | countByAttribute('location', location) }})</option>
-          {%- endfor %}
-        </select>
-      </div>
-
-      <!-- Clear All Filters Button -->
-      <div>
-        <button
-          type="button"
-          data-filter-action="clear"
-          class="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[48px] transition-colors">
-          Clear Filters
-        </button>
-      </div>
-
     </div>
-  </fieldset>
-</form>
 
-<!-- Price Range Slider Styling -->
+    <!-- Price Dropdown -->
+    <div class="filter-dropdown">
+      <button type="button" class="filter-btn" data-dropdown="price">
+        <span class="filter-btn-label">Price</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="filter-dropdown-menu filter-dropdown-wide" id="dropdown-price">
+        <div class="filter-dropdown-header">Price Range</div>
+        <div class="filter-price-inputs">
+          <div class="filter-price-group">
+            <label>Min Price</label>
+            <select id="filter-price-min" data-filter="price-min">
+              <option value="0">Any</option>
+              <option value="500000">R500,000</option>
+              <option value="1000000">R1,000,000</option>
+              <option value="1500000">R1,500,000</option>
+              <option value="2000000">R2,000,000</option>
+              <option value="3000000">R3,000,000</option>
+              <option value="5000000">R5,000,000</option>
+            </select>
+          </div>
+          <div class="filter-price-divider">to</div>
+          <div class="filter-price-group">
+            <label>Max Price</label>
+            <select id="filter-price-max" data-filter="price-max">
+              <option value="10000000">Any</option>
+              <option value="1000000">R1,000,000</option>
+              <option value="1500000">R1,500,000</option>
+              <option value="2000000">R2,000,000</option>
+              <option value="3000000">R3,000,000</option>
+              <option value="5000000">R5,000,000</option>
+              <option value="10000000">R10,000,000+</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beds Dropdown -->
+    <div class="filter-dropdown">
+      <button type="button" class="filter-btn" data-dropdown="beds">
+        <span class="filter-btn-label">Beds</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="filter-dropdown-menu" id="dropdown-beds">
+        <div class="filter-dropdown-header">Bedrooms</div>
+        <label class="filter-option">
+          <input type="radio" name="bedrooms" value="" checked data-filter="bedrooms"> Any
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bedrooms" value="1" data-filter="bedrooms"> 1+
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bedrooms" value="2" data-filter="bedrooms"> 2+
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bedrooms" value="3" data-filter="bedrooms"> 3+
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bedrooms" value="4" data-filter="bedrooms"> 4+
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bedrooms" value="5" data-filter="bedrooms"> 5+
+        </label>
+      </div>
+    </div>
+
+    <!-- Baths Dropdown -->
+    <div class="filter-dropdown">
+      <button type="button" class="filter-btn" data-dropdown="baths">
+        <span class="filter-btn-label">Baths</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="filter-dropdown-menu" id="dropdown-baths">
+        <div class="filter-dropdown-header">Bathrooms</div>
+        <label class="filter-option">
+          <input type="radio" name="bathrooms" value="" checked data-filter="bathrooms"> Any
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bathrooms" value="1" data-filter="bathrooms"> 1+
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bathrooms" value="2" data-filter="bathrooms"> 2+
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="bathrooms" value="3" data-filter="bathrooms"> 3+
+        </label>
+      </div>
+    </div>
+
+    <!-- Property Type Dropdown -->
+    <div class="filter-dropdown">
+      <button type="button" class="filter-btn" data-dropdown="type">
+        <span class="filter-btn-label">Property types</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="filter-dropdown-menu" id="dropdown-type">
+        <div class="filter-dropdown-header">Property Type</div>
+        <label class="filter-option">
+          <input type="radio" name="propertyType" value="" checked data-filter="type"> All Types
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="propertyType" value="House" data-filter="type"> House
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="propertyType" value="FlatApartment" data-filter="type"> Flat/Apartment
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="propertyType" value="Townhouse" data-filter="type"> Townhouse
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="propertyType" value="Land" data-filter="type"> Land
+        </label>
+      </div>
+    </div>
+
+    <!-- More Filters Button -->
+    <button type="button" class="filter-btn filter-btn-more">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="4" y1="21" x2="4" y2="14"></line>
+        <line x1="4" y1="10" x2="4" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="3"></line>
+        <line x1="20" y1="21" x2="20" y2="16"></line>
+        <line x1="20" y1="12" x2="20" y2="3"></line>
+        <line x1="1" y1="14" x2="7" y2="14"></line>
+        <line x1="9" y1="8" x2="15" y2="8"></line>
+        <line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+      More filters
+    </button>
+  </div>
+</div>
+
 <style>
-  /* Custom range slider styling */
-  .price-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 8px;
-    background: linear-gradient(to right, #bfdbfe, #60a5fa);
-    border-radius: 8px;
-    outline: none;
-    cursor: pointer;
+/* OneRoof Filter Bar Styles */
+.filter-bar-oneroof {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 0;
+  margin-bottom: 0;
+}
+
+.filter-bar-row {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-dropdown {
+  position: relative;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: #9ca3af;
+  background: #fafafa;
+}
+
+.filter-btn.active {
+  border-color: #f97316;
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.filter-btn-more {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+}
+
+.filter-btn-more:hover {
+  color: #374151;
+  background: transparent;
+}
+
+.filter-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+  min-width: 180px;
+  z-index: 50;
+  padding: 8px 0;
+}
+
+.filter-dropdown-menu.show {
+  display: block;
+}
+
+.filter-dropdown-wide {
+  min-width: 320px;
+  padding: 16px;
+}
+
+.filter-dropdown-header {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 4px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 14px;
+  color: #374151;
+}
+
+.filter-option:hover {
+  background: #f9fafb;
+}
+
+.filter-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #f97316;
+}
+
+.filter-price-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.filter-price-group {
+  flex: 1;
+}
+
+.filter-price-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.filter-price-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+}
+
+.filter-price-group select:focus {
+  outline: none;
+  border-color: #f97316;
+}
+
+.filter-price-divider {
+  padding-bottom: 10px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .filter-bar-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
-  /* Slider thumb (the draggable part) */
-  .price-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-    border: 2px solid white;
-    transition: all 0.2s ease;
+  .filter-bar-row::-webkit-scrollbar {
+    display: none;
   }
 
-  .price-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+  .filter-btn-more {
+    margin-left: 0;
   }
-
-  .price-slider::-webkit-slider-thumb:active {
-    transform: scale(0.95);
-  }
-
-  /* Firefox thumb */
-  .price-slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-    border: 2px solid white;
-    transition: all 0.2s ease;
-  }
-
-  .price-slider::-moz-range-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
-  }
-
-  /* Firefox track */
-  .price-slider::-moz-range-track {
-    background: transparent;
-    border: none;
-  }
+}
 </style>
 
-<!-- Price Range Slider Display Update -->
 <script>
-  const priceMinInput = document.getElementById('filter-price-min');
-  const priceMaxInput = document.getElementById('filter-price-max');
-  const priceMinDisplay = document.getElementById('price-min-display');
-  const priceMaxDisplay = document.getElementById('price-max-display');
+// Filter dropdown functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const dropdownBtns = document.querySelectorAll('[data-dropdown]');
 
-  function formatPrice(value) {
-    const num = parseInt(value);
-    if (num >= 1000000) {
-      return 'R' + (num / 1000000).toFixed(1) + 'M';
-    } else if (num >= 1000) {
-      return 'R' + (num / 1000).toFixed(0) + 'K';
-    }
-    return 'R' + num;
+  dropdownBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const dropdownId = this.getAttribute('data-dropdown');
+      const menu = document.getElementById('dropdown-' + dropdownId);
+
+      // Close all other dropdowns
+      document.querySelectorAll('.filter-dropdown-menu').forEach(m => {
+        if (m !== menu) m.classList.remove('show');
+      });
+
+      // Toggle this dropdown
+      menu.classList.toggle('show');
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.filter-dropdown-menu').forEach(m => {
+      m.classList.remove('show');
+    });
+  });
+
+  // Prevent closing when clicking inside dropdown
+  document.querySelectorAll('.filter-dropdown-menu').forEach(menu => {
+    menu.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+
+  // Handle filter changes
+  document.querySelectorAll('[data-filter]').forEach(input => {
+    input.addEventListener('change', function() {
+      applyFilters();
+
+      // Update button label if selection changed
+      const dropdown = this.closest('.filter-dropdown');
+      if (dropdown) {
+        const btn = dropdown.querySelector('.filter-btn-label');
+        if (this.type === 'radio' && this.checked && this.value) {
+          btn.textContent = this.closest('label').textContent.trim();
+          dropdown.querySelector('.filter-btn').classList.add('active');
+        } else if (this.type === 'radio' && this.checked && !this.value) {
+          // Reset to default
+          const defaultLabels = {
+            'location': 'All South Africa',
+            'bedrooms': 'Beds',
+            'bathrooms': 'Baths',
+            'type': 'Property types'
+          };
+          const filterType = this.getAttribute('data-filter');
+          if (defaultLabels[filterType]) {
+            btn.textContent = defaultLabels[filterType];
+          }
+          dropdown.querySelector('.filter-btn').classList.remove('active');
+        }
+      }
+    });
+  });
+});
+
+function applyFilters() {
+  // This integrates with the existing filtering.js
+  if (typeof window.filterProperties === 'function') {
+    window.filterProperties();
   }
-
-  function updatePriceDisplay() {
-    priceMinDisplay.textContent = formatPrice(priceMinInput.value);
-    priceMaxDisplay.textContent = formatPrice(priceMaxInput.value);
-  }
-
-  priceMinInput.addEventListener('input', updatePriceDisplay);
-  priceMaxInput.addEventListener('input', updatePriceDisplay);
-  updatePriceDisplay();
+}
 </script>

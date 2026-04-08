@@ -6,25 +6,103 @@ pagination:
   size: 999
 ---
 
-<h1>Find Your Property</h1>
-<p class="text-lg text-gray-600 mb-8">Browse all available properties below</p>
-
-<!-- Filter bar (Story 3.1) -->
+<!-- Filter bar (Story 3.1) - OneRoof style -->
 {% include "filter-bar.html" %}
 
-<!-- Property grid -->
-<section id="properties" class="property-grid" role="region" aria-label="Property listings">
-  <h2 id="results-counter" class="text-2xl font-semibold mb-6 text-gray-800" aria-live="polite" aria-atomic="true">
-    {{ properties.length }} Properties Available
-  </h2>
+<!-- Results Section - OneRoof style -->
+<section id="properties" class="results-section" role="region" aria-label="Property listings">
+  <!-- Results Header with Count and Sort -->
+  <div class="results-header">
+    <div class="results-count">
+      <span id="results-counter">We found <strong>{{ properties.length }}</strong> properties for sale</span>
+    </div>
+    <div class="results-sort">
+      <label for="sort-select">Sort by:</label>
+      <select id="sort-select" class="sort-dropdown">
+        <option value="featured">Featured</option>
+        <option value="price-low">Price (Low to High)</option>
+        <option value="price-high">Price (High to Low)</option>
+        <option value="newest">Newest</option>
+        <option value="beds">Bedrooms</option>
+      </select>
+    </div>
+  </div>
 
-  <!-- Property cards -->
-  <div id="property-list" class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <!-- Property cards - Single column layout -->
+  <div id="property-list" class="property-list">
     {% for property in properties %}
       {% include "property-card.html" %}
     {% endfor %}
   </div>
 </section>
+
+<style>
+/* Results Section - OneRoof Style */
+.results-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 16px;
+}
+
+.results-count {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.results-count strong {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.results-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.results-sort label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.sort-dropdown {
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: #f97316;
+}
+
+.property-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+</style>
 
 <!-- Serialize properties data for client-side filtering -->
 <script>
@@ -33,3 +111,138 @@ pagination:
 
 <!-- Load filtering JavaScript -->
 <script src="{{ '/js/filtering.js' | url }}" defer></script>
+
+<!-- Card Carousel & Save Functionality -->
+<script>
+// Track current slide index for each carousel
+window.carouselStates = {};
+
+// Saved properties (stored in localStorage)
+window.savedProperties = JSON.parse(localStorage.getItem('savedProperties') || '[]');
+
+// Initialize all carousels on DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize carousels
+  document.querySelectorAll('.carousel-container').forEach(function(container) {
+    const cardId = container.dataset.cardId;
+    const slides = container.querySelectorAll('.carousel-slide');
+    window.carouselStates[cardId] = {
+      currentIndex: 0,
+      totalSlides: slides.length
+    };
+  });
+
+  // Initialize saved state for all save buttons
+  document.querySelectorAll('.property-card-save').forEach(function(btn) {
+    const card = btn.closest('.property-card');
+    if (card) {
+      const propertyId = card.dataset.propertyId;
+      if (window.savedProperties.includes(propertyId)) {
+        btn.classList.add('saved');
+      }
+    }
+  });
+
+  // Sort functionality
+  const sortSelect = document.getElementById('sort-select');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function() {
+      sortProperties(this.value);
+    });
+  }
+});
+
+// Global functions for carousel control
+window.goToSlide = function(cardId, index) {
+  const container = document.querySelector('.carousel-container[data-card-id="' + cardId + '"]');
+  if (!container) return false;
+
+  const slides = container.querySelectorAll('.carousel-slide');
+  const dots = container.querySelectorAll('.carousel-dot');
+  const state = window.carouselStates[cardId];
+
+  if (!state || index < 0 || index >= state.totalSlides) return false;
+
+  state.currentIndex = index;
+
+  // Update slides
+  slides.forEach(function(slide, i) {
+    if (i === index) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+
+  // Update dots
+  dots.forEach(function(dot, i) {
+    if (i === index) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+
+  return false;
+};
+
+window.changeSlide = function(cardId, direction) {
+  const state = window.carouselStates[cardId];
+  if (!state) return false;
+
+  let newIndex = state.currentIndex + direction;
+  if (newIndex < 0) newIndex = state.totalSlides - 1;
+  if (newIndex >= state.totalSlides) newIndex = 0;
+
+  window.goToSlide(cardId, newIndex);
+  return false;
+};
+
+// Toggle save/favorite
+window.toggleSave = function(propertyId) {
+  const index = window.savedProperties.indexOf(propertyId);
+  const btn = document.querySelector('.property-card[data-property-id="' + propertyId + '"] .property-card-save');
+
+  if (index === -1) {
+    window.savedProperties.push(propertyId);
+    if (btn) btn.classList.add('saved');
+  } else {
+    window.savedProperties.splice(index, 1);
+    if (btn) btn.classList.remove('saved');
+  }
+
+  localStorage.setItem('savedProperties', JSON.stringify(window.savedProperties));
+  return false;
+};
+
+// Sort properties
+function sortProperties(sortBy) {
+  const propertyList = document.getElementById('property-list');
+  const cards = Array.from(propertyList.querySelectorAll('.property-card'));
+
+  cards.sort(function(a, b) {
+    const propA = allProperties.find(p => p.id === a.dataset.propertyId);
+    const propB = allProperties.find(p => p.id === b.dataset.propertyId);
+
+    if (!propA || !propB) return 0;
+
+    switch(sortBy) {
+      case 'price-low':
+        return (propA.price || 0) - (propB.price || 0);
+      case 'price-high':
+        return (propB.price || 0) - (propA.price || 0);
+      case 'beds':
+        return (propB.bedrooms || 0) - (propA.bedrooms || 0);
+      case 'newest':
+      case 'featured':
+      default:
+        return 0;
+    }
+  });
+
+  // Re-append sorted cards
+  cards.forEach(function(card) {
+    propertyList.appendChild(card);
+  });
+}
+</script>
