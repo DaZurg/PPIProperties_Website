@@ -57,9 +57,25 @@
   }
 
   /**
+   * Get highlight filter values from checkboxes
+   *
+   * @returns {Array} Array of selected highlight filter values
+   */
+  function getHighlightFilters() {
+    const highlights = [];
+    const checkboxes = document.querySelectorAll('[data-filter="highlight"]:checked');
+    checkboxes.forEach(cb => {
+      if (cb.value) {
+        highlights.push(cb.value);
+      }
+    });
+    return highlights;
+  }
+
+  /**
    * Get current filter values from form controls
    *
-   * @returns {Object} Filter object with type, priceMin, priceMax, bedrooms, bathrooms, location
+   * @returns {Object} Filter object with type, priceMin, priceMax, bedrooms, bathrooms, location, highlights
    */
   function getFilterValues() {
     // Read values - handles both radio buttons and select elements
@@ -69,6 +85,7 @@
     const bedroomsStr = getFilterValue('bedrooms');
     const bathroomsStr = getFilterValue('bathrooms');
     const location = getFilterValue('location');
+    const highlights = getHighlightFilters();
 
     // Convert numeric values, handling empty strings and invalid numbers
     const priceMin = priceMinStr ? parseFloat(priceMinStr) : null;
@@ -84,7 +101,8 @@
       priceMax: (priceMax !== null && !isNaN(priceMax) && priceMax > 0 && priceMax < 10000000) ? priceMax : null,
       bedrooms: (bedrooms !== null && !isNaN(bedrooms) && bedrooms > 0) ? bedrooms : null,
       bathrooms: (bathrooms !== null && !isNaN(bathrooms) && bathrooms > 0) ? bathrooms : null,
-      location: location || null
+      location: location || null,
+      highlights: highlights.length > 0 ? highlights : null
     };
   }
 
@@ -264,7 +282,7 @@
     }
 
     // Handle edge case: no filters selected - return all properties
-    if (!filters.type && !filters.priceMin && !filters.priceMax && !filters.bedrooms && !filters.bathrooms && !filters.location) {
+    if (!filters.type && !filters.priceMin && !filters.priceMax && !filters.bedrooms && !filters.bathrooms && !filters.location && !filters.highlights) {
       return properties;
     }
 
@@ -329,6 +347,24 @@
         const selectedLocations = filters.location.split(',').map(l => l.trim().toLowerCase());
         if (!selectedLocations.includes(property.location.toLowerCase())) {
           return false;
+        }
+      }
+
+      // Highlight filters (energy features, pets, etc.)
+      // Property must have ALL selected highlights (AND logic)
+      if (filters.highlights && filters.highlights.length > 0) {
+        for (const highlight of filters.highlights) {
+          // Handle petsAllowed separately as it's a top-level property
+          if (highlight === 'petsAllowed') {
+            if (!property.petsAllowed) {
+              return false;
+            }
+          } else {
+            // Check in property.highlights object
+            if (!property.highlights || !property.highlights[highlight]) {
+              return false;
+            }
+          }
         }
       }
 
@@ -488,6 +524,7 @@
 
   /**
    * Update property grid DOM with filtered results
+   * Uses show/hide approach to preserve the original OneRoof-style cards
    *
    * @param {Array} filteredProperties - Filtered properties to display
    * @param {number} totalProperties - Total number of properties (for counter)
@@ -502,34 +539,50 @@
         return;
       }
 
-      // Clear existing cards
-      propertyList.innerHTML = '';
+      // Get set of filtered property IDs for quick lookup
+      const filteredIds = new Set(filteredProperties.map(p => String(p.id)));
 
-      // Handle no results case
-      if (filteredProperties.length === 0) {
-        propertyList.innerHTML = `
-          <div class="col-span-full text-center py-8 text-gray-600">
-            <p class="text-lg mb-2">No properties match your criteria.</p>
-            <p class="text-sm">Try adjusting your filters or clearing all filters.</p>
-          </div>
-        `;
+      // Get all property cards
+      const allCards = propertyList.querySelectorAll('.property-card');
 
-        if (resultsHeader) {
-          resultsHeader.textContent = '0 Properties Found';
-        }
-        return;
+      // Remove any existing "no results" message
+      const existingNoResults = propertyList.querySelector('.no-results-message');
+      if (existingNoResults) {
+        existingNoResults.remove();
       }
 
-      // Render filtered properties
-      const cardsHTML = filteredProperties.map(property => createPropertyCardHTML(property)).join('');
-      propertyList.innerHTML = cardsHTML;
+      // Show/hide each card based on whether it's in filtered results
+      allCards.forEach(card => {
+        const propertyId = card.getAttribute('data-property-id');
+        if (filteredIds.has(propertyId)) {
+          card.style.display = '';
+          card.removeAttribute('hidden');
+        } else {
+          card.style.display = 'none';
+          card.setAttribute('hidden', '');
+        }
+      });
+
+      // Handle no results case - add a message
+      if (filteredProperties.length === 0) {
+        const noResultsDiv = document.createElement('div');
+        noResultsDiv.className = 'no-results-message col-span-full text-center py-8';
+        noResultsDiv.innerHTML = `
+          <div class="bg-gray-50 rounded-lg p-8 border border-gray-200">
+            <p class="text-lg text-gray-700 mb-2 font-medium">No properties match your criteria</p>
+            <p class="text-sm text-gray-500">Try adjusting your filters or clearing some selections.</p>
+          </div>
+        `;
+        propertyList.appendChild(noResultsDiv);
+      }
 
       // Update results counter
       if (resultsHeader) {
-        const countText = filteredProperties.length === totalProperties
-          ? `${filteredProperties.length} Properties Available`
-          : `${filteredProperties.length} Properties Found`;
-        resultsHeader.textContent = countText;
+        if (filteredProperties.length === totalProperties) {
+          resultsHeader.innerHTML = `We found <strong>${filteredProperties.length}</strong> properties for sale`;
+        } else {
+          resultsHeader.innerHTML = `Showing <strong>${filteredProperties.length}</strong> of ${totalProperties} properties`;
+        }
       }
     } catch (error) {
       console.error('Error updating property grid:', error);

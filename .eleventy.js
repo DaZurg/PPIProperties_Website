@@ -41,6 +41,12 @@ export default function(eleventyConfig) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   });
 
+  // Convert newlines to <br> tags
+  eleventyConfig.addNunjucksFilter('nl2br', (value) => {
+    if (!value) return '';
+    return value.replace(/\n/g, '<br>');
+  });
+
   // Add date filter for formatting dates
   eleventyConfig.addNunjucksFilter('dateFilter', (date, format) => {
     if (!date) {

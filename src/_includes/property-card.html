@@ -68,29 +68,6 @@
           {% endif %}
         </div>
 
-        <!-- 2x2 THUMBNAIL GRID -->
-        {% if property.imageUrls and property.imageUrls.length > 1 %}
-          <div class="property-card-thumbs">
-            {% for url in property.imageUrls %}
-              {% if loop.index0 >= 1 and loop.index0 <= 4 %}
-                <div class="property-card-thumb">
-                  <img src="/images/property-{{ property.id }}-{{ loop.index0 }}-640.webp"
-                       onerror="this.onerror=null; this.src='{{ url }}';"
-                       alt="Thumbnail {{ loop.index }}" loading="lazy" />
-                  {% if loop.index0 == 4 and property.imageUrls.length > 5 %}
-                    <div class="property-card-thumb-more">+{{ property.imageUrls.length - 5 }}</div>
-                  {% endif %}
-                </div>
-              {% endif %}
-            {% endfor %}
-            {% set thumbCount = property.imageUrls.length - 1 %}
-            {% if thumbCount < 4 %}
-              {% for i in range(thumbCount, 4) %}
-                <div class="property-card-thumb property-card-thumb-empty"></div>
-              {% endfor %}
-            {% endif %}
-          </div>
-        {% endif %}
       </div>
 
       <!-- PROPERTY INFO (Right Side) -->
@@ -115,10 +92,12 @@
         <div class="property-card-features">
           {% if property.bedrooms is not none and property.bedrooms >= 0 %}
             <div class="property-card-feature">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/>
-                <path d="M3 15h18"/>
-                <path d="M3 11h18"/>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 18v-6a2 2 0 012-2h16a2 2 0 012 2v6"/>
+                <path d="M2 12V8a2 2 0 012-2h2a2 2 0 012 2v2"/>
+                <path d="M22 18H2"/>
+                <path d="M4 18v2"/>
+                <path d="M20 18v2"/>
               </svg>
               <span>{{ property.bedrooms }}</span>
             </div>
@@ -126,9 +105,11 @@
 
           {% if property.bathrooms is not none and property.bathrooms >= 0 %}
             <div class="property-card-feature">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M4 12h16a1 1 0 011 1v3a4 4 0 01-4 4H7a4 4 0 01-4-4v-3a1 1 0 011-1z"/>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12h16"/>
+                <path d="M4 12v6a2 2 0 002 2h12a2 2 0 002-2v-6"/>
                 <path d="M6 12V5a2 2 0 012-2h1"/>
+                <circle cx="9" cy="4" r="1"/>
               </svg>
               <span>{{ property.bathrooms }}</span>
             </div>
@@ -136,13 +117,25 @@
 
           {% if property.parkingSpaces is not none and property.parkingSpaces >= 0 %}
             <div class="property-card-feature">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="6" width="18" height="12" rx="2"/>
-                <circle cx="7" cy="15" r="1.5"/>
-                <circle cx="17" cy="15" r="1.5"/>
-                <path d="M5 10h4l1-2h4l1 2h4"/>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 17h14v-4a2 2 0 00-2-2H7a2 2 0 00-2 2v4z"/>
+                <path d="M5 17a2 2 0 104 0"/>
+                <path d="M15 17a2 2 0 104 0"/>
+                <path d="M7 11V7a4 4 0 018 0v4"/>
               </svg>
               <span>{{ property.parkingSpaces }}</span>
+            </div>
+          {% endif %}
+
+          {% if property.petsAllowed %}
+            <div class="property-card-feature property-card-feature-pets">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="4" r="2"/>
+                <circle cx="18" cy="8" r="2"/>
+                <circle cx="4" cy="8" r="2"/>
+                <path d="M12 14c-2.5 0-4.5 2-4.5 4.5 0 1.5 1.5 3.5 4.5 3.5s4.5-2 4.5-3.5c0-2.5-2-4.5-4.5-4.5z"/>
+              </svg>
+              <span>Pets OK</span>
             </div>
           {% endif %}
         </div>
@@ -343,56 +336,6 @@
 .carousel-prev { left: 8px; }
 .carousel-next { right: 8px; }
 
-/* Thumbnail Grid */
-.property-card-thumbs {
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px;
-  width: 160px;
-  background: #e5e7eb;
-}
-
-@media (min-width: 1024px) {
-  .property-card-thumbs {
-    display: grid;
-  }
-}
-
-.property-card-thumb {
-  position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  background: #f3f4f6;
-}
-
-.property-card-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.property-card-thumb:hover img {
-  transform: scale(1.05);
-}
-
-.property-card-thumb-more {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.property-card-thumb-empty {
-  background: #f3f4f6;
-}
-
 .property-card-no-image {
   width: 100%;
   height: 100%;
@@ -508,5 +451,14 @@
   border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Pets Icon */
+.property-card-feature-pets {
+  color: #22c55e;
+}
+
+.property-card-feature-pets svg {
+  color: #22c55e;
 }
 </style>

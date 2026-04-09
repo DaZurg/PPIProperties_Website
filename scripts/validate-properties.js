@@ -119,17 +119,17 @@ function validateProperty(property, index) {
   // Required: bedrooms
   if (property.bedrooms === undefined || property.bedrooms === null) {
     errors.push(`Property ${propId}: Missing required field: bedrooms`);
-  } else if (!Number.isInteger(property.bedrooms)) {
-    errors.push(`Property ${propId}: Field type error: bedrooms should be integer, got ${typeof property.bedrooms}`);
+  } else if (typeof property.bedrooms !== 'number') {
+    errors.push(`Property ${propId}: Field type error: bedrooms should be number, got ${typeof property.bedrooms}`);
   } else if (property.bedrooms < 0 || property.bedrooms > 20) {
     errors.push(`Property ${propId}: Field value error: bedrooms must be 0-20, got ${property.bedrooms}`);
   }
 
-  // Required: bathrooms
+  // Required: bathrooms (can be decimal for half-baths)
   if (property.bathrooms === undefined || property.bathrooms === null) {
     errors.push(`Property ${propId}: Missing required field: bathrooms`);
-  } else if (!Number.isInteger(property.bathrooms)) {
-    errors.push(`Property ${propId}: Field type error: bathrooms should be integer, got ${typeof property.bathrooms}`);
+  } else if (typeof property.bathrooms !== 'number') {
+    errors.push(`Property ${propId}: Field type error: bathrooms should be number, got ${typeof property.bathrooms}`);
   } else if (property.bathrooms < 0 || property.bathrooms > 20) {
     errors.push(`Property ${propId}: Field value error: bathrooms must be 0-20, got ${property.bathrooms}`);
   }
@@ -180,11 +180,11 @@ function validateOptionalFields(property, index) {
     warnings.push(`Property ${propId}: Missing optional field: agentPhone`);
   }
 
-  // Optional: features
-  if (!property.features) {
-    warnings.push(`Property ${propId}: Missing optional field: features`);
-  } else if (!Array.isArray(property.features)) {
-    warnings.push(`Property ${propId}: features should be array, got ${typeof property.features}`);
+  // Optional: roomFeatures (detailed room-by-room features)
+  if (!property.roomFeatures) {
+    warnings.push(`Property ${propId}: Missing optional field: roomFeatures`);
+  } else if (!Array.isArray(property.roomFeatures)) {
+    warnings.push(`Property ${propId}: roomFeatures should be array, got ${typeof property.roomFeatures}`);
   }
 
   // Optional: location

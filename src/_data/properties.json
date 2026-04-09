@@ -3,8 +3,10 @@
     "id": "3108496",
     "address": "95 Japonica Avenue, Moregloed",
     "price": 495000,
-    "bedrooms": 0,
-    "bathrooms": 0,
+    "currencySymbol": "R",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "parkingSpaces": 2,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=c134b2ca-f888-442b-8d7e-ae0e0d110561&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=da2920c5-29dc-4563-b78f-d4b25513bb57&userId=57314",
@@ -17,29 +19,168 @@
       "https://server.exdev.propctrl-test.com/image.ashx?Id=510ce735-9816-4949-8ef2-5a7ec9a71084&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=aa001fb6-9d26-4939-80cf-2454d2ba8388&userId=57314"
     ],
-    "description": "This very neat, move-in-ready apartment is situated in the popular Unigloed Apartment Complex in the well-established suburb of Môregloed.\r\n\r\nThe 2nd floor unit offers:\r\n* 1 spacious bedroom\r\n* 1 bathroom\r\n* Neat kitchen\r\n* Comfortable living area\r\n* Prepaid electricity\r\n* Lock-up garage\r\n\r\nThe comp",
-    "agentName": "Property Agent",
-    "agentPhone": "",
-    "agentEmail": "",
-    "features": [
-      "Bedroom",
-      "Bathroom",
-      "Garage",
-      "with communal braai area",
-      "Kitchen",
-      "Parking",
-      "The apartment complex has a lift",
-      "SpecialFeature"
+    "description": "This very neat, move-in-ready apartment is situated in the popular Unigloed Apartment Complex in the well-established suburb of Môregloed.\r\n\r\nThe 2nd floor unit offers:\r\n* 1 spacious bedroom\r\n* 1 bathroom\r\n* Neat kitchen\r\n* Comfortable living area\r\n* Prepaid electricity\r\n* Lock-up garage\r\n\r\nThe complex features a communal garden, braai area, and guest parking, creating a pleasant and welcoming environment for residents and visitors. The complex also has a lift, providing convenient access to the upper floors.\r\n\r\nSecurity includes electric gates and a CCTV camera system for added peace of mind.\r\n\r\nConveniently located near shopping centres, schools, and churches, this apartment is perfectly positioned in a well-established area.\r\n\r\nIdeal for investors, first-time buyers, or those looking to scale down.",
+    "marketingHeading": "Apartment for Sale in Môregloed, Pretoria",
+    "agentName": "Martie Pelser",
+    "agentPhone": "0726999255",
+    "agentEmail": "martie@ppiproperties.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Carpets",
+              "Curtain Rails",
+              "King Bed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Bathroom",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Bath, Toilet and Basin"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garage",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Single",
+              "Tip Up"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garden",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "with communal braai area",
+            "options": [
+              "Communal"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Kitchen",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Stove (Oven & Hob)",
+              "Tiled Floors"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Parking",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Visitors Parking"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Security",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "The apartment complex has a lift",
+            "options": [
+              "Electric Garage"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SpecialFeature",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Lifts"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "NearbyPublicTransport",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Bus"
+            ]
+          }
+        ]
+      }
     ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": false,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": {
+      "size": 44,
+      "unit": "m²",
+      "display": "44 m²"
+    },
+    "erfSize": null,
+    "furnishedType": "No",
+    "levy": 1000,
+    "rates": 145,
+    "ownershipType": "SectionalTitle",
+    "petsAllowed": false,
+    "listedDate": "30 Mar 2026",
+    "updatedDate": "30 Mar 2026",
     "location": "Moregloed",
+    "city": "Pretoria",
+    "province": "Gauteng",
     "propertyType": "FlatApartment"
   },
   {
     "id": "3108497",
     "address": "56B Sparrow Street, Ninapark",
     "price": 1150000,
-    "bedrooms": 0,
-    "bathrooms": 0,
+    "currencySymbol": "R",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "parkingSpaces": 2,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=96c2be19-38bb-4732-8c9c-042aa2bf0105&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=4d19492c-c7f1-4835-a300-97fbedb46140&userId=57314",
@@ -52,29 +193,157 @@
       "https://server.exdev.propctrl-test.com/image.ashx?Id=79f5b92d-1ceb-40cf-ad81-24db5bfde52c&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=9d5d41bc-88d9-4f0f-b7ad-eadcf556d3f1&userId=57314"
     ],
-    "description": "This home offers comfortable family living in the sought-after area of Ninapark, conveniently located near shopping centres and essential amenities.\r\n\r\nThe property features 3 spacious bedrooms, with the main bedroom boasting a private en-suite bathroom, along with a second bathroom to serve the res",
-    "agentName": "Property Agent",
-    "agentPhone": "",
-    "agentEmail": "",
-    "features": [
-      "Bedroom",
-      "Bedroom",
-      "Bedroom",
-      "Bathroom",
-      "Bathroom",
-      "Double Lock-up Garage (3rd garage door for easy access to backyard)",
-      "Garage",
-      "Garden"
+    "description": "This home offers comfortable family living in the sought-after area of Ninapark, conveniently located near shopping centres and essential amenities.\r\n\r\nThe property features 3 spacious bedrooms, with the main bedroom boasting a private en-suite bathroom, along with a second bathroom to serve the rest of the home. The neat kitchen offers ample cupboard space, making it both practical and functional for everyday living.\r\n\r\nEnjoy generous living spaces including a welcoming living room and a dining area, perfect for entertaining family and friends.\r\n\r\nAdditional features include:\r\n* Double garage with a convenient third garage door providing easy access to the backyard\r\n* Allocated washing line area\r\n* Lovely, well-kept garden\r\n* Patio with built-in braai, ideal for relaxed outdoor entertaining\r\n\r\nThis property combines comfort, convenience, and great value—perfect for families or first-time buyers.",
+    "marketingHeading": "Charming 3 Bedroom Home for Sale in Ninapark",
+    "agentName": "Martie Pelser",
+    "agentPhone": "0726999255",
+    "agentEmail": "martie@ppiproperties.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 3,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Carpets",
+              "Curtain Rails",
+              "Built-in Cupboards"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Carpets",
+              "Curtain Rails",
+              "Built-in Cupboards"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Carpets",
+              "Curtain Rails",
+              "Built-in Cupboards"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Bathroom",
+        "count": 2,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors",
+              "Curtain Rails",
+              "Bath, Toilet and Basin"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors",
+              "Main en Suite",
+              "Curtain Rails",
+              "Shower, Toilet and Basin"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garage",
+        "count": 2,
+        "items": [
+          {
+            "value": 1,
+            "description": "Double Lock-up Garage (3rd garage door for easy access to backyard)",
+            "options": [
+              "Double"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garden",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Immaculate Condition"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SpecialFeature",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Built-in Braai"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Other",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "with built-in Braai",
+            "options": [
+              "Patio"
+            ]
+          }
+        ]
+      }
     ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": false,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": {
+      "size": 137,
+      "unit": "m²",
+      "display": "137 m²"
+    },
+    "erfSize": null,
+    "furnishedType": "No",
+    "levy": null,
+    "rates": 1072,
+    "ownershipType": "SectionalTitle",
+    "petsAllowed": true,
+    "listedDate": "30 Mar 2026",
+    "updatedDate": "30 Mar 2026",
     "location": "Ninapark",
+    "city": "Akasia",
+    "province": "Gauteng",
     "propertyType": "FlatApartment"
   },
   {
     "id": "3108498",
     "address": "110 Christiaan De Wet Road, Florida Park",
     "price": 1150000,
-    "bedrooms": 0,
-    "bathrooms": 0,
+    "currencySymbol": "R",
+    "bedrooms": 3,
+    "bathrooms": 2.5,
+    "parkingSpaces": 2,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=cb1709ce-330d-4797-92ac-6623a24664da&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=31204215-8bb5-44dd-b164-5a1fea7c3c30&userId=57314",
@@ -87,46 +356,353 @@
       "https://server.exdev.propctrl-test.com/image.ashx?Id=79c63faa-9e39-4ebf-8ee3-e802ff7ba1a6&userId=57314",
       "https://server.exdev.propctrl-test.com/image.ashx?Id=9bbf312b-4042-4453-899b-53cd3639efba&userId=57314"
     ],
-    "description": "Discover this immaculate, well-maintained townhouse, perfectly located in the sought-after Villarus Complex. Move-in ready and ideal for comfortable family living!\r\n\r\nDownstairs features:\r\nA beautiful, modern kitchen with ample cupboard space, perfect for any home chef. The home offers a spacious di",
-    "agentName": "Property Agent",
-    "agentPhone": "",
-    "agentEmail": "",
-    "features": [
-      "Bedroom",
-      "Bedroom",
-      "Bedroom",
-      "Downstairs",
-      "Upstairs",
-      "Bath with shower head",
-      "DiningRoom",
-      "FamilyTVRoom"
+    "description": "Discover this immaculate, well-maintained townhouse, perfectly located in the sought-after Villarus Complex. Move-in ready and ideal for comfortable family living!\r\n\r\nDownstairs features:\r\nA beautiful, modern kitchen with ample cupboard space, perfect for any home chef. The home offers a spacious dining area and two inviting living areas, creating a warm and versatile living environment. Step outside to your private garden with a patio and built-in braai—perfect for entertaining. A guest toilet and private washing line add to the convenience.\r\n\r\nUpstairs offers:\r\nThree generously sized bedrooms and two bathrooms. The main bedroom boasts its own private balcony—ideal for relaxing and enjoying quiet moments.\r\n\r\nAdditional features:\r\nThe complex offers a communal swimming pool with braai facilities.\r\n\r\nThe property includes one lock-up garage and one undercover parking. Levies conveniently include garden services. Electricity is post-paid.\r\n\r\nThis is a fantastic opportunity to own a beautiful home in a well-maintained and secure complex.",
+    "marketingHeading": "3-Bedroom Townhouse for Sale in Villarus Complex, Florida Park, Roodepoort",
+    "agentName": "Martie Pelser",
+    "agentPhone": "0726999255",
+    "agentEmail": "martie@ppiproperties.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 3,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors",
+              "Balcony",
+              "Built-in Cupboards",
+              "King Bed"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors",
+              "Built-in Cupboards"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors",
+              "Built-in Cupboards"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Bathroom",
+        "count": 2.5,
+        "items": [
+          {
+            "value": 0.5,
+            "description": "Downstairs",
+            "options": [
+              "Tiled Floors",
+              "Basin (Separate)",
+              "Guest Toilet"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "Upstairs",
+            "options": [
+              "Tiled Floors",
+              "Bath, Toilet and Basin"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "Bath with shower head",
+            "options": [
+              "Tiled Floors",
+              "Main en Suite",
+              "Bath, Toilet and Basin"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "DiningRoom",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FamilyTVRoom",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Tiled Floors"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garage",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Single"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garden",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Garden Services",
+              "Immaculate Condition"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Kitchen",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Breakfast Nook",
+              "Tiled Floors",
+              "Built in Cupboards"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Pool",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Communal Pool"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Parking",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Carport"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Security",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Electric Gate",
+              "Security Gate",
+              "Burglar Bars"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Other",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "with Built-in Braai",
+            "options": [
+              "Patio"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InternetAccess",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Fibre"
+            ]
+          }
+        ]
+      }
     ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": false,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": {
+      "size": 153,
+      "unit": "m²",
+      "display": "153 m²"
+    },
+    "erfSize": {
+      "size": 3962,
+      "unit": "m²",
+      "display": "3962 m²"
+    },
+    "furnishedType": "No",
+    "levy": 3700,
+    "rates": 1021,
+    "ownershipType": "SectionalTitle",
+    "petsAllowed": false,
+    "listedDate": "30 Mar 2026",
+    "updatedDate": "30 Mar 2026",
     "location": "Florida Park",
+    "city": "Roodepoort",
+    "province": "Gauteng",
     "propertyType": "FlatApartment"
   },
   {
     "id": "3108499",
     "address": "12 Fair Road, Glenhazel",
     "price": 600000,
-    "bedrooms": 0,
+    "currencySymbol": "R",
+    "bedrooms": 2,
     "bathrooms": 0,
+    "parkingSpaces": 3,
     "imageUrls": [
       "https://server.exdev.propctrl-test.com/image.ashx?Id=e69e94d4-149e-4ce4-a69a-316a1b9392ad&userId=57314"
     ],
     "description": "test 3 description",
-    "agentName": "Property Agent",
-    "agentPhone": "",
-    "agentEmail": "",
-    "features": [
-      "2",
-      "3",
-      "garage 1",
-      "garage 2",
-      "off street",
-      "Security",
-      "InternetAccess"
+    "marketingHeading": "",
+    "agentName": "Martie Pelser",
+    "agentPhone": "0726999255",
+    "agentEmail": "martie@ppiproperties.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 2,
+        "items": [
+          {
+            "value": 1,
+            "description": "2",
+            "options": [
+              "Double Bed"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "3",
+            "options": [
+              "King Bed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garage",
+        "count": 2,
+        "items": [
+          {
+            "value": 1,
+            "description": "garage 1",
+            "options": []
+          },
+          {
+            "value": 1,
+            "description": "garage 2",
+            "options": []
+          }
+        ]
+      },
+      {
+        "type": "Parking",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "off street",
+            "options": []
+          }
+        ]
+      },
+      {
+        "type": "Security",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Burglar Bars"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InternetAccess",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Fibre"
+            ]
+          }
+        ]
+      }
     ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": true,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": null,
+    "erfSize": null,
+    "furnishedType": "Yes",
+    "levy": null,
+    "rates": null,
+    "ownershipType": "FullFreeTitle",
+    "petsAllowed": false,
+    "listedDate": "30 Mar 2026",
+    "updatedDate": "31 Mar 2026",
     "location": "Glenhazel",
+    "city": "Johannesburg",
+    "province": "Gauteng",
     "propertyType": "House"
   }
 ]

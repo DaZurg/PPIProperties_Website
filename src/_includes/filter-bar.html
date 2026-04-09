@@ -68,22 +68,22 @@
       <div class="filter-dropdown-menu" id="dropdown-beds">
         <div class="filter-dropdown-header">Bedrooms</div>
         <label class="filter-option">
-          <input type="radio" name="bedrooms" value="" checked data-filter="bedrooms"> Any
+          <input type="radio" name="bedrooms" value="" checked data-filter="bedrooms"> Any <span class="filter-count" data-count="beds-any"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bedrooms" value="1" data-filter="bedrooms"> 1+
+          <input type="radio" name="bedrooms" value="1" data-filter="bedrooms"> 1+ <span class="filter-count" data-count="beds-1"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bedrooms" value="2" data-filter="bedrooms"> 2+
+          <input type="radio" name="bedrooms" value="2" data-filter="bedrooms"> 2+ <span class="filter-count" data-count="beds-2"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bedrooms" value="3" data-filter="bedrooms"> 3+
+          <input type="radio" name="bedrooms" value="3" data-filter="bedrooms"> 3+ <span class="filter-count" data-count="beds-3"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bedrooms" value="4" data-filter="bedrooms"> 4+
+          <input type="radio" name="bedrooms" value="4" data-filter="bedrooms"> 4+ <span class="filter-count" data-count="beds-4"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bedrooms" value="5" data-filter="bedrooms"> 5+
+          <input type="radio" name="bedrooms" value="5" data-filter="bedrooms"> 5+ <span class="filter-count" data-count="beds-5"></span>
         </label>
       </div>
     </div>
@@ -99,16 +99,16 @@
       <div class="filter-dropdown-menu" id="dropdown-baths">
         <div class="filter-dropdown-header">Bathrooms</div>
         <label class="filter-option">
-          <input type="radio" name="bathrooms" value="" checked data-filter="bathrooms"> Any
+          <input type="radio" name="bathrooms" value="" checked data-filter="bathrooms"> Any <span class="filter-count" data-count="baths-any"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bathrooms" value="1" data-filter="bathrooms"> 1+
+          <input type="radio" name="bathrooms" value="1" data-filter="bathrooms"> 1+ <span class="filter-count" data-count="baths-1"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bathrooms" value="2" data-filter="bathrooms"> 2+
+          <input type="radio" name="bathrooms" value="2" data-filter="bathrooms"> 2+ <span class="filter-count" data-count="baths-2"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="bathrooms" value="3" data-filter="bathrooms"> 3+
+          <input type="radio" name="bathrooms" value="3" data-filter="bathrooms"> 3+ <span class="filter-count" data-count="baths-3"></span>
         </label>
       </div>
     </div>
@@ -124,38 +124,100 @@
       <div class="filter-dropdown-menu" id="dropdown-type">
         <div class="filter-dropdown-header">Property Type</div>
         <label class="filter-option">
-          <input type="radio" name="propertyType" value="" checked data-filter="type"> All Types
+          <input type="radio" name="propertyType" value="" checked data-filter="type"> All Types <span class="filter-count" data-count="type-any"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="propertyType" value="House" data-filter="type"> House
+          <input type="radio" name="propertyType" value="House" data-filter="type"> House <span class="filter-count" data-count="type-House"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="propertyType" value="FlatApartment" data-filter="type"> Flat/Apartment
+          <input type="radio" name="propertyType" value="FlatApartment" data-filter="type"> Flat/Apartment <span class="filter-count" data-count="type-FlatApartment"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="propertyType" value="Townhouse" data-filter="type"> Townhouse
+          <input type="radio" name="propertyType" value="Townhouse" data-filter="type"> Townhouse <span class="filter-count" data-count="type-Townhouse"></span>
         </label>
         <label class="filter-option">
-          <input type="radio" name="propertyType" value="Land" data-filter="type"> Land
+          <input type="radio" name="propertyType" value="Land" data-filter="type"> Land <span class="filter-count" data-count="type-Land"></span>
         </label>
       </div>
     </div>
 
-    <!-- More Filters Button -->
-    <button type="button" class="filter-btn filter-btn-more">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="4" y1="21" x2="4" y2="14"></line>
-        <line x1="4" y1="10" x2="4" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12" y2="3"></line>
-        <line x1="20" y1="21" x2="20" y2="16"></line>
-        <line x1="20" y1="12" x2="20" y2="3"></line>
-        <line x1="1" y1="14" x2="7" y2="14"></line>
-        <line x1="9" y1="8" x2="15" y2="8"></line>
-        <line x1="17" y1="16" x2="23" y2="16"></line>
-      </svg>
-      More filters
-    </button>
+    <!-- More Filters Dropdown -->
+    <div class="filter-dropdown">
+      <button type="button" class="filter-btn filter-btn-more" data-dropdown="more" id="more-filter-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="4" y1="21" x2="4" y2="14"></line>
+          <line x1="4" y1="10" x2="4" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12" y2="3"></line>
+          <line x1="20" y1="21" x2="20" y2="16"></line>
+          <line x1="20" y1="12" x2="20" y2="3"></line>
+          <line x1="1" y1="14" x2="7" y2="14"></line>
+          <line x1="9" y1="8" x2="15" y2="8"></line>
+          <line x1="17" y1="16" x2="23" y2="16"></line>
+        </svg>
+        <span class="filter-btn-label" id="more-btn-label">More filters</span>
+      </button>
+      <div class="filter-dropdown-menu filter-dropdown-wide" id="dropdown-more">
+        <div class="filter-dropdown-header">Green & Energy Features</div>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-solar" value="solarPanels" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </span>
+          Solar Panels
+        </label>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-solar-geyser" value="solarGeyser" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          Solar Geyser
+        </label>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-gas-geyser" value="gasGeyser" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c1 3 3 5 3 9a3 3 0 11-6 0c0-4 2-6 3-9z"/><path d="M12 22v-3"/></svg>
+          </span>
+          Gas Geyser
+        </label>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-battery" value="backupBattery" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2M10 11v2M14 11v2"/></svg>
+          </span>
+          Backup Battery
+        </label>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-borehole" value="borehole" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8M8 6h8M12 10v12"/><circle cx="12" cy="18" r="3"/></svg>
+          </span>
+          Borehole
+        </label>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-water-tank" value="waterTank" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2h12l2 6v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8l2-6z"/><path d="M4 8h16"/></svg>
+          </span>
+          Water Tank
+        </label>
+
+        <div class="filter-dropdown-header" style="margin-top: 12px;">Other Features</div>
+        <label class="filter-option filter-checkbox">
+          <input type="checkbox" name="highlight-pets" value="petsAllowed" data-filter="highlight">
+          <span class="filter-checkbox-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .137 1.217 1.217 2.5 3 2.5 2.242 0 4.5-1.5 4.5-3.328z"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.137 1.217-1.217 2.5-3 2.5-2.242 0-4.5-1.5-4.5-3.328z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75z"/><path d="M4.42 11.247a13.152 13.152 0 004.08 5.253c1.33 1.11 3.165 3.11 3.5 5.5.336-2.39 2.171-4.39 3.5-5.5a13.152 13.152 0 004.08-5.253"/></svg>
+          </span>
+          Pets Allowed
+        </label>
+
+        <!-- Clear & Apply buttons -->
+        <div class="more-filter-actions">
+          <button type="button" class="more-filter-clear" id="more-filter-clear">Clear</button>
+          <button type="button" class="more-filter-apply" id="more-filter-apply">Apply Filters</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -245,14 +307,12 @@
 
 .filter-btn-more {
   margin-left: auto;
-  background: transparent;
-  border: none;
-  color: #6b7280;
 }
 
-.filter-btn-more:hover {
-  color: #374151;
-  background: transparent;
+.filter-btn-more.active {
+  border-color: #f97316;
+  background: #fff7ed;
+  color: #ea580c;
 }
 
 .filter-dropdown-menu {
@@ -274,8 +334,77 @@
 }
 
 .filter-dropdown-wide {
-  min-width: 320px;
-  padding: 16px;
+  min-width: 280px;
+  padding: 12px 0;
+}
+
+/* Checkbox style filters */
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #f97316;
+  cursor: pointer;
+}
+
+.filter-checkbox-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.filter-checkbox:has(input:checked) .filter-checkbox-icon {
+  color: #22c55e;
+}
+
+/* More filter action buttons */
+.more-filter-actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 8px;
+}
+
+.more-filter-clear {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.more-filter-clear:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.more-filter-apply {
+  flex: 1;
+  padding: 8px 16px;
+  background: #f97316;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.more-filter-apply:hover {
+  background: #ea580c;
 }
 
 .filter-dropdown-header {
@@ -308,6 +437,17 @@
   width: 16px;
   height: 16px;
   accent-color: #f97316;
+}
+
+.filter-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.filter-count:empty {
+  display: none;
 }
 
 /* Price Histogram Slider Styles */
@@ -526,8 +666,7 @@
 .location-item {
   display: flex;
   align-items: center;
-  padding: 14px 20px;
-  cursor: pointer;
+  padding: 0;
   transition: background 0.15s;
   border: none;
   background: none;
@@ -539,6 +678,62 @@
   background: #f9fafb;
 }
 
+/* Checkbox button - clickable area for selection */
+.location-item-checkbox-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 14px;
+}
+
+.location-item-checkbox-btn::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  display: block;
+  transition: all 0.15s;
+  background: white;
+}
+
+.location-item-checkbox-btn:hover::before {
+  border-color: #f97316;
+}
+
+.location-item.selected .location-item-checkbox-btn::before {
+  background: #f97316;
+  border-color: #f97316;
+}
+
+.location-item.selected .location-item-checkbox-btn::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  top: 50%;
+  left: 50%;
+  margin-top: -6px;
+  margin-left: -3px;
+}
+
+/* Partial selection (some children selected) */
+.location-item-checkbox-btn.partial::before {
+  background: #fed7aa;
+  border-color: #fed7aa;
+}
+
+/* Legacy checkbox div - keep for compatibility */
 .location-item-checkbox {
   width: 20px;
   height: 20px;
@@ -572,6 +767,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 14px 20px 14px 0;
+  min-height: 48px;
+}
+
+/* Drill-down button - clickable area for navigation */
+.location-item-drill {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.location-item-drill:hover {
+  color: #f97316;
 }
 
 .location-item-name {
@@ -753,12 +962,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Select All option
     const allSelected = locationData.provinces.every(p => isProvinceSelected(p));
     html += `
-      <button type="button" class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all">
-        <div class="location-item-checkbox"></div>
+      <div class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all">
+        <button type="button" class="location-item-checkbox-btn" data-action="select-all" aria-label="Select all regions"></button>
         <div class="location-item-content">
           <span class="location-item-name">Select All</span>
         </div>
-      </button>
+      </div>
     `;
 
     // Province items
@@ -768,10 +977,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const partial = !selected && isProvincePartiallySelected(province);
 
       html += `
-        <button type="button" class="location-item ${selected ? 'selected' : ''}"
-                data-province="${province.slug}" data-action="drill">
-          <div class="location-item-checkbox" ${partial ? 'style="background:#fed7aa;border-color:#fed7aa;"' : ''}></div>
-          <div class="location-item-content">
+        <div class="location-item ${selected ? 'selected' : ''}" data-province="${province.slug}">
+          <button type="button" class="location-item-checkbox-btn ${partial ? 'partial' : ''}"
+                  data-action="select-province" data-province="${province.slug}"
+                  aria-label="Select all in ${province.name}"></button>
+          <button type="button" class="location-item-content location-item-drill" data-action="drill" data-province="${province.slug}">
             <span class="location-item-name">${province.name}</span>
             <div class="location-item-right">
               <span class="location-item-count">${count}</span>
@@ -779,8 +989,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
       `;
     });
 
@@ -801,12 +1011,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Select All option for this province
     const allSelected = isProvinceSelected(province);
     html += `
-      <button type="button" class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all-province">
-        <div class="location-item-checkbox"></div>
+      <div class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all-province">
+        <button type="button" class="location-item-checkbox-btn" data-action="select-all-province" aria-label="Select all in ${province.name}"></button>
         <div class="location-item-content">
           <span class="location-item-name">Select All</span>
         </div>
-      </button>
+      </div>
     `;
 
     // City items
@@ -816,10 +1026,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const partial = !selected && isCityPartiallySelected(city);
 
       html += `
-        <button type="button" class="location-item ${selected ? 'selected' : ''}"
-                data-city="${city.slug}" data-action="drill">
-          <div class="location-item-checkbox" ${partial ? 'style="background:#fed7aa;border-color:#fed7aa;"' : ''}></div>
-          <div class="location-item-content">
+        <div class="location-item ${selected ? 'selected' : ''}" data-city="${city.slug}">
+          <button type="button" class="location-item-checkbox-btn ${partial ? 'partial' : ''}"
+                  data-action="select-city" data-city="${city.slug}"
+                  aria-label="Select all in ${city.name}"></button>
+          <button type="button" class="location-item-content location-item-drill" data-action="drill" data-city="${city.slug}">
             <span class="location-item-name">${city.name}</span>
             <div class="location-item-right">
               <span class="location-item-count">${count}</span>
@@ -827,8 +1038,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
       `;
     });
 
@@ -848,12 +1059,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Select All option for this city
     const allSelected = isCitySelected(city);
     html += `
-      <button type="button" class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all-city">
-        <div class="location-item-checkbox"></div>
+      <div class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all-city">
+        <button type="button" class="location-item-checkbox-btn" data-action="select-all-city" aria-label="Select all in ${city.name}"></button>
         <div class="location-item-content">
           <span class="location-item-name">Select All</span>
         </div>
-      </button>
+      </div>
     `;
 
     // Suburb items
@@ -862,16 +1073,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const selected = selectedLocations.includes(suburb);
 
       html += `
-        <button type="button" class="location-item ${selected ? 'selected' : ''}"
-                data-suburb="${suburb}" data-action="toggle">
-          <div class="location-item-checkbox"></div>
+        <div class="location-item ${selected ? 'selected' : ''}" data-suburb="${suburb}">
+          <button type="button" class="location-item-checkbox-btn" data-action="toggle" data-suburb="${suburb}" aria-label="Select ${suburb}"></button>
           <div class="location-item-content">
             <span class="location-item-name">${suburb}</span>
             <div class="location-item-right">
               <span class="location-item-count">${count}</span>
             </div>
           </div>
-        </button>
+        </div>
       `;
     });
 
@@ -881,16 +1091,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Attach event handlers to list items
   function attachListItemHandlers() {
-    locationList.querySelectorAll('.location-item').forEach(item => {
-      item.addEventListener('click', handleItemClick);
+    // Handle checkbox button clicks
+    locationList.querySelectorAll('.location-item-checkbox-btn').forEach(btn => {
+      btn.addEventListener('click', handleCheckboxClick);
+    });
+    // Handle drill-down clicks
+    locationList.querySelectorAll('.location-item-drill').forEach(btn => {
+      btn.addEventListener('click', handleDrillClick);
     });
     updateApplyButton();
   }
 
-  // Handle item clicks
-  function handleItemClick(e) {
-    const item = e.currentTarget;
-    const action = item.dataset.action;
+  // Handle checkbox clicks (select without drilling down)
+  function handleCheckboxClick(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const action = btn.dataset.action;
+    const item = btn.closest('.location-item');
 
     if (action === 'select-all') {
       // Toggle select all provinces
@@ -911,7 +1128,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (action === 'select-all-province' && currentProvince) {
       // Toggle select all cities in current province
       if (isProvinceSelected(currentProvince)) {
-        // Deselect all suburbs in this province
         currentProvince.cities.forEach(city => {
           city.suburbs.forEach(suburb => {
             const idx = selectedLocations.indexOf(suburb);
@@ -919,7 +1135,6 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         });
       } else {
-        // Select all suburbs in this province
         currentProvince.cities.forEach(city => {
           city.suburbs.forEach(suburb => {
             if (!selectedLocations.includes(suburb)) selectedLocations.push(suburb);
@@ -930,30 +1145,59 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (action === 'select-all-city' && currentCity) {
       // Toggle select all suburbs in current city
       if (isCitySelected(currentCity)) {
-        // Deselect all suburbs in this city
         currentCity.suburbs.forEach(suburb => {
           const idx = selectedLocations.indexOf(suburb);
           if (idx > -1) selectedLocations.splice(idx, 1);
         });
       } else {
-        // Select all suburbs in this city
         currentCity.suburbs.forEach(suburb => {
           if (!selectedLocations.includes(suburb)) selectedLocations.push(suburb);
         });
       }
       renderSuburbs(currentCity);
-    } else if (action === 'drill') {
-      // Drill down to next level
-      if (currentLevel === 'province') {
-        const province = locationData.provinces.find(p => p.slug === item.dataset.province);
-        if (province) renderCities(province);
-      } else if (currentLevel === 'city' && currentProvince) {
-        const city = currentProvince.cities.find(c => c.slug === item.dataset.city);
-        if (city) renderSuburbs(city);
+    } else if (action === 'select-province') {
+      // Toggle all suburbs in this province
+      const provinceSlug = btn.dataset.province;
+      const province = locationData.provinces.find(p => p.slug === provinceSlug);
+      if (province) {
+        if (isProvinceSelected(province)) {
+          // Deselect all suburbs in this province
+          province.cities.forEach(city => {
+            city.suburbs.forEach(suburb => {
+              const idx = selectedLocations.indexOf(suburb);
+              if (idx > -1) selectedLocations.splice(idx, 1);
+            });
+          });
+        } else {
+          // Select all suburbs in this province
+          province.cities.forEach(city => {
+            city.suburbs.forEach(suburb => {
+              if (!selectedLocations.includes(suburb)) selectedLocations.push(suburb);
+            });
+          });
+        }
+        renderProvinces();
+      }
+    } else if (action === 'select-city') {
+      // Toggle all suburbs in this city
+      const citySlug = btn.dataset.city;
+      const city = currentProvince.cities.find(c => c.slug === citySlug);
+      if (city) {
+        if (isCitySelected(city)) {
+          city.suburbs.forEach(suburb => {
+            const idx = selectedLocations.indexOf(suburb);
+            if (idx > -1) selectedLocations.splice(idx, 1);
+          });
+        } else {
+          city.suburbs.forEach(suburb => {
+            if (!selectedLocations.includes(suburb)) selectedLocations.push(suburb);
+          });
+        }
+        renderCities(currentProvince);
       }
     } else if (action === 'toggle') {
       // Toggle suburb selection
-      const suburb = item.dataset.suburb;
+      const suburb = btn.dataset.suburb;
       const idx = selectedLocations.indexOf(suburb);
       if (idx > -1) {
         selectedLocations.splice(idx, 1);
@@ -962,6 +1206,22 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       item.classList.toggle('selected');
       updateApplyButton();
+    }
+  }
+
+  // Handle drill-down clicks (navigate to next level)
+  function handleDrillClick(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+
+    if (currentLevel === 'province') {
+      const provinceSlug = btn.dataset.province;
+      const province = locationData.provinces.find(p => p.slug === provinceSlug);
+      if (province) renderCities(province);
+    } else if (currentLevel === 'city' && currentProvince) {
+      const citySlug = btn.dataset.city;
+      const city = currentProvince.cities.find(c => c.slug === citySlug);
+      if (city) renderSuburbs(city);
     }
   }
 
@@ -1301,8 +1561,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Handle filter changes for radio buttons
   document.querySelectorAll('[data-filter]').forEach(input => {
-    // Skip price sliders - they have their own handling
+    // Skip price sliders and highlight checkboxes - they have their own handling
     if (input.id === 'price-slider-min' || input.id === 'price-slider-max') return;
+    if (input.getAttribute('data-filter') === 'highlight') return;
 
     input.addEventListener('change', function() {
       applyFilters();
@@ -1331,6 +1592,91 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // ==================== MORE FILTERS ====================
+  const moreFilterBtn = document.getElementById('more-filter-btn');
+  const moreBtnLabel = document.getElementById('more-btn-label');
+  const moreFilterClear = document.getElementById('more-filter-clear');
+  const moreFilterApply = document.getElementById('more-filter-apply');
+  const highlightCheckboxes = document.querySelectorAll('[data-filter="highlight"]');
+
+  // Update "More filters" button label
+  function updateMoreFiltersLabel() {
+    const checkedCount = document.querySelectorAll('[data-filter="highlight"]:checked').length;
+    if (checkedCount > 0) {
+      moreBtnLabel.textContent = `${checkedCount} filter${checkedCount > 1 ? 's' : ''}`;
+      moreFilterBtn.classList.add('active');
+    } else {
+      moreBtnLabel.textContent = 'More filters';
+      moreFilterBtn.classList.remove('active');
+    }
+  }
+
+  // Clear all highlight filters
+  if (moreFilterClear) {
+    moreFilterClear.addEventListener('click', function(e) {
+      e.stopPropagation();
+      highlightCheckboxes.forEach(cb => cb.checked = false);
+      updateMoreFiltersLabel();
+      applyFilters();
+    });
+  }
+
+  // Apply highlight filters
+  if (moreFilterApply) {
+    moreFilterApply.addEventListener('click', function(e) {
+      e.stopPropagation();
+      updateMoreFiltersLabel();
+      applyFilters();
+      // Close dropdown
+      document.getElementById('dropdown-more').classList.remove('show');
+    });
+  }
+
+  // Update label when checkboxes change (for real-time feedback)
+  highlightCheckboxes.forEach(cb => {
+    cb.addEventListener('change', updateMoreFiltersLabel);
+  });
+
+  // ==================== FILTER COUNTS ====================
+  function updateFilterCounts() {
+    if (typeof allProperties === 'undefined') {
+      // Retry until properties are loaded
+      setTimeout(updateFilterCounts, 100);
+      return;
+    }
+
+    const properties = allProperties;
+    const total = properties.length;
+
+    // Bedroom counts
+    document.querySelector('[data-count="beds-any"]').textContent = `(${total})`;
+    for (let i = 1; i <= 5; i++) {
+      const count = properties.filter(p => p.bedrooms >= i).length;
+      const el = document.querySelector(`[data-count="beds-${i}"]`);
+      if (el) el.textContent = count > 0 ? `(${count})` : '';
+    }
+
+    // Bathroom counts
+    document.querySelector('[data-count="baths-any"]').textContent = `(${total})`;
+    for (let i = 1; i <= 3; i++) {
+      const count = properties.filter(p => p.bathrooms >= i).length;
+      const el = document.querySelector(`[data-count="baths-${i}"]`);
+      if (el) el.textContent = count > 0 ? `(${count})` : '';
+    }
+
+    // Property type counts
+    document.querySelector('[data-count="type-any"]').textContent = `(${total})`;
+    const types = ['House', 'FlatApartment', 'Townhouse', 'Land'];
+    types.forEach(type => {
+      const count = properties.filter(p => p.propertyType === type).length;
+      const el = document.querySelector(`[data-count="type-${type}"]`);
+      if (el) el.textContent = count > 0 ? `(${count})` : '';
+    });
+  }
+
+  // Initialize counts
+  updateFilterCounts();
 });
 
 function applyFilters() {

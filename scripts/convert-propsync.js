@@ -8,77 +8,225 @@ const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, '../Sensitive/Origional_data');
 const PROPERTIES_FILE = path.join(DATA_DIR, 'PropSync Data-Test - Properties.csv');
 const SUBURBS_FILE = path.join(DATA_DIR, 'PropSync Data-Test - Suburbs.csv');
+const AGENTS_FILE = path.join(DATA_DIR, 'PropSync Data-Test - Agents.csv');
 const OUTPUT_FILE = path.join(__dirname, '../src/_data/properties.json');
 
 function parseCSVLine(line) {
-  // Simple CSV parser that handles quoted fields
+  // CSV parser that handles quoted fields and escaped quotes
   const result = [];
   let current = '';
   let inQuotes = false;
+  let i = 0;
 
-  for (let i = 0; i < line.length; i++) {
+  while (i < line.length) {
     const char = line[i];
 
     if (char === '"') {
+      // Check for escaped quote (double quote)
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i += 2;
+        continue;
+      }
       inQuotes = !inQuotes;
     } else if (char === ',' && !inQuotes) {
-      result.push(current.trim());
+      result.push(current);
       current = '';
     } else {
       current += char;
     }
+    i++;
   }
-  result.push(current.trim());
+  result.push(current);
   return result;
 }
 
 function parseCSV(content) {
-  const lines = content.split('\n');
-  if (lines.length < 2) return [];
-
-  const headers = parseCSVLine(lines[0]);
+  // Handle both \r\n and \n line endings, and handle fields that span multiple lines
   const records = [];
+  let currentRecord = [];
+  let currentField = '';
+  let inQuotes = false;
+  let headers = null;
 
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
+  for (let i = 0; i < content.length; i++) {
+    const char = content[i];
 
-    const values = parseCSVLine(lines[i]);
-    const record = {};
+    if (char === '"') {
+      // Check for escaped quote (double quote)
+      if (inQuotes && content[i + 1] === '"') {
+        currentField += '"';
+        i++;
+        continue;
+      }
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      currentRecord.push(currentField);
+      currentField = '';
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      // End of line - skip \r if followed by \n
+      if (char === '\r' && content[i + 1] === '\n') {
+        i++;
+      }
 
-    headers.forEach((header, idx) => {
-      record[header] = values[idx] || '';
-    });
+      currentRecord.push(currentField);
+      currentField = '';
 
-    records.push(record);
+      if (currentRecord.length > 0 && currentRecord.some(f => f.length > 0)) {
+        if (!headers) {
+          headers = currentRecord;
+        } else {
+          const record = {};
+          headers.forEach((header, idx) => {
+            record[header] = currentRecord[idx] || '';
+          });
+          records.push(record);
+        }
+      }
+      currentRecord = [];
+    } else {
+      currentField += char;
+    }
+  }
+
+  // Handle last record if file doesn't end with newline
+  if (currentRecord.length > 0 || currentField.length > 0) {
+    currentRecord.push(currentField);
+    if (headers && currentRecord.some(f => f.length > 0)) {
+      const record = {};
+      headers.forEach((header, idx) => {
+        record[header] = currentRecord[idx] || '';
+      });
+      records.push(record);
+    }
   }
 
   return records;
 }
 
 function extractBedsAndBaths(featuresJSON) {
-  let beds = 2;
-  let baths = 1;
+  let beds = 0;
+  let baths = 0;
+  let parking = 0;
 
   try {
     const features = JSON.parse(featuresJSON || '[]');
-    beds = 0;
-    baths = 0;
 
     features.forEach(f => {
       if (f.type === 'Bedroom' && f.value) {
-        beds += Math.round(f.value);
+        beds += f.value;
       } else if (f.type === 'Bathroom' && f.value) {
-        baths += Math.round(f.value);
+        baths += f.value;
+      } else if ((f.type === 'Garage' || f.type === 'Parking') && f.value) {
+        parking += f.value;
       }
     });
-
-    if (beds === 0) beds = 2;
-    if (baths === 0) baths = 1;
   } catch (e) {
     // Silently use defaults
   }
 
-  return { beds, baths };
+  return { beds, baths, parking };
+}
+
+// Extract the detailed room-by-room features for display
+function extractRoomFeatures(featuresJSON) {
+  try {
+    const features = JSON.parse(featuresJSON || '[]');
+    const rooms = {};
+
+    features.forEach(f => {
+      const type = f.type || 'Other';
+      if (!rooms[type]) {
+        rooms[type] = {
+          type: type,
+          count: 0,
+          items: []
+        };
+      }
+
+      rooms[type].count += f.value || 1;
+
+      // Collect item details
+      const item = {
+        value: f.value,
+        description: f.description || '',
+        options: (f.options || []).map(opt => opt.description).filter(d => d)
+      };
+
+      if (item.description || item.options.length > 0) {
+        rooms[type].items.push(item);
+      }
+    });
+
+    return Object.values(rooms);
+  } catch (e) {
+    return [];
+  }
+}
+
+// Extract floor area from JSON object
+function extractFloorArea(floorAreaJSON) {
+  try {
+    if (!floorAreaJSON || floorAreaJSON === '') return null;
+    const data = JSON.parse(floorAreaJSON);
+    if (data && data.size) {
+      const unit = data.measurementUnit === 'Metresquared' ? 'm²' : data.measurementUnit || '';
+      return { size: data.size, unit: unit, display: `${data.size} ${unit}` };
+    }
+  } catch (e) {}
+  return null;
+}
+
+// Extract erf/property size from JSON object
+function extractErfSize(erfSizeJSON) {
+  try {
+    if (!erfSizeJSON || erfSizeJSON === '') return null;
+    const data = JSON.parse(erfSizeJSON);
+    if (data && data.size) {
+      const unit = data.measurementUnit === 'Metresquared' ? 'm²' : data.measurementUnit || '';
+      return { size: data.size, unit: unit, display: `${data.size} ${unit}` };
+    }
+  } catch (e) {}
+  return null;
+}
+
+// Parse agent IDs from JSON array string
+function parseAgentIds(agentsJSON) {
+  try {
+    if (!agentsJSON || agentsJSON === '') return [];
+    return JSON.parse(agentsJSON);
+  } catch (e) {
+    return [];
+  }
+}
+
+// Format date for display
+function formatDate(dateString) {
+  try {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+// Parse phone numbers from JSON array
+function parsePhoneNumbers(phoneJSON) {
+  try {
+    if (!phoneJSON || phoneJSON === '') return [];
+    const phones = JSON.parse(phoneJSON);
+    return phones.map(p => ({
+      number: p.number,
+      type: p.type || 'Phone'
+    }));
+  } catch (e) {
+    return [];
+  }
 }
 
 function extractImages(imagesJSON) {
@@ -111,12 +259,14 @@ function convertProperties() {
   // Read files
   const propertiesContent = fs.readFileSync(PROPERTIES_FILE, 'utf8');
   const suburpsContent = fs.readFileSync(SUBURBS_FILE, 'utf8');
+  const agentsContent = fs.readFileSync(AGENTS_FILE, 'utf8');
 
   // Parse CSVs
   const properties = parseCSV(propertiesContent);
   const suburbs = parseCSV(suburpsContent);
+  const agents = parseCSV(agentsContent);
 
-  console.log(`📊 Found ${properties.length} properties and ${suburbs.length} suburbs`);
+  console.log(`📊 Found ${properties.length} properties, ${suburbs.length} suburbs, ${agents.length} agents`);
 
   // Create suburb map
   const suburbMap = {};
@@ -128,33 +278,93 @@ function convertProperties() {
     };
   });
 
+  // Create agent map
+  const agentMap = {};
+  agents.forEach(a => {
+    const phones = parsePhoneNumbers(a.telephone_numbers);
+    agentMap[a.agent_id] = {
+      id: a.agent_id,
+      firstName: a.first_name,
+      lastName: a.last_name,
+      fullName: `${a.first_name} ${a.last_name}`.trim(),
+      email: a.email_address,
+      phone: phones.length > 0 ? phones[0].number : '',
+      phones: phones,
+      active: a.active === 'TRUE'
+    };
+  });
+
   // Filter active and convert
   const converted = properties
     .filter(p => p.listing_status === 'Active')
     .map((prop) => {
       const suburb = suburbMap[prop.suburb_id] || { name: 'Unknown', city: 'South Africa' };
-      const { beds, baths } = extractBedsAndBaths(prop.features);
+      const { beds, baths, parking } = extractBedsAndBaths(prop.features);
       const imageUrls = extractImages(prop.images);
-      const features = extractFeatures(prop.features);
+      const roomFeatures = extractRoomFeatures(prop.features);
+      const floorArea = extractFloorArea(prop.floor_area);
+      const erfSize = extractErfSize(prop.erf_size);
 
-      const address = `${prop.address_line}, ${suburb.name}, ${suburb.city}`;
+      // Get first agent from the agents array
+      const agentIds = parseAgentIds(prop.agents);
+      const primaryAgent = agentIds.length > 0 ? agentMap[agentIds[0]] : null;
+
+      const address = `${prop.address_line}, ${suburb.name}`;
 
       return {
-        id: `property-${prop.property_id}`,
+        id: prop.property_id,
         address: address,
         price: parseInt(prop.list_price) || 0,
+        currencySymbol: prop.currency_symbol || 'R',
         bedrooms: beds,
         bathrooms: baths,
+        parkingSpaces: parking,
         imageUrls: imageUrls,
-        description: (prop.marketing_description || '').split('\n')[0].substring(0, 150),
-        agentName: 'Property Agent',
-        agentPhone: '+27 00 000 0000',
-        agentEmail: 'agent@example.com',
-        features: features.length > 0 ? features : ['Modern Property'],
+
+        // Full marketing description
+        description: prop.marketing_description || '',
+        marketingHeading: prop.marketing_heading || '',
+
+        // Agent details from agents CSV
+        agentName: primaryAgent ? primaryAgent.fullName : 'Property Agent',
+        agentPhone: primaryAgent ? primaryAgent.phone : '',
+        agentEmail: primaryAgent ? primaryAgent.email : '',
+
+        // Room-by-room features for detailed display
+        roomFeatures: roomFeatures,
+
+        // Property highlights/amenities (boolean flags)
+        highlights: {
+          backupBattery: prop.backup_battery === 'TRUE',
+          borehole: prop.borehole === 'TRUE',
+          solarPanels: prop.solar_panels === 'TRUE',
+          solarGeyser: prop.solar_geyser === 'TRUE',
+          gasGeyser: prop.gas_geyser === 'TRUE',
+          waterTank: prop.water_tank === 'TRUE'
+        },
+
+        // Size information
+        floorArea: floorArea,
+        erfSize: erfSize,
+        furnishedType: prop.furnished_type || null,
+
+        // Property info
+        levy: parseInt(prop.levy) || null,
+        rates: parseInt(prop.rates) || null,
+        ownershipType: prop.ownership_type || null,
+        petsAllowed: prop.pets_allowed === 'TRUE',
+
+        // Dates
+        listedDate: formatDate(prop.created),
+        updatedDate: formatDate(prop.change_date),
+
+        // Location
         location: suburb.name,
-        propertyType: prop.property_type.includes('House') ? 'House' :
-                     prop.property_type.includes('Apartment') ? 'Apartment' :
-                     prop.property_type.includes('Townhouse') ? 'Townhouse' : 'Property'
+        city: suburb.city,
+        province: suburb.province,
+
+        // Property type
+        propertyType: prop.property_type || 'Property'
       };
     });
 
@@ -166,8 +376,9 @@ function convertProperties() {
   converted.forEach(prop => {
     console.log(`✓ ${prop.id}`);
     console.log(`  Address: ${prop.address}`);
-    console.log(`  Price: R${prop.price.toLocaleString()}`);
-    console.log(`  Details: ${prop.bedrooms} bed, ${prop.bathrooms} bath | ${prop.imageUrls.length} images`);
+    console.log(`  Price: ${prop.currencySymbol}${prop.price.toLocaleString()}`);
+    console.log(`  Details: ${prop.bedrooms} bed, ${prop.bathrooms} bath, ${prop.parkingSpaces} parking | ${prop.imageUrls.length} images`);
+    console.log(`  Agent: ${prop.agentName} (${prop.agentPhone || 'No phone'})`);
   });
   console.log('');
 

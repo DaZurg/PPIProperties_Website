@@ -122,27 +122,180 @@ function parseFeatures(featuresJSON) {
 }
 
 /**
+ * Extract beds, baths, and parking from features JSON
+ */
+function extractBedsAndBaths(featuresJSON) {
+  let beds = 0;
+  let baths = 0;
+  let parking = 0;
+
+  try {
+    const features = JSON.parse(featuresJSON || '[]');
+    features.forEach(f => {
+      if (f.type === 'Bedroom' && f.value) beds += f.value;
+      else if (f.type === 'Bathroom' && f.value) baths += f.value;
+      else if ((f.type === 'Garage' || f.type === 'Parking') && f.value) parking += f.value;
+    });
+  } catch (e) {}
+
+  return { beds, baths, parking };
+}
+
+/**
+ * Extract detailed room features for display
+ */
+function extractRoomFeatures(featuresJSON) {
+  try {
+    const features = JSON.parse(featuresJSON || '[]');
+    const rooms = {};
+
+    features.forEach(f => {
+      const type = f.type || 'Other';
+      if (!rooms[type]) {
+        rooms[type] = { type, count: 0, items: [] };
+      }
+      rooms[type].count += f.value || 1;
+
+      const item = {
+        value: f.value,
+        description: f.description || '',
+        options: (f.options || []).map(opt => opt.description).filter(d => d)
+      };
+
+      if (item.description || item.options.length > 0) {
+        rooms[type].items.push(item);
+      }
+    });
+
+    return Object.values(rooms);
+  } catch (e) {
+    return [];
+  }
+}
+
+/**
+ * Extract floor area or erf size from JSON object
+ */
+function extractSizeField(sizeJSON) {
+  try {
+    if (!sizeJSON) return null;
+    const data = JSON.parse(sizeJSON);
+    if (data && data.size) {
+      const unit = data.measurementUnit === 'Metresquared' ? 'm²' : (data.measurementUnit || '');
+      return { size: data.size, unit, display: `${data.size} ${unit}` };
+    }
+  } catch (e) {}
+  return null;
+}
+
+/**
+ * Format date for display
+ */
+function formatDate(dateString) {
+  try {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
  * Convert properties data to output format
  */
-function transformProperty(prop, suburb) {
+function transformProperty(prop, suburb, agent) {
   const imageUrls = parseImageUrls(prop.images);
-  const features = parseFeatures(prop.features);
+  const { beds, baths, parking } = extractBedsAndBaths(prop.features);
+  const roomFeatures = extractRoomFeatures(prop.features);
+  const floorArea = extractSizeField(prop.floor_area);
+  const erfSize = extractSizeField(prop.erf_size);
 
   return {
     id: prop.property_id || `property-${Date.now()}`,
     address: `${prop.address_line || ''}${suburb ? `, ${suburb.suburb_name || ''}` : ''}`.trim(),
     price: parseInt(prop.list_price) || 0,
-    bedrooms: parseInt(prop.bedrooms) || 0,
-    bathrooms: parseInt(prop.bathrooms) || 0,
+    currencySymbol: prop.currency_symbol || 'R',
+    bedrooms: beds,
+    bathrooms: baths,
+    parkingSpaces: parking,
     imageUrls: imageUrls,
-    description: (prop.marketing_description || '').substring(0, 300).trim(),
-    agentName: prop.agent_name || 'Property Agent',
-    agentPhone: prop.agent_phone || '',
-    agentEmail: prop.agent_email || '',
-    features: features.length > 0 ? features : ['Property'],
+
+    // Full marketing description
+    description: prop.marketing_description || '',
+    marketingHeading: prop.marketing_heading || '',
+
+    // Agent details
+    agentName: agent ? `${agent.first_name} ${agent.last_name}`.trim() : 'Property Agent',
+    agentPhone: agent ? parsePhoneNumber(agent.telephone_numbers) : '',
+    agentEmail: agent ? agent.email_address : '',
+
+    // Room-by-room features
+    roomFeatures: roomFeatures,
+
+    // Property highlights
+    highlights: {
+      backupBattery: prop.backup_battery === 'TRUE',
+      borehole: prop.borehole === 'TRUE',
+      solarPanels: prop.solar_panels === 'TRUE',
+      solarGeyser: prop.solar_geyser === 'TRUE',
+      gasGeyser: prop.gas_geyser === 'TRUE',
+      waterTank: prop.water_tank === 'TRUE'
+    },
+
+    // Size information
+    floorArea: floorArea,
+    erfSize: erfSize,
+    furnishedType: prop.furnished_type || null,
+
+    // Property info
+    levy: parseInt(prop.levy) || null,
+    rates: parseInt(prop.rates) || null,
+    ownershipType: prop.ownership_type || null,
+    petsAllowed: prop.pets_allowed === 'TRUE',
+
+    // Dates
+    listedDate: formatDate(prop.created),
+    updatedDate: formatDate(prop.change_date),
+
+    // Location
     location: suburb ? suburb.suburb_name : prop.location || 'Unknown',
+    city: suburb ? suburb.city : '',
+    province: suburb ? suburb.province : '',
+
+    // Property type
     propertyType: prop.property_type || 'Property',
   };
+}
+
+/**
+ * Parse first phone number from JSON array
+ */
+function parsePhoneNumber(phoneJSON) {
+  try {
+    if (!phoneJSON) return '';
+    const phones = JSON.parse(phoneJSON);
+    if (Array.isArray(phones) && phones.length > 0) {
+      return phones[0].number || '';
+    }
+  } catch (e) {}
+  return '';
+}
+
+/**
+ * Parse agent IDs from JSON array string
+ */
+function parseAgentIds(agentsJSON) {
+  try {
+    if (!agentsJSON) return [];
+    return JSON.parse(agentsJSON);
+  } catch (e) {
+    return [];
+  }
 }
 
 /**
@@ -167,15 +320,26 @@ export async function fetchGoogleSheetsData() {
     const sheetId = config.sheetId;
     const propertiesSheetName = config.sheets.properties.sheetName;
     const suburbesSheetName = config.sheets.suburbs.sheetName;
+    const agentsSheetName = config.sheets.agents?.sheetName || 'Agents';
     const suburbanKeyColumn = config.sheets.properties.suburbanKeyColumn;
     const suburbKeyColumn = config.sheets.suburbs.keyColumn;
 
-    // Fetch both sheets
+    // Fetch all sheets
     console.log('📥 Fetching data from Google Sheets...');
-    const [propertiesData, suburbsData] = await Promise.all([
+    const sheetsToFetch = [
       fetchSheetData(auth, sheetId, propertiesSheetName),
       fetchSheetData(auth, sheetId, suburbesSheetName),
-    ]);
+    ];
+
+    // Try to fetch agents sheet if configured
+    try {
+      sheetsToFetch.push(fetchSheetData(auth, sheetId, agentsSheetName));
+    } catch (e) {
+      console.log('⚠️  Agents sheet not found, using default agent info');
+      sheetsToFetch.push(Promise.resolve([]));
+    }
+
+    const [propertiesData, suburbsData, agentsData] = await Promise.all(sheetsToFetch);
 
     if (propertiesData.length === 0) {
       throw new Error('No properties found in sheet');
@@ -189,15 +353,29 @@ export async function fetchGoogleSheetsData() {
 
     console.log(`✓ Created suburb lookup map with ${Object.keys(suburbMap).length} suburbs`);
 
+    // Create agent lookup map
+    const agentMap = {};
+    if (agentsData && agentsData.length > 0) {
+      agentsData.forEach(agent => {
+        agentMap[agent.agent_id] = agent;
+      });
+      console.log(`✓ Created agent lookup map with ${Object.keys(agentMap).length} agents`);
+    }
+
     // Filter active properties and transform
     const properties = propertiesData
       .filter(prop => prop.listing_status === 'Active' || !prop.listing_status)
       .map(prop => {
         const suburbId = prop[suburbanKeyColumn];
         const suburb = suburbMap[suburbId];
-        return transformProperty(prop, suburb);
+
+        // Get first agent from agents array
+        const agentIds = parseAgentIds(prop.agents);
+        const primaryAgent = agentIds.length > 0 ? agentMap[agentIds[0]] : null;
+
+        return transformProperty(prop, suburb, primaryAgent);
       })
-      .filter(prop => prop.price > 0 && prop.bedrooms >= 0 && prop.bathrooms >= 0);
+      .filter(prop => prop.price >= 0);
 
     console.log(`✓ Transformed ${properties.length} properties`);
 

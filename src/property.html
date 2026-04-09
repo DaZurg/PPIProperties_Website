@@ -90,7 +90,7 @@ title: "Property Details"
               {%- if property.price %}
                 <div class="detail-price">
                   <span class="detail-price-label">Asking Price</span>
-                  <span class="detail-price-value">R{{ property.price | formatNumber }}</span>
+                  <span class="detail-price-value">{{ property.currencySymbol or 'R' }}{{ property.price | formatNumber }}</span>
                 </div>
               {%- else %}
                 <div class="detail-price">
@@ -108,49 +108,81 @@ title: "Property Details"
 
         <!-- Property Features Row -->
         <div class="detail-features">
-          {%- if property.bedrooms is not none and property.bedrooms >= 0 %}
+          {%- if property.bedrooms is not none and property.bedrooms > 0 %}
             <div class="detail-feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/>
-                <path d="M3 15h18"/>
-                <path d="M3 11h18"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 18v-6a2 2 0 012-2h16a2 2 0 012 2v6"/>
+                <path d="M2 12V8a2 2 0 012-2h2a2 2 0 012 2v2"/>
+                <path d="M22 18H2"/>
+                <path d="M4 18v2"/>
+                <path d="M20 18v2"/>
               </svg>
-              <span>{{ property.bedrooms }}</span>
+              <span>{{ property.bedrooms }} bed</span>
             </div>
           {%- endif %}
 
-          {%- if property.bathrooms is not none and property.bathrooms >= 0 %}
+          {%- if property.bathrooms is not none and property.bathrooms > 0 %}
             <div class="detail-feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M4 12h16a1 1 0 011 1v3a4 4 0 01-4 4H7a4 4 0 01-4-4v-3a1 1 0 011-1z"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12h16"/>
+                <path d="M4 12v6a2 2 0 002 2h12a2 2 0 002-2v-6"/>
                 <path d="M6 12V5a2 2 0 012-2h1"/>
+                <circle cx="9" cy="4" r="1"/>
               </svg>
-              <span>{{ property.bathrooms }}</span>
+              <span>{{ property.bathrooms }} bath</span>
             </div>
           {%- endif %}
 
-          {%- if property.parkingSpaces is not none and property.parkingSpaces >= 0 %}
+          {%- if property.parkingSpaces is not none and property.parkingSpaces > 0 %}
             <div class="detail-feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="6" width="18" height="12" rx="2"/>
-                <circle cx="7" cy="15" r="1.5"/>
-                <circle cx="17" cy="15" r="1.5"/>
-                <path d="M5 10h4l1-2h4l1 2h4"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 17h14v-4a2 2 0 00-2-2H7a2 2 0 00-2 2v4z"/>
+                <path d="M5 17a2 2 0 104 0"/>
+                <path d="M15 17a2 2 0 104 0"/>
+                <path d="M7 11V7a4 4 0 018 0v4"/>
               </svg>
-              <span>{{ property.parkingSpaces }}</span>
+              <span>{{ property.parkingSpaces }} parking</span>
             </div>
           {%- endif %}
 
-          {%- if property.floorArea %}
+          {%- if property.petsAllowed %}
+            <div class="detail-feature detail-feature-pets">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="4" r="2"/>
+                <circle cx="18" cy="8" r="2"/>
+                <circle cx="4" cy="8" r="2"/>
+                <path d="M12 14c-2.5 0-4.5 2-4.5 4.5 0 1.5 1.5 3.5 4.5 3.5s4.5-2 4.5-3.5c0-2.5-2-4.5-4.5-4.5z"/>
+              </svg>
+              <span>Pets OK</span>
+            </div>
+          {%- endif %}
+
+          {%- if property.floorArea and property.floorArea.display %}
             <div class="detail-feature">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                 <path d="M3 9h18M9 21V9"/>
               </svg>
-              <span>{{ property.floorArea }}</span>
+              <span>{{ property.floorArea.display }}</span>
+            </div>
+          {%- endif %}
+
+          {%- if property.erfSize and property.erfSize.display %}
+            <div class="detail-feature">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              </svg>
+              <span>{{ property.erfSize.display }} land</span>
             </div>
           {%- endif %}
         </div>
+
+        <!-- Listed Date -->
+        {%- if property.listedDate %}
+          <div class="detail-listed-date">
+            Listed: {{ property.listedDate }}
+          </div>
+        {%- endif %}
       </section>
     </div>
 
@@ -289,6 +321,20 @@ title: "Property Details"
     color: #6b7280;
   }
 
+  .detail-feature-pets {
+    color: #22c55e;
+  }
+
+  .detail-feature-pets svg {
+    color: #22c55e;
+  }
+
+  .detail-listed-date {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #6b7280;
+  }
+
   /* Agent Sidebar */
   .detail-sidebar {
     position: sticky;
@@ -386,136 +432,399 @@ title: "Property Details"
   }
   </style>
 
-  <!-- Property Details Section - PLACEHOLDER FOR STORY 4.4 -->
-  <section class="mb-8">
+  <!-- Property Details Section -->
+  <section class="property-details-section">
+    <!-- Marketing Heading -->
+    {%- if property.marketingHeading %}
+      <h2 class="property-marketing-heading">{{ property.marketingHeading }}</h2>
+    {%- endif %}
+
     <!-- Property Type & Location Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="property-overview-grid">
       {%- if property.propertyType %}
-        <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
-          <p class="text-sm text-gray-600 font-medium mb-1">Property Type</p>
-          <p class="text-lg font-semibold text-blue-900">{{ property.propertyType }}</p>
+        <div class="property-overview-card property-overview-type">
+          <p class="property-overview-label">Property Type</p>
+          <p class="property-overview-value">{{ property.propertyType | replace("FlatApartment", "Flat/Apartment") }}</p>
         </div>
       {%- endif %}
       {%- if property.location %}
-        <div class="bg-green-50 rounded-lg p-4 border border-green-200">
-          <p class="text-sm text-gray-600 font-medium mb-1">Location</p>
-          <p class="text-lg font-semibold text-green-900">{{ property.location }}</p>
+        <div class="property-overview-card property-overview-location">
+          <p class="property-overview-label">Location</p>
+          <p class="property-overview-value">{{ property.location }}{%- if property.city %}, {{ property.city }}{%- endif %}</p>
+        </div>
+      {%- endif %}
+      {%- if property.ownershipType %}
+        <div class="property-overview-card">
+          <p class="property-overview-label">Ownership</p>
+          <p class="property-overview-value">{{ property.ownershipType | replace("FullFreeTitle", "Full Title") | replace("SectionalTitle", "Sectional Title") }}</p>
+        </div>
+      {%- endif %}
+      {%- if property.furnishedType and property.furnishedType != 'No' %}
+        <div class="property-overview-card">
+          <p class="property-overview-label">Furnished</p>
+          <p class="property-overview-value">{{ property.furnishedType }}</p>
         </div>
       {%- endif %}
     </div>
 
-    <!-- Description Section -->
-    {%- if property.description %}
-      <div class="mb-8 bg-white rounded-lg p-6 border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-900 mb-4">About This Property</h3>
-        <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap">
-          {{- property.description | replace("\r\n", "\n") | replace("\r", "\n") -}}
+    <!-- Property Highlights (green features) -->
+    {%- set hasHighlights = property.highlights and (property.highlights.solarPanels or property.highlights.solarGeyser or property.highlights.gasGeyser or property.highlights.backupBattery or property.highlights.borehole or property.highlights.waterTank) %}
+    {%- if hasHighlights %}
+      <div class="property-highlights">
+        <h3 class="property-section-title">Green & Energy Features</h3>
+        <div class="property-highlights-grid">
+          {%- if property.highlights.solarPanels %}
+            <div class="property-highlight-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              <span>Solar Panels</span>
+            </div>
+          {%- endif %}
+          {%- if property.highlights.solarGeyser %}
+            <div class="property-highlight-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Solar Geyser</span>
+            </div>
+          {%- endif %}
+          {%- if property.highlights.gasGeyser %}
+            <div class="property-highlight-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c1 3 3 5 3 9a3 3 0 11-6 0c0-4 2-6 3-9z"/><path d="M12 22v-3"/></svg>
+              <span>Gas Geyser</span>
+            </div>
+          {%- endif %}
+          {%- if property.highlights.backupBattery %}
+            <div class="property-highlight-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2M10 11v2M14 11v2"/></svg>
+              <span>Backup Battery</span>
+            </div>
+          {%- endif %}
+          {%- if property.highlights.borehole %}
+            <div class="property-highlight-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8M8 6h8M12 10v12"/><circle cx="12" cy="18" r="3"/></svg>
+              <span>Borehole</span>
+            </div>
+          {%- endif %}
+          {%- if property.highlights.waterTank %}
+            <div class="property-highlight-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2h12l2 6v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8l2-6z"/><path d="M4 8h16"/></svg>
+              <span>Water Tank</span>
+            </div>
+          {%- endif %}
         </div>
       </div>
-    {%- else %}
-      <p class="text-gray-500 italic mb-8">No description available for this property.</p>
     {%- endif %}
 
-    <!-- Features as Tags/Pills -->
-    {%- if property.features and property.features.length > 0 %}
-      <div class="mb-8 bg-white rounded-lg p-6 border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-900 mb-4">Property Features</h3>
-        <div class="flex flex-wrap gap-2">
-          {%- for feature in property.features %}
-            <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
-              {{ feature }}
-            </span>
+    <!-- Description Section -->
+    {%- if property.description %}
+      <div class="property-description">
+        <h3 class="property-section-title">About This Property</h3>
+        <div class="property-description-text">
+          {{- property.description | replace("\r\n", "\n") | replace("\r", "\n") | nl2br | safe -}}
+        </div>
+      </div>
+    {%- endif %}
+
+    <!-- Room-by-Room Features -->
+    {%- if property.roomFeatures and property.roomFeatures.length > 0 %}
+      <div class="property-room-features">
+        <h3 class="property-section-title">Room Details & Features</h3>
+        <div class="property-rooms-grid">
+          {%- for room in property.roomFeatures %}
+            <div class="property-room-card">
+              <div class="property-room-header">
+                <span class="property-room-type">{{ room.type | replace("FamilyTVRoom", "Family/TV Room") | replace("DiningRoom", "Dining Room") | replace("InternetAccess", "Internet") | replace("SpecialFeature", "Special Features") | replace("NearbyPublicTransport", "Transport") }}</span>
+                {%- if room.count > 1 or (room.count == 0.5) %}
+                  <span class="property-room-count">
+                    {%- if room.count == 0.5 %}Half{%- else %}{{ room.count }}{%- endif %}
+                  </span>
+                {%- endif %}
+              </div>
+              {%- if room.items and room.items.length > 0 %}
+                <div class="property-room-items">
+                  {%- for item in room.items %}
+                    {%- if item.description %}
+                      <div class="property-room-item-desc">{{ item.description }}</div>
+                    {%- endif %}
+                    {%- if item.options and item.options.length > 0 %}
+                      <div class="property-room-options">
+                        {%- for opt in item.options %}
+                          <span class="property-room-option">{{ opt }}</span>
+                        {%- endfor %}
+                      </div>
+                    {%- endif %}
+                  {%- endfor %}
+                </div>
+              {%- endif %}
+            </div>
           {%- endfor %}
         </div>
       </div>
     {%- endif %}
 
-    <!-- Property Specifications - Story 4.4 -->
-    <div class="bg-white rounded-lg p-6 border border-gray-200">
-      <h3 class="text-xl font-bold text-gray-900 mb-4">Property Specifications</h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        <!-- Bedrooms -->
-        {%- if property.bedrooms is not none and property.bedrooms >= 0 %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">🛏️</span>
-            {%- if property.bedrooms == 1 %}
-              <p class="text-sm font-semibold text-gray-700">{{ property.bedrooms }} Bedroom</p>
-            {%- else %}
-              <p class="text-sm font-semibold text-gray-700">{{ property.bedrooms }} Bedrooms</p>
-            {%- endif %}
-          </div>
-        {%- endif %}
-
-        <!-- Bathrooms -->
-        {%- if property.bathrooms is not none and property.bathrooms >= 0 %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">🚿</span>
-            {%- if property.bathrooms == 1 %}
-              <p class="text-sm font-semibold text-gray-700">{{ property.bathrooms }} Bathroom</p>
-            {%- else %}
-              <p class="text-sm font-semibold text-gray-700">{{ property.bathrooms }} Bathrooms</p>
-            {%- endif %}
-          </div>
-        {%- endif %}
-
-        <!-- Parking Spaces -->
-        {%- if property.parkingSpaces is not none and property.parkingSpaces >= 0 %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">🅿️</span>
-            {%- if property.parkingSpaces == 1 %}
-              <p class="text-sm font-semibold text-gray-700">{{ property.parkingSpaces }} Space</p>
-            {%- else %}
-              <p class="text-sm font-semibold text-gray-700">{{ property.parkingSpaces }} Spaces</p>
-            {%- endif %}
-          </div>
-        {%- endif %}
-
-        <!-- Pets Allowed -->
-        {%- if property.allowsPets is not none %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">🐾</span>
-            {%- if property.allowsPets %}
-              <p class="text-sm font-semibold text-gray-700">Pets Allowed</p>
-            {%- else %}
-              <p class="text-sm font-semibold text-gray-700">No Pets</p>
-            {%- endif %}
-          </div>
-        {%- endif %}
-
-        <!-- Solar Panels - Only show if true -->
-        {%- if property.hasSolar %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">☀️</span>
-            <p class="text-sm font-semibold text-gray-700">Solar Panels</p>
-          </div>
-        {%- endif %}
-
-        <!-- Security System - Only show if true -->
-        {%- if property.hasSecurity %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">🔒</span>
-            <p class="text-sm font-semibold text-gray-700">Security System</p>
-          </div>
-        {%- endif %}
-
-        <!-- Floor Area -->
-        {%- if property.floorArea %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">📐</span>
-            <p class="text-sm font-semibold text-gray-700">{{ property.floorArea }}</p>
-          </div>
-        {%- endif %}
-
-        <!-- Land Size -->
-        {%- if property.landSize %}
-          <div class="flex flex-col items-center text-center p-3 bg-white rounded-lg border border-gray-200">
-            <span aria-hidden="true" class="text-3xl mb-2">🏡</span>
-            <p class="text-sm font-semibold text-gray-700">{{ property.landSize }}</p>
-          </div>
-        {%- endif %}
+    <!-- Property Info (Levy, Rates, etc) -->
+    {%- if property.levy or property.rates or property.petsAllowed %}
+      <div class="property-info-section">
+        <h3 class="property-section-title">Property Information</h3>
+        <div class="property-info-grid">
+          {%- if property.levy %}
+            <div class="property-info-item">
+              <span class="property-info-label">Monthly Levy</span>
+              <span class="property-info-value">{{ property.currencySymbol or 'R' }}{{ property.levy | formatNumber }}</span>
+            </div>
+          {%- endif %}
+          {%- if property.rates %}
+            <div class="property-info-item">
+              <span class="property-info-label">Monthly Rates</span>
+              <span class="property-info-value">{{ property.currencySymbol or 'R' }}{{ property.rates | formatNumber }}</span>
+            </div>
+          {%- endif %}
+          {%- if property.petsAllowed %}
+            <div class="property-info-item">
+              <span class="property-info-label">Pets</span>
+              <span class="property-info-value property-info-pets-yes">Pets Allowed</span>
+            </div>
+          {%- endif %}
+        </div>
       </div>
-    </div>
+    {%- endif %}
   </section>
+
+  <!-- Property Details Styles -->
+  <style>
+  .property-details-section {
+    margin-bottom: 32px;
+  }
+
+  .property-marketing-heading {
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 20px;
+  }
+
+  .property-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .property-overview-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .property-overview-card {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .property-overview-type {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+
+  .property-overview-location {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  .property-overview-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0 0 4px 0;
+  }
+
+  .property-overview-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+  }
+
+  .property-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 16px 0;
+  }
+
+  /* Green Features/Highlights */
+  .property-highlights {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .property-highlights .property-section-title {
+    color: #166534;
+  }
+
+  .property-highlights-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .property-highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #166534;
+    border: 1px solid #86efac;
+  }
+
+  .property-highlight-item svg {
+    color: #22c55e;
+  }
+
+  /* Description */
+  .property-description {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .property-description-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #4b5563;
+  }
+
+  /* Room Features */
+  .property-room-features {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .property-rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .property-rooms-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .property-rooms-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .property-room-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .property-room-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .property-room-type {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .property-room-count {
+    background: #2563eb;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .property-room-items {
+    font-size: 13px;
+    color: #6b7280;
+  }
+
+  .property-room-item-desc {
+    font-style: italic;
+    margin-bottom: 6px;
+    color: #4b5563;
+  }
+
+  .property-room-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .property-room-option {
+    background: #e5e7eb;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #374151;
+  }
+
+  /* Property Info */
+  .property-info-section {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .property-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .property-info-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .property-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .property-info-label {
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .property-info-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .property-info-pets-yes {
+    color: #16a34a;
+  }
+  </style>
 
   <!-- Contact Form Section - Story 4.4 / UX Redesign -->
   <section id="contact-form" class="mb-8 bg-white rounded-lg p-8 border border-gray-200 shadow-md">
@@ -523,11 +832,25 @@ title: "Property Details"
 
       <!-- Success Message (Hidden by default) -->
       <div id="form-success" class="hidden mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <p class="text-green-700 font-semibold">✓ Thank you! Your message has been sent.</p>
+        <p class="text-green-700 font-semibold">Thank you! Your message has been sent to the agent.</p>
       </div>
 
-      <!-- Contact Form -->
-      <form id="agent-contact-form" class="space-y-4">
+      <!-- Error Message (Hidden by default) -->
+      <div id="form-error" class="hidden mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <p class="text-red-700 font-semibold">There was an error sending your message. Please try again.</p>
+      </div>
+
+      <!-- Contact Form - Uses Formspree for static site form handling -->
+      <!-- To enable: Create account at formspree.io and replace YOUR_FORM_ID with your form ID -->
+      <form id="agent-contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4">
+        <!-- Hidden fields for property context -->
+        <input type="hidden" name="property_id" value="{{ property.id }}">
+        <input type="hidden" name="property_address" value="{{ property.address }}{% if property.location %}, {{ property.location }}{% endif %}">
+        <input type="hidden" name="property_url" id="property-url-field" value="">
+        <input type="hidden" name="agent_name" value="{{ property.agentName }}">
+        <input type="hidden" name="agent_email" value="{{ property.agentEmail }}">
+        <input type="hidden" name="_subject" value="Property Inquiry: {{ property.address }}">
+
         <!-- Name Field -->
         <div>
           <label for="form-name" class="block text-sm font-semibold text-gray-700 mb-1">
@@ -559,6 +882,21 @@ title: "Property Details"
           />
         </div>
 
+        <!-- Phone Field (optional) -->
+        <div>
+          <label for="form-phone" class="block text-sm font-semibold text-gray-700 mb-1">
+            Phone Number (optional)
+          </label>
+          <input
+            type="tel"
+            id="form-phone"
+            name="phone"
+            maxlength="20"
+            placeholder="Your phone number"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
         <!-- Message Field -->
         <div>
           <label for="form-message" class="block text-sm font-semibold text-gray-700 mb-1">
@@ -568,25 +906,29 @@ title: "Property Details"
             id="form-message"
             name="message"
             required
-            maxlength="500"
+            maxlength="1000"
             rows="4"
             placeholder="Tell us what you'd like to know about this property..."
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           ></textarea>
           <p class="text-xs text-gray-500 mt-1">
-            <span id="char-count">0</span>/500 characters
+            <span id="char-count">0</span>/1000 characters
           </p>
         </div>
 
         <!-- Submit Button -->
         <button
           type="submit"
+          id="form-submit-btn"
           class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Send Message
         </button>
+
+        <p class="text-xs text-gray-500 text-center mt-2">
+          By submitting, you agree to be contacted regarding this property inquiry.
+        </p>
       </form>
-    </div>
   </section>
 
   <!-- Footer Navigation - Repeated for Easy Access -->
@@ -627,6 +969,14 @@ title: "Property Details"
 
 <!-- Contact Form Validation & Character Counter - Story 4.4 -->
 <script>
+  // Set the property URL in the hidden field on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const propertyUrlField = document.getElementById('property-url-field');
+    if (propertyUrlField) {
+      propertyUrlField.value = window.location.href;
+    }
+  });
+
   // Character counter for message field
   const messageField = document.getElementById('form-message');
   const charCountDisplay = document.getElementById('char-count');
@@ -640,6 +990,7 @@ title: "Property Details"
   // Form validation and submission
   const contactForm = document.getElementById('agent-contact-form');
   const successMessage = document.getElementById('form-success');
+  const errorMessage = document.getElementById('form-error');
   let successMessageTimeout = null;
 
   if (contactForm) {
@@ -650,11 +1001,10 @@ title: "Property Details"
       const nameField = document.getElementById('form-name');
       const emailField = document.getElementById('form-email');
       const messageField = document.getElementById('form-message');
-      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const submitButton = document.getElementById('form-submit-btn');
 
       // Validate all form elements exist
       if (!nameField || !emailField || !messageField) {
-        alert('Form elements not found.');
         return;
       }
 
@@ -669,16 +1019,21 @@ title: "Property Details"
         return;
       }
 
-      // Validate email format (improved regex: at least 2-char TLD)
+      // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (!emailRegex.test(email)) {
         alert('Please enter a valid email address.');
         return;
       }
 
-      // Disable submit button to prevent race condition
+      // Hide any previous messages
+      if (successMessage) successMessage.classList.add('hidden');
+      if (errorMessage) errorMessage.classList.add('hidden');
+
+      // Disable submit button and show loading state
       if (submitButton) {
         submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
       }
 
       // Clear any existing timeout
@@ -686,29 +1041,22 @@ title: "Property Details"
         clearTimeout(successMessageTimeout);
       }
 
-      // Submit form to backend
-      const propertyId = document.querySelector('article').getAttribute('data-property-id') || 'unknown';
-      const formData = {
-        propertyId: propertyId,
-        name: name,
-        email: email,
-        message: message,
-        submittedAt: new Date().toISOString()
-      };
+      // Submit form via Formspree
+      const formData = new FormData(contactForm);
 
-      fetch('/api/contact', {
+      fetch(contactForm.action, {
         method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+          'Accept': 'application/json'
+        }
       })
       .then(response => {
         if (response.ok) {
           // Show success message
           if (successMessage) {
             successMessage.classList.remove('hidden');
-            successMessage.setAttribute('aria-live', 'polite');
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
 
           // Reset form
@@ -717,24 +1065,38 @@ title: "Property Details"
             charCountDisplay.textContent = '0';
           }
 
-          // Hide success message after 5 seconds
+          // Re-set property URL after reset
+          const propertyUrlField = document.getElementById('property-url-field');
+          if (propertyUrlField) {
+            propertyUrlField.value = window.location.href;
+          }
+
+          // Hide success message after 10 seconds
           successMessageTimeout = setTimeout(function() {
             if (successMessage) {
               successMessage.classList.add('hidden');
             }
-          }, 5000);
+          }, 10000);
         } else {
-          alert('Failed to submit form. Please try again.');
+          // Show error message
+          if (errorMessage) {
+            errorMessage.classList.remove('hidden');
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
       })
       .catch(error => {
         console.error('Form submission error:', error);
-        alert('An error occurred. Please try again.');
+        if (errorMessage) {
+          errorMessage.classList.remove('hidden');
+          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       })
       .finally(() => {
         // Re-enable submit button
         if (submitButton) {
           submitButton.disabled = false;
+          submitButton.textContent = 'Send Message';
         }
       });
     });
