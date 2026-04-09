@@ -319,14 +319,17 @@
         return false;
       }
 
-      // Location filter (case-insensitive)
-      if (filters.location && property.location) {
-        if (property.location.toLowerCase() !== filters.location.toLowerCase()) {
+      // Location filter (supports comma-separated list of locations)
+      if (filters.location && filters.location.length > 0) {
+        if (!property.location) {
+          // Exclude property if filter is active but property has no location
           return false;
         }
-      } else if (filters.location && !property.location) {
-        // Exclude property if filter is active but property has no location
-        return false;
+        // Check if property location matches any of the selected locations
+        const selectedLocations = filters.location.split(',').map(l => l.trim().toLowerCase());
+        if (!selectedLocations.includes(property.location.toLowerCase())) {
+          return false;
+        }
       }
 
       // Property passes all filters

@@ -1,0 +1,47 @@
+{
+  "provinces": [
+    {
+      "name": "Gauteng",
+      "slug": "gauteng",
+      "cities": [
+        {
+          "name": "Johannesburg",
+          "slug": "johannesburg",
+          "suburbs": ["Glenhazel", "Norwood", "Sandton", "Rosebank", "Melrose", "Hyde Park"]
+        },
+        {
+          "name": "Pretoria",
+          "slug": "pretoria",
+          "suburbs": ["Moregloed", "Ninapark", "Centurion", "Menlo Park", "Waterkloof", "Brooklyn"]
+        },
+        {
+          "name": "Roodepoort",
+          "slug": "roodepoort",
+          "suburbs": ["Florida Park", "Florida", "Honeydew", "Constantia Kloof"]
+        }
+      ]
+    },
+    {
+      "name": "Western Cape",
+      "slug": "western-cape",
+      "cities": [
+        {
+          "name": "Cape Town",
+          "slug": "cape-town",
+          "suburbs": ["Sea Point", "Camps Bay", "Constantia", "Newlands", "Claremont"]
+        }
+      ]
+    },
+    {
+      "name": "KwaZulu-Natal",
+      "slug": "kwazulu-natal",
+      "cities": [
+        {
+          "name": "Durban",
+          "slug": "durban",
+          "suburbs": ["Umhlanga", "Ballito", "Morningside", "Berea"]
+        }
+      ]
+    }
+  ]
+}
