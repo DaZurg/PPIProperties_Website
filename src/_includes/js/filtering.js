@@ -35,35 +35,55 @@
   }
 
   /**
+   * Get the value from a filter element (handles both selects and radio buttons)
+   *
+   * @param {string} filterName - The data-filter attribute value
+   * @returns {string} The selected value or empty string
+   */
+  function getFilterValue(filterName) {
+    // First try to find a checked radio button
+    const checkedRadio = document.querySelector('[data-filter="' + filterName + '"]:checked');
+    if (checkedRadio) {
+      return checkedRadio.value;
+    }
+
+    // Fall back to select/input element
+    const element = document.querySelector('[data-filter="' + filterName + '"]');
+    if (element) {
+      return element.value;
+    }
+
+    return '';
+  }
+
+  /**
    * Get current filter values from form controls
    *
-   * @returns {Object} Filter object with type, priceMin, priceMax, bedrooms, location
+   * @returns {Object} Filter object with type, priceMin, priceMax, bedrooms, bathrooms, location
    */
   function getFilterValues() {
-    const typeElement = document.querySelector('[data-filter="type"]');
-    const priceMinElement = document.querySelector('[data-filter="price-min"]');
-    const priceMaxElement = document.querySelector('[data-filter="price-max"]');
-    const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
-    const locationElement = document.querySelector('[data-filter="location"]');
-
-    // Read values and convert to appropriate types
-    const type = typeElement ? typeElement.value : '';
-    const priceMinStr = priceMinElement ? priceMinElement.value : '';
-    const priceMaxStr = priceMaxElement ? priceMaxElement.value : '';
-    const bedroomsStr = bedroomsElement ? bedroomsElement.value : '';
-    const location = locationElement ? locationElement.value : '';
+    // Read values - handles both radio buttons and select elements
+    const type = getFilterValue('type');
+    const priceMinStr = getFilterValue('price-min');
+    const priceMaxStr = getFilterValue('price-max');
+    const bedroomsStr = getFilterValue('bedrooms');
+    const bathroomsStr = getFilterValue('bathrooms');
+    const location = getFilterValue('location');
 
     // Convert numeric values, handling empty strings and invalid numbers
     const priceMin = priceMinStr ? parseFloat(priceMinStr) : null;
     const priceMax = priceMaxStr ? parseFloat(priceMaxStr) : null;
     const bedrooms = bedroomsStr ? parseInt(bedroomsStr, 10) : null;
+    const bathrooms = bathroomsStr ? parseInt(bathroomsStr, 10) : null;
 
     // Validate numeric conversions (treat NaN as null)
+    // For price, 0 means "Any" so treat as null
     return {
       type: type || null,
-      priceMin: (priceMin !== null && !isNaN(priceMin) && priceMin >= 0) ? priceMin : null,
-      priceMax: (priceMax !== null && !isNaN(priceMax) && priceMax >= 0) ? priceMax : null,
-      bedrooms: (bedrooms !== null && !isNaN(bedrooms) && bedrooms >= 0) ? bedrooms : null,
+      priceMin: (priceMin !== null && !isNaN(priceMin) && priceMin > 0) ? priceMin : null,
+      priceMax: (priceMax !== null && !isNaN(priceMax) && priceMax > 0 && priceMax < 10000000) ? priceMax : null,
+      bedrooms: (bedrooms !== null && !isNaN(bedrooms) && bedrooms > 0) ? bedrooms : null,
+      bathrooms: (bathrooms !== null && !isNaN(bathrooms) && bathrooms > 0) ? bathrooms : null,
       location: location || null
     };
   }
@@ -83,6 +103,7 @@
     if (filters.priceMin !== null) state.priceMin = filters.priceMin;
     if (filters.priceMax !== null) state.priceMax = filters.priceMax;
     if (filters.bedrooms !== null) state.bedrooms = filters.bedrooms;
+    if (filters.bathrooms !== null) state.bathrooms = filters.bathrooms;
     if (filters.location !== null) state.location = filters.location;
 
     return state;
@@ -146,6 +167,30 @@
   }
 
   /**
+   * Set a filter value (handles both radio buttons and select/input elements)
+   *
+   * @param {string} filterName - The data-filter attribute value
+   * @param {string} value - The value to set
+   */
+  function setFilterValue(filterName, value) {
+    const valueStr = String(value);
+
+    // Try to find and check a radio button with matching value
+    const radioSelector = '[data-filter="' + filterName + '"][value="' + valueStr + '"]';
+    const radio = document.querySelector(radioSelector);
+    if (radio && radio.type === 'radio') {
+      radio.checked = true;
+      return;
+    }
+
+    // Fall back to setting value on select/input element
+    const element = document.querySelector('[data-filter="' + filterName + '"]');
+    if (element) {
+      element.value = valueStr;
+    }
+  }
+
+  /**
    * Restore filter state by applying saved values to form controls
    * Called on page load to restore previous filter selections
    */
@@ -157,40 +202,28 @@
 
     try {
       // Apply each saved filter value to corresponding form control
-      // Use consistent type validation for all fields
       if (typeof state.type === 'string' && state.type) {
-        const typeElement = document.querySelector('[data-filter="type"]');
-        if (typeElement) {
-          typeElement.value = state.type;
-        }
+        setFilterValue('type', state.type);
       }
 
       if (typeof state.priceMin === 'number') {
-        const priceMinElement = document.querySelector('[data-filter="price-min"]');
-        if (priceMinElement) {
-          priceMinElement.value = String(state.priceMin);
-        }
+        setFilterValue('price-min', state.priceMin);
       }
 
       if (typeof state.priceMax === 'number') {
-        const priceMaxElement = document.querySelector('[data-filter="price-max"]');
-        if (priceMaxElement) {
-          priceMaxElement.value = String(state.priceMax);
-        }
+        setFilterValue('price-max', state.priceMax);
       }
 
       if (typeof state.bedrooms === 'number') {
-        const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
-        if (bedroomsElement) {
-          bedroomsElement.value = String(state.bedrooms);
-        }
+        setFilterValue('bedrooms', state.bedrooms);
+      }
+
+      if (typeof state.bathrooms === 'number') {
+        setFilterValue('bathrooms', state.bathrooms);
       }
 
       if (typeof state.location === 'string' && state.location) {
-        const locationElement = document.querySelector('[data-filter="location"]');
-        if (locationElement) {
-          locationElement.value = state.location;
-        }
+        setFilterValue('location', state.location);
       }
 
       // Trigger filtering to show correct results based on restored filters
@@ -231,7 +264,7 @@
     }
 
     // Handle edge case: no filters selected - return all properties
-    if (!filters.type && !filters.priceMin && !filters.priceMax && !filters.bedrooms && !filters.location) {
+    if (!filters.type && !filters.priceMin && !filters.priceMax && !filters.bedrooms && !filters.bathrooms && !filters.location) {
       return properties;
     }
 
@@ -273,6 +306,16 @@
         }
       } else if (filters.bedrooms !== null && (property.bedrooms === undefined || property.bedrooms === null || property.bedrooms === 0)) {
         // Exclude property if filter is active but property has no/zero bedrooms
+        return false;
+      }
+
+      // Bathrooms filter (property must have >= selected bathrooms)
+      if (filters.bathrooms !== null && property.bathrooms !== undefined && property.bathrooms !== null) {
+        if (property.bathrooms < filters.bathrooms) {
+          return false;
+        }
+      } else if (filters.bathrooms !== null && (property.bathrooms === undefined || property.bathrooms === null || property.bathrooms === 0)) {
+        // Exclude property if filter is active but property has no/zero bathrooms
         return false;
       }
 
@@ -514,22 +557,37 @@
   }
 
   /**
+   * Reset a filter to its default "Any" value (handles radio buttons and selects)
+   *
+   * @param {string} filterName - The data-filter attribute value
+   */
+  function resetFilterValue(filterName) {
+    // For radio buttons, check the one with empty value
+    const emptyRadio = document.querySelector('[data-filter="' + filterName + '"][value=""]');
+    if (emptyRadio && emptyRadio.type === 'radio') {
+      emptyRadio.checked = true;
+      return;
+    }
+
+    // For select elements, set to empty or first option
+    const element = document.querySelector('[data-filter="' + filterName + '"]');
+    if (element) {
+      element.value = '';
+    }
+  }
+
+  /**
    * Clear all filters and show all properties
    */
   function clearAllFilters() {
     try {
-      // Reset all filter controls
-      const typeElement = document.querySelector('[data-filter="type"]');
-      const priceMinElement = document.querySelector('[data-filter="price-min"]');
-      const priceMaxElement = document.querySelector('[data-filter="price-max"]');
-      const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
-      const locationElement = document.querySelector('[data-filter="location"]');
-
-      if (typeElement) typeElement.value = '';
-      if (priceMinElement) priceMinElement.value = '';
-      if (priceMaxElement) priceMaxElement.value = '';
-      if (bedroomsElement) bedroomsElement.value = '';
-      if (locationElement) locationElement.value = '';
+      // Reset all filter controls using the helper
+      resetFilterValue('type');
+      resetFilterValue('price-min');
+      resetFilterValue('price-max');
+      resetFilterValue('bedrooms');
+      resetFilterValue('bathrooms');
+      resetFilterValue('location');
 
       // Clear persisted filter state
       clearFilterState();
@@ -553,20 +611,26 @@
         return;
       }
 
-      // Add event listeners to all filter controls
-      const typeElement = document.querySelector('[data-filter="type"]');
-      const priceMinElement = document.querySelector('[data-filter="price-min"]');
-      const priceMaxElement = document.querySelector('[data-filter="price-max"]');
-      const bedroomsElement = document.querySelector('[data-filter="bedrooms"]');
-      const locationElement = document.querySelector('[data-filter="location"]');
-      const clearButton = document.querySelector('[data-filter-action="clear"]');
+      // Add event listeners to ALL filter controls (both radio buttons and selects)
+      // For radio buttons, we need to add listeners to each one
+      const allFilterInputs = document.querySelectorAll('[data-filter]');
+      allFilterInputs.forEach(function(input) {
+        const filterType = input.getAttribute('data-filter');
 
-      if (typeElement) typeElement.addEventListener('change', handleFilterChange);
-      if (priceMinElement) priceMinElement.addEventListener('input', handleFilterChange);
-      if (priceMaxElement) priceMaxElement.addEventListener('input', handleFilterChange);
-      if (bedroomsElement) bedroomsElement.addEventListener('change', handleFilterChange);
-      if (locationElement) locationElement.addEventListener('change', handleFilterChange);
-      if (clearButton) clearButton.addEventListener('click', clearAllFilters);
+        // Use 'change' event for radio buttons and selects
+        if (input.type === 'radio' || input.tagName === 'SELECT') {
+          input.addEventListener('change', handleFilterChange);
+        } else {
+          // Use 'input' event for text inputs (like price range inputs)
+          input.addEventListener('input', handleFilterChange);
+        }
+      });
+
+      // Clear button
+      const clearButton = document.querySelector('[data-filter-action="clear"]');
+      if (clearButton) {
+        clearButton.addEventListener('click', clearAllFilters);
+      }
 
       // Restore filter state if available (will trigger handleFilterChange internally)
       const savedState = loadFilterState();
@@ -587,5 +651,9 @@
   } else {
     initFiltering();
   }
+
+  // Expose functions to window for external use (by filter-bar.html)
+  window.filterProperties = handleFilterChange;
+  window.applyPropertyFilters = handleFilterChange;
 
 })();

@@ -7,13 +7,15 @@
 {%- if property.imageUrls and property.imageUrls.length > 0 %}
 
 <!-- Gallery Container - OneRoof Layout -->
-<div class="gallery-oneroof">
+<div class="gallery-oneroof" id="property-gallery">
   <!-- Main Image (Left - Large) -->
-  <div class="gallery-main" id="gallery-main-container">
-    <img id="main-image" src="{{ property.imageUrls[0] }}" alt="Property main image" onclick="openLightbox(currentIndex)">
+  <div class="gallery-main">
+    <img id="main-image" src="/images/property-{{ property.id }}-0-1024.webp"
+         onerror="this.onerror=null; this.src='{{ property.imageUrls[0] }}';"
+         alt="Property main image">
 
     <!-- Pictures Tab -->
-    <button type="button" class="gallery-tab active" onclick="openLightbox(0)">
+    <button type="button" class="gallery-tab" id="gallery-open-lightbox">
       <span class="gallery-tab-count">{{ property.imageUrls.length }}</span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -23,9 +25,9 @@
       Pictures
     </button>
 
-    <!-- Share & Save Icons (OneRoof style) -->
+    <!-- Share & Save Icons -->
     <div class="gallery-actions">
-      <button type="button" class="gallery-action-btn" onclick="shareProperty()" aria-label="Share property">
+      <button type="button" class="gallery-action-btn" id="gallery-share-btn" aria-label="Share property">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="18" cy="5" r="3"></circle>
           <circle cx="6" cy="12" r="3"></circle>
@@ -34,7 +36,7 @@
           <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
         </svg>
       </button>
-      <button type="button" class="gallery-action-btn" onclick="saveProperty()" aria-label="Save property">
+      <button type="button" class="gallery-action-btn" id="gallery-save-btn" aria-label="Save property">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
         </svg>
@@ -51,24 +53,22 @@
   </div>
 
   <!-- Thumbnail Grid (Right - 2x2) -->
-  <div class="gallery-thumbs" id="gallery-thumbs-container">
+  <div class="gallery-thumbs" id="gallery-thumbs">
     {%- for url in property.imageUrls %}
       {%- if loop.index0 >= 1 and loop.index0 <= 4 %}
-        <button
-          type="button"
-          class="gallery-thumb{% if loop.index0 == 1 %} active{% endif %}"
-          data-index="{{ loop.index0 }}"
-        >
-          <img src="{{ url }}" alt="Thumbnail {{ loop.index }}">
+        <button type="button" class="gallery-thumb" data-index="{{ loop.index0 }}">
+          <img src="/images/property-{{ property.id }}-{{ loop.index0 }}-640.webp"
+               onerror="this.onerror=null; this.src='{{ url }}';"
+               alt="Thumbnail {{ loop.index }}"
+               loading="lazy">
           {%- if loop.index0 == 4 and property.imageUrls.length > 5 %}
-            <div class="gallery-thumb-more">
+            <div class="gallery-thumb-more" data-action="open-lightbox">
               +{{ property.imageUrls.length - 5 }}
             </div>
           {%- endif %}
         </button>
       {%- endif %}
     {%- endfor %}
-    <!-- Fill empty slots if fewer than 4 thumbnails -->
     {%- set thumbCount = property.imageUrls.length - 1 %}
     {%- if thumbCount < 4 %}
       {%- for i in range(thumbCount, 4) %}
@@ -79,23 +79,23 @@
 </div>
 
 <!-- FULLSCREEN LIGHTBOX -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
-  <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close gallery">
+<div id="lightbox" class="lightbox">
+  <button type="button" class="lightbox-close" id="lightbox-close-btn" aria-label="Close gallery">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
   </button>
 
-  <div class="lightbox-content" onclick="event.stopPropagation()">
+  <div class="lightbox-content">
     <img id="lightbox-image" src="" alt="Property image fullscreen">
   </div>
 
-  <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); changeLightboxImage(-1)" aria-label="Previous">
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev-btn" aria-label="Previous">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
   </button>
 
-  <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); changeLightboxImage(1)" aria-label="Next">
+  <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next-btn" aria-label="Next">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
   </button>
 
@@ -104,14 +104,13 @@
   </div>
 
   <!-- Lightbox Thumbnail Strip -->
-  <div class="lightbox-thumbnails">
+  <div class="lightbox-thumbnails" id="lightbox-thumbnails">
     {%- for url in property.imageUrls %}
-      <button
-        class="lightbox-thumb{% if loop.index0 == 0 %} active{% endif %}"
-        data-index="{{ loop.index0 }}"
-        onclick="event.stopPropagation(); goToLightboxImage({{ loop.index0 }})"
-      >
-        <img src="{{ url }}" alt="Thumbnail {{ loop.index }}">
+      <button type="button" class="lightbox-thumb{% if loop.index0 == 0 %} active{% endif %}" data-index="{{ loop.index0 }}">
+        <img src="/images/property-{{ property.id }}-{{ loop.index0 }}-640.webp"
+             onerror="this.onerror=null; this.src='{{ url }}';"
+             alt="Thumbnail {{ loop.index }}"
+             loading="lazy">
       </button>
     {%- endfor %}
   </div>
@@ -465,26 +464,166 @@
 </style>
 
 <script>
+// Gallery JavaScript - Property Detail Page Carousel & Lightbox
 (function() {
-  const imageUrls = {{ property.imageUrls | dump }};
-  let currentIndex = 0;
-  let lightboxOpen = false;
+  'use strict';
 
-  // Wait for DOM to be ready
-  document.addEventListener('DOMContentLoaded', function() {
-    initGallery();
-  });
+  // Image URLs from the property data
+  var propertyId = '{{ property.id }}';
+  var remoteUrls = {{ property.imageUrls | dump | safe }};
+  var totalImages = remoteUrls.length;
+  var currentIndex = 0;
+  var lightboxOpen = false;
 
-  function initGallery() {
-    // Gallery navigation arrows
-    const prevBtn = document.getElementById('gallery-prev-btn');
-    const nextBtn = document.getElementById('gallery-next-btn');
+  // Get optimized local image URL (with size: 640, 1024, or 1920)
+  function getLocalUrl(index, size) {
+    return '/images/property-' + propertyId + '-' + index + '-' + size + '.webp';
+  }
+
+  // Get remote URL for an image index (fallback)
+  function getRemoteUrl(index) {
+    if (index >= 0 && index < remoteUrls.length) {
+      return remoteUrls[index];
+    }
+    return '';
+  }
+
+  // Initialize all event handlers
+  function init() {
+    console.log('Gallery init: ' + totalImages + ' images');
+
+    // Gallery navigation arrows - direct binding
+    bindArrowEvents();
+
+    // Thumbnail clicks - event delegation
+    bindThumbnailEvents();
+
+    // Main image click - open lightbox
+    bindMainImageEvents();
+
+    // Lightbox controls
+    bindLightboxEvents();
+
+    // Share/Save buttons
+    bindActionButtons();
+
+    // Keyboard navigation
+    bindKeyboardEvents();
+
+    // Set initial state - show first image
+    updateMainImage(0);
+    updateThumbnailHighlight(0);
+  }
+
+  function bindArrowEvents() {
+    var prevBtn = document.getElementById('gallery-prev-btn');
+    var nextBtn = document.getElementById('gallery-next-btn');
+
+    if (prevBtn) {
+      // Remove any existing listeners by cloning
+      var newPrev = prevBtn.cloneNode(true);
+      prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+      newPrev.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateImage(-1);
+      });
+      // Also handle touch
+      newPrev.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateImage(-1);
+      });
+    }
+
+    if (nextBtn) {
+      var newNext = nextBtn.cloneNode(true);
+      nextBtn.parentNode.replaceChild(newNext, nextBtn);
+      newNext.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateImage(1);
+      });
+      newNext.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateImage(1);
+      });
+    }
+  }
+
+  function bindThumbnailEvents() {
+    var thumbsContainer = document.getElementById('gallery-thumbs');
+    if (!thumbsContainer) return;
+
+    thumbsContainer.addEventListener('click', function(e) {
+      // Check for +X more overlay first
+      var moreOverlay = e.target.closest('.gallery-thumb-more');
+      if (moreOverlay) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Open lightbox at first unseen image (index 5)
+        openLightbox(5);
+        return;
+      }
+
+      // Check for thumbnail button
+      var thumb = e.target.closest('.gallery-thumb');
+      if (thumb) {
+        e.preventDefault();
+        e.stopPropagation();
+        var index = parseInt(thumb.getAttribute('data-index'), 10);
+        if (!isNaN(index) && index >= 0 && index < totalImages) {
+          goToImage(index);
+        }
+      }
+    });
+  }
+
+  function bindMainImageEvents() {
+    var mainImageContainer = document.querySelector('.gallery-main');
+    var mainImage = document.getElementById('main-image');
+
+    if (mainImage) {
+      mainImage.addEventListener('click', function(e) {
+        // Don't open lightbox if clicking on buttons
+        if (e.target.closest('button')) return;
+        e.preventDefault();
+        openLightbox(currentIndex);
+      });
+    }
+
+    // Pictures tab opens lightbox
+    var galleryTab = document.getElementById('gallery-open-lightbox');
+    if (galleryTab) {
+      galleryTab.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openLightbox(currentIndex);
+      });
+    }
+  }
+
+  function bindLightboxEvents() {
+    var lightbox = document.getElementById('lightbox');
+    var closeBtn = document.getElementById('lightbox-close-btn');
+    var prevBtn = document.getElementById('lightbox-prev-btn');
+    var nextBtn = document.getElementById('lightbox-next-btn');
+    var thumbsContainer = document.getElementById('lightbox-thumbnails');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
 
     if (prevBtn) {
       prevBtn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        changeImage(-1);
+        navigateLightbox(-1);
       });
     }
 
@@ -492,184 +631,225 @@
       nextBtn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        changeImage(1);
+        navigateLightbox(1);
       });
     }
 
-    // Thumbnail clicks
-    const thumbsContainer = document.getElementById('gallery-thumbs-container');
     if (thumbsContainer) {
-      thumbsContainer.querySelectorAll('.gallery-thumb').forEach(function(thumb) {
-        thumb.addEventListener('click', function(e) {
+      thumbsContainer.addEventListener('click', function(e) {
+        var thumb = e.target.closest('.lightbox-thumb');
+        if (thumb) {
           e.preventDefault();
           e.stopPropagation();
-          const index = parseInt(this.dataset.index);
+          var index = parseInt(thumb.getAttribute('data-index'), 10);
           if (!isNaN(index)) {
-            goToImage(index);
+            goToLightboxImage(index);
           }
-        });
-      });
-    }
-
-    // Lightbox navigation
-    const lightboxPrev = document.querySelector('.lightbox-prev');
-    const lightboxNext = document.querySelector('.lightbox-next');
-
-    if (lightboxPrev) {
-      lightboxPrev.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        changeLightboxImage(-1);
-      });
-    }
-
-    if (lightboxNext) {
-      lightboxNext.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        changeLightboxImage(1);
-      });
-    }
-
-    // Lightbox thumbnails
-    document.querySelectorAll('.lightbox-thumb').forEach(function(thumb) {
-      thumb.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const index = parseInt(this.dataset.index);
-        if (!isNaN(index)) {
-          goToLightboxImage(index);
         }
       });
-    });
-
-    // Initialize first image
-    goToImage(0);
-  }
-
-  // Make functions globally available
-  window.changeImage = function(direction) {
-    let newIndex = currentIndex + direction;
-    if (newIndex < 0) newIndex = imageUrls.length - 1;
-    if (newIndex >= imageUrls.length) newIndex = 0;
-    goToImage(newIndex);
-  };
-
-  window.goToImage = goToImage;
-  function goToImage(index) {
-    currentIndex = index;
-
-    // Update main image
-    const mainImg = document.getElementById('main-image');
-    if (mainImg) {
-      mainImg.src = imageUrls[index];
     }
 
-    // Update thumbnail highlights (indices 1-4 in the grid)
-    const thumbnails = document.querySelectorAll('.gallery-thumb');
-    thumbnails.forEach(function(thumb) {
-      const thumbIndex = parseInt(thumb.dataset.index);
-      if (thumbIndex === index) {
-        thumb.classList.add('active');
-      } else {
-        thumb.classList.remove('active');
+    // Click outside to close
+    if (lightbox) {
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+    }
+  }
+
+  function bindActionButtons() {
+    var shareBtn = document.getElementById('gallery-share-btn');
+    var saveBtn = document.getElementById('gallery-save-btn');
+
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        shareProperty();
+      });
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        saveProperty();
+      });
+    }
+  }
+
+  function bindKeyboardEvents() {
+    document.addEventListener('keydown', function(e) {
+      if (!lightboxOpen) return;
+
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          navigateLightbox(-1);
+          break;
+        case 'ArrowRight':
+          navigateLightbox(1);
+          break;
       }
     });
   }
 
-  // ========== LIGHTBOX FUNCTIONS ==========
-  window.openLightbox = function(index) {
-    const lightbox = document.getElementById('lightbox');
+  // Navigation functions
+  function navigateImage(direction) {
+    var newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = totalImages - 1;
+    if (newIndex >= totalImages) newIndex = 0;
+    goToImage(newIndex);
+  }
+
+  function goToImage(index) {
+    if (index < 0 || index >= totalImages) return;
+    currentIndex = index;
+    updateMainImage(index);
+    updateThumbnailHighlight(index);
+  }
+
+  function updateMainImage(index) {
+    var mainImg = document.getElementById('main-image');
+    if (!mainImg) return;
+
+    // Use optimized 1024px image with remote fallback
+    var localUrl = getLocalUrl(index, 1024);
+    var remoteUrl = getRemoteUrl(index);
+
+    mainImg.onerror = function() {
+      this.onerror = null;
+      if (remoteUrl) this.src = remoteUrl;
+    };
+    mainImg.src = localUrl;
+  }
+
+  function updateThumbnailHighlight(index) {
+    var thumbs = document.querySelectorAll('#gallery-thumbs .gallery-thumb');
+    thumbs.forEach(function(thumb) {
+      var thumbIndex = parseInt(thumb.getAttribute('data-index'), 10);
+      thumb.classList.toggle('active', thumbIndex === index);
+    });
+  }
+
+  // Lightbox functions
+  function openLightbox(index) {
+    var lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
+
+    // Clamp index to valid range
+    if (index < 0) index = 0;
+    if (index >= totalImages) index = totalImages - 1;
+
     lightbox.classList.add('active');
-    lightbox.offsetHeight; // Trigger reflow
+    // Force reflow for animation
+    void lightbox.offsetHeight;
     lightbox.classList.add('visible');
     lightboxOpen = true;
     document.body.style.overflow = 'hidden';
-    goToLightboxImage(index);
-  };
 
-  window.closeLightbox = function(event) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    const lightbox = document.getElementById('lightbox');
+    goToLightboxImage(index);
+  }
+
+  function closeLightbox() {
+    var lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
+
     lightbox.classList.remove('visible');
     setTimeout(function() {
       lightbox.classList.remove('active');
     }, 300);
     lightboxOpen = false;
     document.body.style.overflow = '';
-  };
+  }
 
-  window.changeLightboxImage = function(direction) {
-    let newIndex = currentIndex + direction;
-    if (newIndex < 0) newIndex = imageUrls.length - 1;
-    if (newIndex >= imageUrls.length) newIndex = 0;
+  function navigateLightbox(direction) {
+    var newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = totalImages - 1;
+    if (newIndex >= totalImages) newIndex = 0;
     goToLightboxImage(newIndex);
-  };
+  }
 
-  window.goToLightboxImage = goToLightboxImage;
   function goToLightboxImage(index) {
+    if (index < 0 || index >= totalImages) return;
     currentIndex = index;
 
-    // Update lightbox image
-    const lightboxImg = document.getElementById('lightbox-image');
+    // Update lightbox image (use large 1920px version with fallback)
+    var lightboxImg = document.getElementById('lightbox-image');
     if (lightboxImg) {
-      lightboxImg.src = imageUrls[index];
+      var localUrl = getLocalUrl(index, 1920);
+      var remoteUrl = getRemoteUrl(index);
+
+      lightboxImg.onerror = function() {
+        this.onerror = null;
+        if (remoteUrl) this.src = remoteUrl;
+      };
+      lightboxImg.src = localUrl;
     }
 
-    // Update lightbox counter
-    const counter = document.getElementById('lightbox-counter');
+    // Update counter
+    var counter = document.getElementById('lightbox-counter');
     if (counter) {
       counter.textContent = index + 1;
     }
 
     // Update lightbox thumbnails
-    const thumbs = document.querySelectorAll('.lightbox-thumb');
-    thumbs.forEach(function(thumb, idx) {
-      if (idx === index) {
-        thumb.classList.add('active');
+    var thumbs = document.querySelectorAll('#lightbox-thumbnails .lightbox-thumb');
+    thumbs.forEach(function(thumb, i) {
+      var isActive = i === index;
+      thumb.classList.toggle('active', isActive);
+      if (isActive) {
         thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      } else {
-        thumb.classList.remove('active');
       }
     });
 
     // Also update main gallery
-    goToImage(index);
+    updateMainImage(index);
+    updateThumbnailHighlight(index);
   }
 
-  // Share & Save placeholder functions
-  window.shareProperty = function() {
+  // Share and save functions
+  function shareProperty() {
     if (navigator.share) {
       navigator.share({
         title: document.title,
         url: window.location.href
+      }).catch(function() {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        alert('Link copied to clipboard!');
       });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
     }
-  };
+  }
 
-  window.saveProperty = function() {
-    alert('Property saved to your favorites!');
-  };
-
-  // Keyboard navigation
-  document.addEventListener('keydown', function(e) {
-    if (lightboxOpen) {
-      if (e.key === 'Escape') window.closeLightbox();
-      if (e.key === 'ArrowLeft') window.changeLightboxImage(-1);
-      if (e.key === 'ArrowRight') window.changeLightboxImage(1);
-    } else {
-      if (e.key === 'ArrowLeft') window.changeImage(-1);
-      if (e.key === 'ArrowRight') window.changeImage(1);
+  function saveProperty() {
+    try {
+      var saved = JSON.parse(localStorage.getItem('savedProperties') || '[]');
+      var idx = saved.indexOf(propertyId);
+      if (idx === -1) {
+        saved.push(propertyId);
+        alert('Property saved!');
+      } else {
+        saved.splice(idx, 1);
+        alert('Property removed from saved.');
+      }
+      localStorage.setItem('savedProperties', JSON.stringify(saved));
+    } catch (e) {
+      console.error('Error saving property:', e);
     }
-  });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    // DOM already loaded, run immediately
+    init();
+  }
 })();
 </script>
 
