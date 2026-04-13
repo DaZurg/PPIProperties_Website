@@ -827,34 +827,50 @@ title: "Property Details"
   </style>
 
   <!-- Contact Form Section - Story 4.4 / UX Redesign -->
-  <section id="contact-form" class="mb-8 bg-white rounded-lg p-8 border border-gray-200 shadow-md">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Send Message to Agent</h2>
+  <section id="contact-form" class="contact-form-section">
+    <h2 class="contact-form-title">Send Message to Agent</h2>
 
-      <!-- Success Message (Hidden by default) -->
-      <div id="form-success" class="hidden mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <p class="text-green-700 font-semibold">Thank you! Your message has been sent to the agent.</p>
-      </div>
+    <!-- Success Message (Hidden by default) -->
+    <div id="form-success" class="contact-form-alert contact-form-success hidden">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <p>Thank you! Your message has been sent to the agent.</p>
+    </div>
 
-      <!-- Error Message (Hidden by default) -->
-      <div id="form-error" class="hidden mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-        <p class="text-red-700 font-semibold">There was an error sending your message. Please try again.</p>
-      </div>
+    <!-- Error Message (Hidden by default) -->
+    <div id="form-error" class="contact-form-alert contact-form-error hidden">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="15" y1="9" x2="9" y2="15"></line>
+        <line x1="9" y1="9" x2="15" y2="15"></line>
+      </svg>
+      <p>There was an error sending your message. Please try again.</p>
+    </div>
 
-      <!-- Contact Form - Uses Formspree for static site form handling -->
-      <!-- To enable: Create account at formspree.io and replace YOUR_FORM_ID with your form ID -->
-      <form id="agent-contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4">
-        <!-- Hidden fields for property context -->
-        <input type="hidden" name="property_id" value="{{ property.id }}">
-        <input type="hidden" name="property_address" value="{{ property.address }}{% if property.location %}, {{ property.location }}{% endif %}">
-        <input type="hidden" name="property_url" id="property-url-field" value="">
-        <input type="hidden" name="agent_name" value="{{ property.agentName }}">
-        <input type="hidden" name="agent_email" value="{{ property.agentEmail }}">
-        <input type="hidden" name="_subject" value="Property Inquiry: {{ property.address }}">
+    <!-- Contact Form - Uses FormSubmit.co (FREE, no signup required) -->
+    <!-- Replace YOUR_EMAIL@example.com with your actual email address -->
+    <form id="agent-contact-form" action="https://formsubmit.co/willemjnr@gmail.com" method="POST" class="contact-form">
+      <!-- FormSubmit.co configuration -->
+      <input type="hidden" name="_subject" value="Property Inquiry: {{ property.address }}{% if property.location %}, {{ property.location }}{% endif %}">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" id="form-redirect-url" value="">
 
+      <!-- Property context fields -->
+      <input type="hidden" name="Property ID" value="{{ property.id }}">
+      <input type="hidden" name="Property Address" value="{{ property.address }}{% if property.location %}, {{ property.location }}{% endif %}">
+      <input type="hidden" name="Property URL" id="property-url-field" value="">
+      <input type="hidden" name="Agent Name" value="{{ property.agentName }}">
+      <input type="hidden" name="Agent Email" value="{{ property.agentEmail }}">
+
+      <!-- Name and Email in 2-column layout on desktop -->
+      <div class="contact-form-row">
         <!-- Name Field -->
-        <div>
-          <label for="form-name" class="block text-sm font-semibold text-gray-700 mb-1">
-            Your Name *
+        <div class="contact-form-field">
+          <label for="form-name" class="contact-form-label">
+            Your Name <span class="contact-form-required">*</span>
           </label>
           <input
             type="text"
@@ -863,14 +879,14 @@ title: "Property Details"
             required
             maxlength="100"
             placeholder="Enter your full name"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="contact-form-input"
           />
         </div>
 
         <!-- Email Field -->
-        <div>
-          <label for="form-email" class="block text-sm font-semibold text-gray-700 mb-1">
-            Email Address *
+        <div class="contact-form-field">
+          <label for="form-email" class="contact-form-label">
+            Email Address <span class="contact-form-required">*</span>
           </label>
           <input
             type="email"
@@ -878,58 +894,246 @@ title: "Property Details"
             name="email"
             required
             placeholder="your.email@example.com"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="contact-form-input"
           />
         </div>
+      </div>
 
-        <!-- Phone Field (optional) -->
-        <div>
-          <label for="form-phone" class="block text-sm font-semibold text-gray-700 mb-1">
-            Phone Number (optional)
-          </label>
-          <input
-            type="tel"
-            id="form-phone"
-            name="phone"
-            maxlength="20"
-            placeholder="Your phone number"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+      <!-- Phone Field (optional) - Full width -->
+      <div class="contact-form-field">
+        <label for="form-phone" class="contact-form-label">
+          Phone Number <span class="contact-form-optional">(optional)</span>
+        </label>
+        <input
+          type="tel"
+          id="form-phone"
+          name="phone"
+          maxlength="20"
+          placeholder="Your phone number"
+          class="contact-form-input"
+        />
+      </div>
 
-        <!-- Message Field -->
-        <div>
-          <label for="form-message" class="block text-sm font-semibold text-gray-700 mb-1">
-            Message *
-          </label>
-          <textarea
-            id="form-message"
-            name="message"
-            required
-            maxlength="1000"
-            rows="4"
-            placeholder="Tell us what you'd like to know about this property..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-          ></textarea>
-          <p class="text-xs text-gray-500 mt-1">
-            <span id="char-count">0</span>/1000 characters
-          </p>
-        </div>
-
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          id="form-submit-btn"
-          class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Send Message
-        </button>
-
-        <p class="text-xs text-gray-500 text-center mt-2">
-          By submitting, you agree to be contacted regarding this property inquiry.
+      <!-- Message Field -->
+      <div class="contact-form-field">
+        <label for="form-message" class="contact-form-label">
+          Message <span class="contact-form-required">*</span>
+        </label>
+        <textarea
+          id="form-message"
+          name="message"
+          required
+          maxlength="1000"
+          rows="4"
+          placeholder="Tell us what you'd like to know about this property..."
+          class="contact-form-input contact-form-textarea"
+        ></textarea>
+        <p class="contact-form-char-count">
+          <span id="char-count">0</span>/1000 characters
         </p>
-      </form>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" id="form-submit-btn" class="contact-form-submit">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        Send Message
+      </button>
+
+      <p class="contact-form-disclaimer">
+        By submitting, you agree to be contacted regarding this property inquiry.
+      </p>
+    </form>
   </section>
+
+  <style>
+  /* Contact Form Styles */
+  .contact-form-section {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .contact-form-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .contact-form-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .contact-form-alert.hidden {
+    display: none;
+  }
+
+  .contact-form-success {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+  }
+
+  .contact-form-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+  }
+
+  .contact-form-alert p {
+    margin: 0;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 640px) {
+    .contact-form-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .contact-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .contact-form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: 0.01em;
+  }
+
+  .contact-form-required {
+    color: #dc2626;
+  }
+
+  .contact-form-optional {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  .contact-form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #1a1a1a;
+    background: #fafafa;
+    transition: all 0.15s ease;
+  }
+
+  .contact-form-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .contact-form-input:hover {
+    border-color: #9ca3af;
+    background: white;
+  }
+
+  .contact-form-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .contact-form-textarea {
+    resize: none;
+    min-height: 120px;
+  }
+
+  .contact-form-char-count {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 4px 0 0 0;
+    text-align: right;
+  }
+
+  .contact-form-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 24px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .contact-form-submit:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+
+  .contact-form-submit:active {
+    transform: translateY(0);
+  }
+
+  .contact-form-submit:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .contact-form-disclaimer {
+    font-size: 12px;
+    color: #9ca3af;
+    text-align: center;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .contact-form-section {
+      padding: 20px 16px;
+      border-radius: 0;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      border-left: none;
+      border-right: none;
+    }
+
+    .contact-form-title {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
 
   <!-- Footer Navigation - Repeated for Easy Access -->
   <nav class="mt-8 pt-8 border-t border-gray-300" aria-label="Footer navigation">
@@ -967,138 +1171,85 @@ title: "Property Details"
   </nav>
 </article>
 
-<!-- Contact Form Validation & Character Counter - Story 4.4 -->
+<!-- Contact Form - FormSubmit.co Integration -->
 <script>
-  // Set the property URL in the hidden field on page load
   document.addEventListener('DOMContentLoaded', function() {
+    // Set hidden fields with current page URL
     const propertyUrlField = document.getElementById('property-url-field');
+    const redirectUrlField = document.getElementById('form-redirect-url');
+    const currentUrl = window.location.href.split('?')[0]; // Remove any query params
+
     if (propertyUrlField) {
-      propertyUrlField.value = window.location.href;
+      propertyUrlField.value = currentUrl;
     }
-  });
+    if (redirectUrlField) {
+      // Redirect back to this page with success flag after submission
+      redirectUrlField.value = currentUrl + '?sent=1#contact-form';
+    }
 
-  // Character counter for message field
-  const messageField = document.getElementById('form-message');
-  const charCountDisplay = document.getElementById('char-count');
+    // Check if returning from successful submission
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('sent') === '1') {
+      const successMessage = document.getElementById('form-success');
+      if (successMessage) {
+        successMessage.classList.remove('hidden');
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  if (messageField && charCountDisplay) {
-    messageField.addEventListener('input', function() {
-      charCountDisplay.textContent = this.value.length;
-    });
-  }
-
-  // Form validation and submission
-  const contactForm = document.getElementById('agent-contact-form');
-  const successMessage = document.getElementById('form-success');
-  const errorMessage = document.getElementById('form-error');
-  let successMessageTimeout = null;
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      // Get form fields
-      const nameField = document.getElementById('form-name');
-      const emailField = document.getElementById('form-email');
-      const messageField = document.getElementById('form-message');
-      const submitButton = document.getElementById('form-submit-btn');
-
-      // Validate all form elements exist
-      if (!nameField || !emailField || !messageField) {
-        return;
+        // Hide after 10 seconds
+        setTimeout(function() {
+          successMessage.classList.add('hidden');
+          // Clean up URL
+          window.history.replaceState({}, '', currentUrl);
+        }, 10000);
       }
+    }
 
-      // Get field values
-      const name = nameField.value.trim();
-      const email = emailField.value.trim();
-      const message = messageField.value.trim();
+    // Character counter for message field
+    const messageField = document.getElementById('form-message');
+    const charCountDisplay = document.getElementById('char-count');
 
-      // Validate required fields
-      if (!name || !email || !message) {
-        alert('Please fill in all required fields.');
-        return;
-      }
+    if (messageField && charCountDisplay) {
+      messageField.addEventListener('input', function() {
+        charCountDisplay.textContent = this.value.length;
+      });
+    }
 
-      // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address.');
-        return;
-      }
+    // Form validation and loading state
+    const contactForm = document.getElementById('agent-contact-form');
 
-      // Hide any previous messages
-      if (successMessage) successMessage.classList.add('hidden');
-      if (errorMessage) errorMessage.classList.add('hidden');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        const nameField = document.getElementById('form-name');
+        const emailField = document.getElementById('form-email');
+        const messageField = document.getElementById('form-message');
+        const submitButton = document.getElementById('form-submit-btn');
 
-      // Disable submit button and show loading state
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
-      }
+        // Get field values
+        const name = nameField?.value.trim();
+        const email = emailField?.value.trim();
+        const message = messageField?.value.trim();
 
-      // Clear any existing timeout
-      if (successMessageTimeout) {
-        clearTimeout(successMessageTimeout);
-      }
-
-      // Submit form via Formspree
-      const formData = new FormData(contactForm);
-
-      fetch(contactForm.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
+        // Validate required fields
+        if (!name || !email || !message) {
+          e.preventDefault();
+          alert('Please fill in all required fields.');
+          return;
         }
-      })
-      .then(response => {
-        if (response.ok) {
-          // Show success message
-          if (successMessage) {
-            successMessage.classList.remove('hidden');
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
 
-          // Reset form
-          contactForm.reset();
-          if (charCountDisplay) {
-            charCountDisplay.textContent = '0';
-          }
-
-          // Re-set property URL after reset
-          const propertyUrlField = document.getElementById('property-url-field');
-          if (propertyUrlField) {
-            propertyUrlField.value = window.location.href;
-          }
-
-          // Hide success message after 10 seconds
-          successMessageTimeout = setTimeout(function() {
-            if (successMessage) {
-              successMessage.classList.add('hidden');
-            }
-          }, 10000);
-        } else {
-          // Show error message
-          if (errorMessage) {
-            errorMessage.classList.remove('hidden');
-            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        if (!emailRegex.test(email)) {
+          e.preventDefault();
+          alert('Please enter a valid email address.');
+          return;
         }
-      })
-      .catch(error => {
-        console.error('Form submission error:', error);
-        if (errorMessage) {
-          errorMessage.classList.remove('hidden');
-          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      })
-      .finally(() => {
-        // Re-enable submit button
+
+        // Show loading state (form will submit normally)
         if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Send Message';
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<span>Sending...</span>';
         }
       });
-    });
-  }
+    }
+  });
 </script>

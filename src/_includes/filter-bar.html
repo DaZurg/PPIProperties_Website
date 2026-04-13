@@ -218,6 +218,15 @@
         </div>
       </div>
     </div>
+
+    <!-- Clear All Filters Button -->
+    <button type="button" class="filter-btn filter-btn-clear-all" id="clear-all-filters-btn" style="display: none;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+      <span>Clear all</span>
+    </button>
   </div>
 </div>
 
@@ -313,6 +322,18 @@
   border-color: #f97316;
   background: #fff7ed;
   color: #ea580c;
+}
+
+.filter-btn-clear-all {
+  margin-left: auto;
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.filter-btn-clear-all:hover {
+  background: #fecaca;
+  border-color: #fca5a5;
 }
 
 .filter-dropdown-menu {
@@ -861,6 +882,35 @@
 
   .filter-btn-more {
     margin-left: 0;
+  }
+
+  /* Fix dropdown menus being clipped by overflow-x on mobile */
+  .filter-dropdown-menu {
+    position: fixed;
+    top: auto;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 16px 16px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.25s ease-out;
+    z-index: 1000;
+  }
+
+  .filter-dropdown-menu.show {
+    transform: translateY(0);
+  }
+
+  .filter-dropdown-price {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .filter-dropdown-wide {
+    min-width: auto;
+    width: 100%;
   }
 
   .location-modal {
@@ -1510,8 +1560,9 @@ document.addEventListener('DOMContentLoaded', function() {
       updatePriceButtonLabel();
       applyFilters();
 
-      // Close dropdown
+      // Close dropdown and mobile backdrop
       document.getElementById('dropdown-price').classList.remove('show');
+      if (typeof closeAllDropdowns === 'function') closeAllDropdowns();
     });
   }
 
@@ -1526,6 +1577,32 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   initHistogram();
 
+  // Mobile backdrop element for dropdowns
+  let mobileBackdrop = null;
+  function getMobileBackdrop() {
+    if (!mobileBackdrop) {
+      mobileBackdrop = document.createElement('div');
+      mobileBackdrop.className = 'filter-mobile-backdrop';
+      mobileBackdrop.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;';
+      document.body.appendChild(mobileBackdrop);
+      mobileBackdrop.addEventListener('click', closeAllDropdowns);
+    }
+    return mobileBackdrop;
+  }
+
+  function closeAllDropdowns() {
+    document.querySelectorAll('.filter-dropdown-menu').forEach(m => {
+      m.classList.remove('show');
+    });
+    const backdrop = getMobileBackdrop();
+    backdrop.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
   // Dropdown toggle functionality
   const dropdownBtns = document.querySelectorAll('[data-dropdown]');
 
@@ -1534,6 +1611,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.stopPropagation();
       const dropdownId = this.getAttribute('data-dropdown');
       const menu = document.getElementById('dropdown-' + dropdownId);
+      const wasOpen = menu.classList.contains('show');
 
       // Close all other dropdowns
       document.querySelectorAll('.filter-dropdown-menu').forEach(m => {
@@ -1542,14 +1620,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Toggle this dropdown
       menu.classList.toggle('show');
+
+      // Handle mobile backdrop
+      if (isMobile()) {
+        const backdrop = getMobileBackdrop();
+        if (!wasOpen && menu.classList.contains('show')) {
+          backdrop.style.display = 'block';
+          document.body.style.overflow = 'hidden';
+        } else {
+          backdrop.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      }
     });
   });
 
   // Close dropdowns when clicking outside
   document.addEventListener('click', function() {
-    document.querySelectorAll('.filter-dropdown-menu').forEach(m => {
-      m.classList.remove('show');
-    });
+    closeAllDropdowns();
   });
 
   // Prevent closing when clicking inside dropdown
@@ -1628,8 +1716,9 @@ document.addEventListener('DOMContentLoaded', function() {
       e.stopPropagation();
       updateMoreFiltersLabel();
       applyFilters();
-      // Close dropdown
+      // Close dropdown and mobile backdrop
       document.getElementById('dropdown-more').classList.remove('show');
+      if (typeof closeAllDropdowns === 'function') closeAllDropdowns();
     });
   }
 
@@ -1639,6 +1728,67 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ==================== FILTER COUNTS ====================
+  // Get currently filtered properties based on active filters (excluding a specific filter type)
+  function getFilteredPropertiesForCounts(excludeFilterType) {
+    if (typeof allProperties === 'undefined') return [];
+
+    let properties = allProperties;
+
+    // Apply location filter (unless excluded)
+    if (excludeFilterType !== 'location' && selectedLocations && selectedLocations.length > 0) {
+      properties = properties.filter(p => selectedLocations.includes(p.location));
+    }
+
+    // Apply price filter (unless excluded)
+    if (excludeFilterType !== 'price') {
+      const minPrice = parseInt(priceSliderMin?.value || 0);
+      const maxPrice = parseInt(priceSliderMax?.value || PRICE_MAX);
+      if (minPrice > 0 || maxPrice < PRICE_MAX) {
+        properties = properties.filter(p => {
+          if (!p.price) return false;
+          return p.price >= minPrice && (maxPrice >= PRICE_MAX || p.price <= maxPrice);
+        });
+      }
+    }
+
+    // Apply bedroom filter (unless excluded)
+    if (excludeFilterType !== 'bedrooms') {
+      const bedroomChecked = document.querySelector('input[name="bedrooms"]:checked');
+      if (bedroomChecked && bedroomChecked.value) {
+        const minBeds = parseInt(bedroomChecked.value);
+        properties = properties.filter(p => p.bedrooms >= minBeds);
+      }
+    }
+
+    // Apply bathroom filter (unless excluded)
+    if (excludeFilterType !== 'bathrooms') {
+      const bathroomChecked = document.querySelector('input[name="bathrooms"]:checked');
+      if (bathroomChecked && bathroomChecked.value) {
+        const minBaths = parseInt(bathroomChecked.value);
+        properties = properties.filter(p => p.bathrooms >= minBaths);
+      }
+    }
+
+    // Apply property type filter (unless excluded)
+    if (excludeFilterType !== 'type') {
+      const typeChecked = document.querySelector('input[name="propertyType"]:checked');
+      if (typeChecked && typeChecked.value) {
+        properties = properties.filter(p => p.propertyType === typeChecked.value);
+      }
+    }
+
+    // Apply highlight filters (unless excluded)
+    if (excludeFilterType !== 'highlight') {
+      const highlightChecked = document.querySelectorAll('[data-filter="highlight"]:checked');
+      highlightChecked.forEach(cb => {
+        const highlightValue = cb.value;
+        properties = properties.filter(p => p.highlights && p.highlights.includes(highlightValue));
+      });
+    }
+
+    return properties;
+  }
+
   function updateFilterCounts() {
     if (typeof allProperties === 'undefined') {
       // Retry until properties are loaded
@@ -1646,30 +1796,36 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    const properties = allProperties;
-    const total = properties.length;
+    // Get filtered properties excluding the filter we're calculating counts for
+    // This gives cascading counts based on OTHER active filters
 
-    // Bedroom counts
-    document.querySelector('[data-count="beds-any"]').textContent = `(${total})`;
+    // Bedroom counts - filter by everything EXCEPT bedrooms
+    const bedsFiltered = getFilteredPropertiesForCounts('bedrooms');
+    const bedsAnyEl = document.querySelector('[data-count="beds-any"]');
+    if (bedsAnyEl) bedsAnyEl.textContent = `(${bedsFiltered.length})`;
     for (let i = 1; i <= 5; i++) {
-      const count = properties.filter(p => p.bedrooms >= i).length;
+      const count = bedsFiltered.filter(p => p.bedrooms >= i).length;
       const el = document.querySelector(`[data-count="beds-${i}"]`);
       if (el) el.textContent = count > 0 ? `(${count})` : '';
     }
 
-    // Bathroom counts
-    document.querySelector('[data-count="baths-any"]').textContent = `(${total})`;
+    // Bathroom counts - filter by everything EXCEPT bathrooms
+    const bathsFiltered = getFilteredPropertiesForCounts('bathrooms');
+    const bathsAnyEl = document.querySelector('[data-count="baths-any"]');
+    if (bathsAnyEl) bathsAnyEl.textContent = `(${bathsFiltered.length})`;
     for (let i = 1; i <= 3; i++) {
-      const count = properties.filter(p => p.bathrooms >= i).length;
+      const count = bathsFiltered.filter(p => p.bathrooms >= i).length;
       const el = document.querySelector(`[data-count="baths-${i}"]`);
       if (el) el.textContent = count > 0 ? `(${count})` : '';
     }
 
-    // Property type counts
-    document.querySelector('[data-count="type-any"]').textContent = `(${total})`;
+    // Property type counts - filter by everything EXCEPT type
+    const typeFiltered = getFilteredPropertiesForCounts('type');
+    const typeAnyEl = document.querySelector('[data-count="type-any"]');
+    if (typeAnyEl) typeAnyEl.textContent = `(${typeFiltered.length})`;
     const types = ['House', 'FlatApartment', 'Townhouse', 'Land'];
     types.forEach(type => {
-      const count = properties.filter(p => p.propertyType === type).length;
+      const count = typeFiltered.filter(p => p.propertyType === type).length;
       const el = document.querySelector(`[data-count="type-${type}"]`);
       if (el) el.textContent = count > 0 ? `(${count})` : '';
     });
@@ -1677,6 +1833,119 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize counts
   updateFilterCounts();
+
+  // Make updateFilterCounts available globally for filtering.js
+  window.updateFilterCounts = updateFilterCounts;
+
+  // ==================== CLEAR ALL FILTERS ====================
+  const clearAllBtn = document.getElementById('clear-all-filters-btn');
+
+  // Check if any filters are active and show/hide the clear all button
+  function updateClearAllButton() {
+    let hasActiveFilters = false;
+
+    // Check location filter
+    if (selectedLocations && selectedLocations.length > 0) hasActiveFilters = true;
+
+    // Check price filter
+    const minPrice = parseInt(priceSliderMin?.value || 0);
+    const maxPrice = parseInt(priceSliderMax?.value || PRICE_MAX);
+    if (minPrice > 0 || maxPrice < PRICE_MAX) hasActiveFilters = true;
+
+    // Check bedroom filter
+    const bedroomChecked = document.querySelector('input[name="bedrooms"]:checked');
+    if (bedroomChecked && bedroomChecked.value) hasActiveFilters = true;
+
+    // Check bathroom filter
+    const bathroomChecked = document.querySelector('input[name="bathrooms"]:checked');
+    if (bathroomChecked && bathroomChecked.value) hasActiveFilters = true;
+
+    // Check property type filter
+    const typeChecked = document.querySelector('input[name="propertyType"]:checked');
+    if (typeChecked && typeChecked.value) hasActiveFilters = true;
+
+    // Check highlight/more filters
+    const highlightChecked = document.querySelectorAll('[data-filter="highlight"]:checked');
+    if (highlightChecked.length > 0) hasActiveFilters = true;
+
+    // Show/hide clear all button
+    if (clearAllBtn) {
+      clearAllBtn.style.display = hasActiveFilters ? 'flex' : 'none';
+    }
+  }
+
+  // Clear all filters function
+  function clearAllFilters() {
+    // Clear location
+    selectedLocations = [];
+    if (locationFilterValue) locationFilterValue.value = '';
+    if (locationBtnLabel) locationBtnLabel.textContent = 'All South Africa';
+    if (locationBtn) locationBtn.classList.remove('active');
+
+    // Clear price
+    if (priceSliderMin) priceSliderMin.value = PRICE_MIN;
+    if (priceSliderMax) priceSliderMax.value = PRICE_MAX;
+    updateSliderRange();
+    updatePriceButtonLabel();
+
+    // Clear bedrooms
+    const bedroomAny = document.querySelector('input[name="bedrooms"][value=""]');
+    if (bedroomAny) bedroomAny.checked = true;
+    const bedsDropdown = document.querySelector('[data-dropdown="beds"]');
+    if (bedsDropdown) {
+      bedsDropdown.querySelector('.filter-btn-label').textContent = 'Beds';
+      bedsDropdown.classList.remove('active');
+    }
+
+    // Clear bathrooms
+    const bathroomAny = document.querySelector('input[name="bathrooms"][value=""]');
+    if (bathroomAny) bathroomAny.checked = true;
+    const bathsDropdown = document.querySelector('[data-dropdown="baths"]');
+    if (bathsDropdown) {
+      bathsDropdown.querySelector('.filter-btn-label').textContent = 'Baths';
+      bathsDropdown.classList.remove('active');
+    }
+
+    // Clear property type
+    const typeAny = document.querySelector('input[name="propertyType"][value=""]');
+    if (typeAny) typeAny.checked = true;
+    const typeDropdown = document.querySelector('[data-dropdown="type"]');
+    if (typeDropdown) {
+      typeDropdown.querySelector('.filter-btn-label').textContent = 'Property types';
+      typeDropdown.classList.remove('active');
+    }
+
+    // Clear highlight/more filters
+    highlightCheckboxes.forEach(cb => cb.checked = false);
+    updateMoreFiltersLabel();
+
+    // Update URL
+    window.history.replaceState({}, '', window.location.pathname);
+
+    // Apply filters and update button visibility
+    applyFilters();
+    updateClearAllButton();
+  }
+
+  // Event listener for clear all button
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      clearAllFilters();
+    });
+  }
+
+  // Update clear all button visibility and filter counts when filters change
+  // Hook into existing filter change events
+  const originalApplyFilters = window.applyFilters;
+  window.applyFilters = function() {
+    if (originalApplyFilters) originalApplyFilters();
+    updateClearAllButton();
+    updateFilterCounts();
+  };
+
+  // Initial check
+  setTimeout(updateClearAllButton, 200);
 });
 
 function applyFilters() {
