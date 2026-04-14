@@ -1,0 +1,23 @@
+{
+  "company": {
+    "name": "PPI Properties",
+    "tagline": "Your trusted property partner in South Africa",
+    "email": "info@ppiproperties.co.za",
+    "url": "https://ppiproperties.co.za"
+  },
+  "forms": {
+    "submissionEmail": "info@ppiproperties.co.za"
+  },
+  "location": {
+    "country": "South Africa",
+    "countryLabel": "All South Africa"
+  },
+  "currency": {
+    "code": "ZAR",
+    "symbol": "R"
+  },
+  "pricing": {
+    "sliderMin": 0,
+    "fallbackMax": 50000000
+  }
+}

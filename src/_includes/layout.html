@@ -25,7 +25,7 @@
   {%- if dynamicOgImage %}
   <meta property="og:image" content="{{ dynamicOgImage }}">
   {%- endif %}
-  <meta property="og:url" content="https://ppiproperties.com/properties/{{ property.id }}/">
+  <meta property="og:url" content="{{ siteConfig.company.url }}/properties/{{ property.id }}/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ dynamicTitle }}">
@@ -35,14 +35,14 @@
   {%- endif %}
 
   <!-- Canonical Tag -->
-  <link rel="canonical" href="https://ppiproperties.com/properties/{{ property.id }}/">
+  <link rel="canonical" href="{{ siteConfig.company.url }}/properties/{{ property.id }}/">
 
   <!-- Language Meta Tag -->
   <meta name="language" content="English">
   {%- else %}
   <meta name="description" content="Find your perfect property. Browse available properties with detailed information and images.">
   <title>{{ title or "Property Listing" }} | Find Your Home</title>
-  <link rel="canonical" href="https://ppiproperties.com/">
+  <link rel="canonical" href="{{ siteConfig.company.url }}/">
   {%- endif %}
 
   <!-- Favicon -->
@@ -1176,10 +1176,10 @@
     "name": "{{ trimmedAddress }}",
     "description": "{{ trimmedDescription | replace('"', '\"') }}",
     "image": {{ property.imageUrls | dump | safe if property.imageUrls else '[]' }},
-    "url": "https://ppiproperties.com/properties/{{ property.id }}/",
+    "url": "{{ siteConfig.company.url }}/properties/{{ property.id }}/",
     {%- if property.price %}
     "price": {{ property.price }},
-    "priceCurrency": "ZAR",
+    "priceCurrency": "{{ siteConfig.currency.code }}",
     {%- endif %}
     {%- if property.bedrooms %}
     "numberOfBedrooms": {{ property.bedrooms }},
@@ -1241,7 +1241,7 @@
           <img src="/images/ppi-logo.png" alt="PPI Properties Logo" class="footer-logo-img">
           <span class="footer-logo-text">PPI<span>Properties</span></span>
         </a>
-        <p class="footer-tagline">Your trusted property partner in South Africa</p>
+        <p class="footer-tagline">{{ siteConfig.company.tagline }}</p>
       </section>
 
       <!-- Quick Links -->
@@ -1268,7 +1268,7 @@
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
-            <a href="mailto:info@ppiproperties.co.za">info@ppiproperties.co.za</a>
+            <a href="mailto:{{ siteConfig.company.email }}">{{ siteConfig.company.email }}</a>
           </li>
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px;">
@@ -1282,7 +1282,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 PPI Properties. All rights reserved.</p>
+      <p>&copy; {{ currentYear }} {{ siteConfig.company.name }}. All rights reserved.</p>
     </div>
   </footer>
 </body>

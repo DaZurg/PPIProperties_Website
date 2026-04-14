@@ -181,7 +181,7 @@ title: "Property Details"
               {%- endif %}
 
               <div class="detail-agency-badge">
-                PPI Properties
+                {{ siteConfig.company.name }}
               </div>
             </div>
           </div>
@@ -277,7 +277,7 @@ title: "Property Details"
             </div>
             <div class="detail-agent-info">
               <p class="detail-agent-name">{{ property.agentName }}</p>
-              <p class="detail-agent-company">PPI Properties</p>
+              <p class="detail-agent-company">{{ siteConfig.company.name }}</p>
             </div>
           </div>
         {%- endif %}
@@ -932,7 +932,7 @@ title: "Property Details"
 
     <!-- Contact Form - Uses FormSubmit.co (FREE, no signup required) -->
     <!-- Replace YOUR_EMAIL@example.com with your actual email address -->
-    <form id="agent-contact-form" action="https://formsubmit.co/willemjnr@gmail.com" method="POST" class="contact-form">
+    <form id="agent-contact-form" action="https://formsubmit.co/{{ siteConfig.forms.submissionEmail }}" method="POST" class="contact-form">
       <!-- FormSubmit.co configuration -->
       <input type="hidden" name="_subject" value="Property Inquiry: {{ property.address }}{% if property.location %}, {{ property.location }}{% endif %}">
       <input type="hidden" name="_captcha" value="false">

@@ -6,7 +6,7 @@ eleventyExcludeFromCollections: true
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Listing Page -->
   <url>
-    <loc>https://ppiproperties.com/</loc>
+    <loc>{{ siteConfig.company.url }}/</loc>
     <lastmod>{{ now | dateFilter('%Y-%m-%d') }}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -15,7 +15,7 @@ eleventyExcludeFromCollections: true
   <!-- Property Detail Pages -->
   {%- for property in properties %}
   <url>
-    <loc>https://ppiproperties.com/properties/{{ property.id }}/</loc>
+    <loc>{{ siteConfig.company.url }}/properties/{{ property.id }}/</loc>
     <lastmod>{{ now | dateFilter('%Y-%m-%d') }}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

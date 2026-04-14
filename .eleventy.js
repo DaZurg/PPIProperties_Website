@@ -8,7 +8,6 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy({"src/_includes/js": "js"});
   eleventyConfig.addPassthroughCopy("src/images");
-  eleventyConfig.addPassthroughCopy("src/robots.txt");
 
   // Run data fetch, validation, and optimization before build
   eleventyConfig.on('eleventy.before', async () => {
@@ -63,6 +62,9 @@ export default function(eleventyConfig) {
 
   // Add global for current date
   eleventyConfig.addNunjucksGlobal('now', new Date());
+
+  // Add global for current year
+  eleventyConfig.addNunjucksGlobal('currentYear', new Date().getFullYear());
 
   return {
     dir: {

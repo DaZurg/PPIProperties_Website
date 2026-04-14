@@ -4,7 +4,7 @@
     <!-- Location Button (opens modal) -->
     <div class="filter-dropdown">
       <button type="button" class="filter-btn" id="location-filter-btn">
-        <span class="filter-btn-label" id="location-btn-label">All South Africa</span>
+        <span class="filter-btn-label" id="location-btn-label">{{ siteConfig.location.countryLabel }}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
@@ -43,8 +43,8 @@
 
         <!-- Price Labels -->
         <div class="price-slider-labels">
-          <span class="price-label-min" id="price-label-min">R0</span>
-          <span class="price-label-max" id="price-label-max">R5,000,000+</span>
+          <span class="price-label-min" id="price-label-min">{{ siteConfig.currency.symbol }}0</span>
+          <span class="price-label-max" id="price-label-max">{{ siteConfig.currency.symbol }}5,000,000+</span>
         </div>
 
         <!-- Action Buttons -->
@@ -945,6 +945,9 @@
 </style>
 
 <script>
+// Site configuration (injected from _data/siteConfig.json)
+const SITE_CONFIG = {{ siteConfig | dump | safe }};
+
 // Filter dropdown functionality with Price Histogram Slider and Location Modal
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -1327,7 +1330,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update button label
     if (selectedLocations.length === 0) {
-      locationBtnLabel.textContent = 'All South Africa';
+      locationBtnLabel.textContent = SITE_CONFIG.location.countryLabel;
       locationBtn.classList.remove('active');
     } else if (selectedLocations.length === 1) {
       locationBtnLabel.textContent = selectedLocations[0];
@@ -1387,7 +1390,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Round up to nearest million
       return Math.ceil(maxPrice / 1000000) * 1000000;
     }
-    return 50000000; // Default fallback: 50M
+    return SITE_CONFIG.pricing.fallbackMax; // Default fallback from config
   })();
   // Expose for filtering.js
   window.PRICE_MAX = PRICE_MAX;
@@ -1467,10 +1470,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Format price for display
   function formatPrice(value) {
+    const symbol = SITE_CONFIG.currency.symbol;
     if (value >= 1000000) {
-      return 'R' + (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+      return symbol + (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
     }
-    return 'R' + value.toLocaleString('en-ZA');
+    return symbol + value.toLocaleString('en-ZA');
   }
 
   // Update slider range visual
@@ -1694,7 +1698,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (this.type === 'radio' && this.checked && !this.value) {
           // Reset to default
           const defaultLabels = {
-            'location': 'All South Africa',
+            'location': SITE_CONFIG.location.countryLabel,
             'bedrooms': 'Beds',
             'bathrooms': 'Baths',
             'type': 'Property types'
@@ -1917,7 +1921,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clear location
     selectedLocations = [];
     if (locationFilterValue) locationFilterValue.value = '';
-    if (locationBtnLabel) locationBtnLabel.textContent = 'All South Africa';
+    if (locationBtnLabel) locationBtnLabel.textContent = SITE_CONFIG.location.countryLabel;
     if (locationBtn) locationBtn.classList.remove('active');
 
     // Clear price
