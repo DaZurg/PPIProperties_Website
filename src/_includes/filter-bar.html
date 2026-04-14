@@ -1477,6 +1477,18 @@ document.addEventListener('DOMContentLoaded', function() {
     return symbol + value.toLocaleString('en-ZA');
   }
 
+  // Update slider inputs to use dynamic PRICE_MAX (must be after formatPrice is defined)
+  if (priceSliderMin) {
+    priceSliderMin.max = PRICE_MAX;
+  }
+  if (priceSliderMax) {
+    priceSliderMax.max = PRICE_MAX;
+    priceSliderMax.value = PRICE_MAX;
+  }
+  if (priceLabelMax) {
+    priceLabelMax.textContent = formatPrice(PRICE_MAX) + '+';
+  }
+
   // Update slider range visual
   function updateSliderRange() {
     if (!priceSliderRange || !priceSliderMin || !priceSliderMax) return;
