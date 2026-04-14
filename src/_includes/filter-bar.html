@@ -900,14 +900,16 @@
   .filter-dropdown-menu {
     position: fixed;
     top: 120px;
-    left: 16px;
-    right: 16px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-10px);
+    width: calc(100% - 32px);
+    max-width: 320px;
     bottom: auto;
     max-height: 60vh;
     overflow-y: auto;
     border-radius: 12px;
     opacity: 0;
-    transform: translateY(-10px);
     transition: opacity 0.2s ease-out, transform 0.2s ease-out;
     z-index: 1000;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
@@ -915,12 +917,13 @@
 
   .filter-dropdown-menu.show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 
   .filter-dropdown-price {
     min-width: auto;
     width: 100%;
+    max-width: 280px;
   }
 
   .filter-dropdown-wide {
