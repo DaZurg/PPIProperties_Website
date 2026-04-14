@@ -87,14 +87,14 @@ async function processImage(propertyId, imageUrl, index) {
 
     // Generate responsive sizes
     for (const size of SIZES) {
-      // Create optimized JPEG
-      const jpegPath = path.join(TEMP_DIR, `property-${propertyId}-${size}.jpg`);
+      // Create optimized JPEG - include image index in filename
+      const jpegPath = path.join(TEMP_DIR, `property-${propertyId}-${index}-${size}.jpg`);
       await sharp(tempPath)
         .resize(size, size * 0.75, { fit: 'cover', withoutEnlargement: true })
         .toFile(jpegPath);
 
-      // Create optimized WebP
-      const webpPath = path.join(TEMP_DIR, `property-${propertyId}-${size}.webp`);
+      // Create optimized WebP - include image index in filename
+      const webpPath = path.join(TEMP_DIR, `property-${propertyId}-${index}-${size}.webp`);
       await sharp(tempPath)
         .resize(size, size * 0.75, { fit: 'cover', withoutEnlargement: true })
         .toFormat('webp', { quality: WEBP_QUALITY })
