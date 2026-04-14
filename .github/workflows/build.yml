@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 0,6,12,18 * * *"  # 4 times a day
   workflow_dispatch:
 
 jobs:
   build-site:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 65
 
     steps:
       - name: Checkout code
