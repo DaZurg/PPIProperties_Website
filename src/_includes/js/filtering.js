@@ -656,6 +656,41 @@
   }
 
   /**
+   * Parse URL query parameters and apply as filters
+   * Handles ?location=xxx from breadcrumb links
+   */
+  function applyUrlFilters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let hasUrlFilters = false;
+
+    // Check for location parameter
+    const locationParam = urlParams.get('location');
+    if (locationParam) {
+      // Set the location filter value
+      const locationInput = document.getElementById('location-filter-value');
+      if (locationInput) {
+        locationInput.value = locationParam;
+        hasUrlFilters = true;
+      }
+
+      // Update the location button label
+      const locationBtnLabel = document.getElementById('location-btn-label');
+      const locationBtn = document.getElementById('location-filter-btn');
+      if (locationBtnLabel && locationBtn) {
+        locationBtnLabel.textContent = locationParam;
+        locationBtn.classList.add('active');
+      }
+
+      // Update selectedLocations in filter-bar.html scope if available
+      if (typeof window.setSelectedLocations === 'function') {
+        window.setSelectedLocations([locationParam]);
+      }
+    }
+
+    return hasUrlFilters;
+  }
+
+  /**
    * Initialize filtering on page load
    * Sets up event listeners, restores filter state, and displays initial property list
    */
@@ -688,13 +723,23 @@
         clearButton.addEventListener('click', clearAllFilters);
       }
 
-      // Restore filter state if available (will trigger handleFilterChange internally)
-      const savedState = loadFilterState();
-      if (savedState) {
-        restoreFilterState();
+      // First check for URL parameters (from breadcrumb links)
+      const hasUrlFilters = applyUrlFilters();
+
+      if (hasUrlFilters) {
+        // URL filters take priority - apply them
+        handleFilterChange();
+        // Clear URL params after applying (clean URL)
+        window.history.replaceState({}, '', window.location.pathname);
       } else {
-        // No filter state was restored, show all properties initially
-        updatePropertyGrid(allProperties, allProperties.length);
+        // Restore filter state if available (will trigger handleFilterChange internally)
+        const savedState = loadFilterState();
+        if (savedState) {
+          restoreFilterState();
+        } else {
+          // No filter state was restored, show all properties initially
+          updatePropertyGrid(allProperties, allProperties.length);
+        }
       }
     } catch (error) {
       console.error('Error initializing filtering:', error);

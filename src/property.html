@@ -68,6 +68,87 @@ title: "Property Details"
     </div>
   </nav>
 
+  <!-- Location Breadcrumb - Above Gallery -->
+  <nav class="location-breadcrumb-bar" aria-label="Property location">
+    {%- set propertyLocation = property.location %}
+    {%- set foundCity = null %}
+    {%- set foundProvince = null %}
+    {%- for province in locations.provinces %}
+      {%- for city in province.cities %}
+        {%- if propertyLocation in city.suburbs %}
+          {%- set foundCity = city %}
+          {%- set foundProvince = province %}
+        {%- endif %}
+      {%- endfor %}
+    {%- endfor %}
+    <a href="/" class="breadcrumb-item">For Sale</a>
+    <span class="breadcrumb-sep">/</span>
+    {%- if foundProvince %}
+      <a href="/?location={{ foundProvince.slug }}" class="breadcrumb-item">{{ foundProvince.name }}</a>
+      <span class="breadcrumb-sep">/</span>
+    {%- endif %}
+    {%- if foundCity %}
+      <a href="/?location={{ foundCity.slug }}" class="breadcrumb-item">{{ foundCity.name }}</a>
+      <span class="breadcrumb-sep">/</span>
+    {%- endif %}
+    {%- if propertyLocation %}
+      <a href="/?location={{ propertyLocation }}" class="breadcrumb-item breadcrumb-current">{{ propertyLocation }}</a>
+    {%- endif %}
+  </nav>
+
+  <style>
+  .location-breadcrumb-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    margin-bottom: 16px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb-item {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+
+  .breadcrumb-item:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+  }
+
+  .breadcrumb-current {
+    color: #374151;
+    font-weight: 600;
+  }
+
+  .breadcrumb-current:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+  }
+
+  .breadcrumb-sep {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  @media (max-width: 640px) {
+    .location-breadcrumb-bar {
+      font-size: 13px;
+      gap: 4px;
+      padding: 10px 0;
+    }
+
+    .breadcrumb-item {
+      padding: 4px 6px;
+    }
+  }
+  </style>
+
   <!-- HERO GALLERY SECTION - Professional Real Estate Carousel -->
   <section class="mb-12">
     {%- include "image-carousel.html" %}

@@ -219,8 +219,8 @@
       </div>
     </div>
 
-    <!-- Clear All Filters Button -->
-    <button type="button" class="filter-btn filter-btn-clear-all" id="clear-all-filters-btn" style="display: none;">
+    <!-- Clear All Filters Button - Always visible, highlighted when active -->
+    <button type="button" class="filter-btn filter-btn-clear-all" id="clear-all-filters-btn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -326,12 +326,24 @@
 
 .filter-btn-clear-all {
   margin-left: auto;
+  background: white;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+}
+
+.filter-btn-clear-all:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #6b7280;
+}
+
+.filter-btn-clear-all.has-filters {
   background: #fee2e2;
   border-color: #fecaca;
   color: #dc2626;
 }
 
-.filter-btn-clear-all:hover {
+.filter-btn-clear-all.has-filters:hover {
   background: #fecaca;
   border-color: #fca5a5;
 }
@@ -887,19 +899,22 @@
   /* Fix dropdown menus being clipped by overflow-x on mobile */
   .filter-dropdown-menu {
     position: fixed;
-    top: auto;
+    top: 120px;
     left: 16px;
     right: 16px;
-    bottom: 0;
-    max-height: 70vh;
+    bottom: auto;
+    max-height: 60vh;
     overflow-y: auto;
-    border-radius: 16px 16px 0 0;
-    transform: translateY(100%);
-    transition: transform 0.25s ease-out;
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
     z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
   }
 
   .filter-dropdown-menu.show {
+    opacity: 1;
     transform: translateY(0);
   }
 
@@ -1868,11 +1883,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const highlightChecked = document.querySelectorAll('[data-filter="highlight"]:checked');
     if (highlightChecked.length > 0) hasActiveFilters = true;
 
-    // Show/hide clear all button
+    // Toggle highlight on clear all button
     if (clearAllBtn) {
-      clearAllBtn.style.display = hasActiveFilters ? 'flex' : 'none';
+      if (hasActiveFilters) {
+        clearAllBtn.classList.add('has-filters');
+      } else {
+        clearAllBtn.classList.remove('has-filters');
+      }
     }
   }
+
+  // Expose function for filtering.js to sync selected locations
+  window.setSelectedLocations = function(locations) {
+    selectedLocations = locations || [];
+    updateClearAllButton();
+  };
 
   // Clear all filters function
   function clearAllFilters() {
