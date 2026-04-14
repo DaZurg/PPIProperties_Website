@@ -1380,7 +1380,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // ==================== PRICE SLIDER ====================
   // Price slider configuration
   const PRICE_MIN = 0;
-  const PRICE_MAX = 5000000;
+  // Calculate PRICE_MAX dynamically from property data
+  const PRICE_MAX = (function() {
+    if (typeof allProperties !== 'undefined' && allProperties.length > 0) {
+      const maxPrice = Math.max(...allProperties.map(p => p.price || 0));
+      // Round up to nearest million
+      return Math.ceil(maxPrice / 1000000) * 1000000;
+    }
+    return 50000000; // Default fallback: 50M
+  })();
+  // Expose for filtering.js
+  window.PRICE_MAX = PRICE_MAX;
   const NUM_BUCKETS = 20;
   const BUCKET_SIZE = PRICE_MAX / NUM_BUCKETS;
 

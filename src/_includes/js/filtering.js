@@ -95,11 +95,12 @@
 
     // Validate numeric conversions (treat NaN as null)
     // For price, 0 means "Any" so treat as null
-    // For priceMax, 5000000+ means "no max" (matches slider max)
+    // For priceMax, use dynamic PRICE_MAX from filter-bar or fallback to checking if at slider max
+    const sliderMax = window.PRICE_MAX || 50000000;
     return {
       type: type || null,
       priceMin: (priceMin !== null && !isNaN(priceMin) && priceMin > 0) ? priceMin : null,
-      priceMax: (priceMax !== null && !isNaN(priceMax) && priceMax > 0 && priceMax < 5000000) ? priceMax : null,
+      priceMax: (priceMax !== null && !isNaN(priceMax) && priceMax > 0 && priceMax < sliderMax) ? priceMax : null,
       bedrooms: (bedrooms !== null && !isNaN(bedrooms) && bedrooms > 0) ? bedrooms : null,
       bathrooms: (bathrooms !== null && !isNaN(bathrooms) && bathrooms > 0) ? bathrooms : null,
       location: location || null,
