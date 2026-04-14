@@ -727,6 +727,8 @@
       const hasUrlFilters = applyUrlFilters();
 
       if (hasUrlFilters) {
+        // Clear any old localStorage state when coming from URL
+        clearFilterState();
         // URL filters take priority - apply them
         handleFilterChange();
         // Clear URL params after applying (clean URL)
