@@ -6,9 +6,9 @@
 
 {%- if property.imageUrls and property.imageUrls.length > 0 %}
 
-<!-- Gallery Container - OneRoof Layout -->
-<div class="gallery-oneroof" id="property-gallery">
-  <!-- Main Image (Left - Large) -->
+<!-- Gallery Container - Single image layout for < 4 photos, grid layout for 4+ -->
+<div class="gallery-oneroof {% if property.imageUrls.length < 4 %}gallery-single{% endif %}" id="property-gallery">
+  <!-- Main Image (Full width for < 4 photos, Left side for 4+) -->
   <div class="gallery-main">
     <img id="main-image" src="/images/property-{{ property.id }}-0-1024.webp"
          onerror="this.onerror=null; this.src='{{ property.imageUrls[0] }}';"
@@ -52,7 +52,8 @@
     </button>
   </div>
 
-  <!-- Thumbnail Grid (Right - 2x2) -->
+  <!-- Thumbnail Grid (Right - 2x2) - Only show for 4+ photos -->
+  {%- if property.imageUrls.length >= 4 %}
   <div class="gallery-thumbs" id="gallery-thumbs">
     {%- for url in property.imageUrls %}
       {%- if loop.index0 >= 1 and loop.index0 <= 4 %}
@@ -76,6 +77,7 @@
       {%- endfor %}
     {%- endif %}
   </div>
+  {%- endif %}
 </div>
 
 <!-- FULLSCREEN LIGHTBOX -->
@@ -137,6 +139,27 @@
 @media (min-width: 1024px) {
   .gallery-oneroof {
     height: 500px;
+  }
+}
+
+/* Single image layout for properties with < 4 photos */
+.gallery-oneroof.gallery-single {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .gallery-oneroof.gallery-single {
+    grid-template-columns: 1fr;
+    height: 500px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-oneroof.gallery-single {
+    height: 550px;
   }
 }
 
