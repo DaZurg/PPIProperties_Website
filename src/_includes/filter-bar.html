@@ -948,21 +948,19 @@
 // Site configuration (injected from _data/siteConfig.json)
 const SITE_CONFIG = {{ siteConfig | dump | safe }};
 
+// Location hierarchy data - exposed globally for filtering.js
+const locationData = {{ locations | dump | safe }};
+window.locationData = locationData;
+
 // Filter dropdown functionality with Price Histogram Slider and Location Modal
 document.addEventListener('DOMContentLoaded', function() {
 
   // ==================== LOCATION MODAL ====================
-  // Location hierarchy data
-  const locationData = {{ locations | dump | safe }};
-
   // State
   let selectedLocations = []; // Array of suburb names
   let currentLevel = 'province'; // 'province', 'city', 'suburb'
   let currentProvince = null;
   let currentCity = null;
-
-  // Expose locationData to window for filtering.js
-  window.locationData = locationData;
 
   // Elements
   const locationBtn = document.getElementById('location-filter-btn');
