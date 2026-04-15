@@ -85,9 +85,14 @@ jobs:
           set ssl:verify-certificate no
           set net:timeout 60
           set net:connection-limit 2
+          set ftp:ssl-allow yes
           open $FTP_HOST
           login $FTP_USERNAME $FTP_PASSWORD
-          cd /public_html/temp.ppiproperties.co.za
+          pwd
+          ls
+          # Try different path variations
+          cd temp.ppiproperties.co.za || cd /temp.ppiproperties.co.za || cd /public_html/temp.ppiproperties.co.za || mkdir -p temp.ppiproperties.co.za && cd temp.ppiproperties.co.za
+          pwd
           mirror -R ./_site .
           quit
           LFTP_SCRIPT
