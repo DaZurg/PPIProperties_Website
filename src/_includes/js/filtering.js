@@ -347,7 +347,13 @@
         }
         // Check if property location matches any of the selected locations
         const selectedLocations = filters.location.split(',').map(l => l.trim().toLowerCase());
-        if (!selectedLocations.includes(property.location.toLowerCase())) {
+        const propertyLocationLower = property.location.toLowerCase();
+        const matches = selectedLocations.includes(propertyLocationLower);
+        // Log first few comparisons for debugging
+        if (properties.indexOf(property) < 3) {
+          console.log('[Filter Debug] Location check - property:', property.location, 'selectedLocations:', selectedLocations, 'matches:', matches);
+        }
+        if (!matches) {
           return false;
         }
       }
@@ -598,12 +604,17 @@
   function handleFilterChange() {
     try {
       if (typeof allProperties === 'undefined') {
-        console.error('Properties data not available');
+        console.error('[Filter Debug] Properties data not available');
         return;
       }
 
       const filters = getFilterValues();
+      console.log('[Filter Debug] handleFilterChange - filters:', JSON.stringify(filters));
+      console.log('[Filter Debug] handleFilterChange - total properties:', allProperties.length);
+
       const filtered = filterProperties(allProperties, filters);
+      console.log('[Filter Debug] handleFilterChange - filtered count:', filtered.length);
+
       updatePropertyGrid(filtered, allProperties.length);
 
       // Save filter state for persistence across navigation
@@ -658,40 +669,57 @@
   }
 
   /**
-   * Expand a location slug (province/city) to all its child suburbs
-   * @param {string} locationSlug - The location slug from URL
-   * @returns {Array} Array of suburb names, or original slug if not found
+   * Expand a location slug (province/city/suburb) to matching suburbs
+   * @param {string} locationSlug - The location slug or suburb name from URL
+   * @returns {Array} Array of suburb names
    */
   function expandLocationSlug(locationSlug) {
-    // Wait for locationData to be available
+    console.log('[Filter Debug] expandLocationSlug called with:', locationSlug);
+
+    // Check if locationData is available
     if (typeof window.locationData === 'undefined') {
+      console.warn('[Filter Debug] locationData NOT available, returning original');
       return [locationSlug];
     }
 
     const locationData = window.locationData;
     const slugLower = locationSlug.toLowerCase();
-    const suburbs = [];
 
     // Check if it's a province slug
     for (const province of locationData.provinces) {
       if (province.slug.toLowerCase() === slugLower) {
         // It's a province - get all suburbs from all cities
+        const suburbs = [];
         for (const city of province.cities) {
           suburbs.push(...city.suburbs);
         }
+        console.log('[Filter Debug] Matched PROVINCE:', province.name, '-> suburbs:', suburbs);
         return suburbs;
       }
 
       // Check if it's a city slug
       for (const city of province.cities) {
         if (city.slug.toLowerCase() === slugLower) {
-          // It's a city - get all suburbs
+          console.log('[Filter Debug] Matched CITY:', city.name, '-> suburbs:', city.suburbs);
           return city.suburbs.slice();
         }
       }
     }
 
-    // Not a province or city slug - treat as suburb name
+    // Check if it's a suburb name (direct match)
+    for (const province of locationData.provinces) {
+      for (const city of province.cities) {
+        for (const suburb of city.suburbs) {
+          if (suburb.toLowerCase() === slugLower) {
+            console.log('[Filter Debug] Matched SUBURB:', suburb);
+            return [suburb];
+          }
+        }
+      }
+    }
+
+    // No match found - return original value
+    console.warn('[Filter Debug] No match found for:', locationSlug, '- returning as-is');
     return [locationSlug];
   }
 
@@ -734,16 +762,22 @@
 
     // Check for location parameter
     const locationParam = urlParams.get('location');
+    console.log('[Filter Debug] applyUrlFilters - URL location param:', locationParam);
+
     if (locationParam) {
       // Expand location slug to suburbs (handles province/city/suburb)
       const expandedLocations = expandLocationSlug(locationParam);
       const locationValue = expandedLocations.join(',');
+      console.log('[Filter Debug] applyUrlFilters - expanded to:', locationValue);
 
       // Set the location filter value
       const locationInput = document.getElementById('location-filter-value');
       if (locationInput) {
         locationInput.value = locationValue;
         hasUrlFilters = true;
+        console.log('[Filter Debug] applyUrlFilters - set hidden input value:', locationInput.value);
+      } else {
+        console.warn('[Filter Debug] applyUrlFilters - location-filter-value element NOT FOUND');
       }
 
       // Update the location button label with display name
@@ -757,6 +791,9 @@
       // Update selectedLocations in filter-bar.html scope if available
       if (typeof window.setSelectedLocations === 'function') {
         window.setSelectedLocations(expandedLocations);
+        console.log('[Filter Debug] applyUrlFilters - called setSelectedLocations');
+      } else {
+        console.warn('[Filter Debug] applyUrlFilters - setSelectedLocations NOT available');
       }
     }
 
