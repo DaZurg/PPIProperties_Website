@@ -961,6 +961,9 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentProvince = null;
   let currentCity = null;
 
+  // Expose locationData to window for filtering.js
+  window.locationData = locationData;
+
   // Elements
   const locationBtn = document.getElementById('location-filter-btn');
   const locationBtnLabel = document.getElementById('location-btn-label');

@@ -1217,13 +1217,26 @@
   <!-- Header - OneRoof Style -->
   <header role="banner">
     <div class="header-top">
-      <a href="/" class="header-logo">
+      <a href="/" class="header-logo" data-clear-filters="true">
         <img src="/images/ppi-logo.png" alt="PPI Properties Logo">
         <span class="header-logo-text">PPI<span>Properties</span></span>
       </a>
 
     </div>
   </header>
+
+  <!-- Clear filters when clicking logo -->
+  <script>
+    document.querySelectorAll('[data-clear-filters="true"]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        try {
+          localStorage.removeItem('ppiproperties-filter-state');
+        } catch (e) {
+          // Ignore localStorage errors
+        }
+      });
+    });
+  </script>
 
   <!-- Main content -->
   <main id="main-content" role="main">
@@ -1237,7 +1250,7 @@
     <div class="container footer-grid">
       <!-- Logo Section -->
       <section class="footer-brand">
-        <a href="/" class="footer-logo">
+        <a href="/" class="footer-logo" data-clear-filters="true">
           <img src="/images/ppi-logo.png" alt="PPI Properties Logo" class="footer-logo-img">
           <span class="footer-logo-text">PPI<span>Properties</span></span>
         </a>

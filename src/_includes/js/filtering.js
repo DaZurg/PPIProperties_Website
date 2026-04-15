@@ -658,6 +658,73 @@
   }
 
   /**
+   * Expand a location slug (province/city) to all its child suburbs
+   * @param {string} locationSlug - The location slug from URL
+   * @returns {Array} Array of suburb names, or original slug if not found
+   */
+  function expandLocationSlug(locationSlug) {
+    // Wait for locationData to be available
+    if (typeof window.locationData === 'undefined') {
+      return [locationSlug];
+    }
+
+    const locationData = window.locationData;
+    const slugLower = locationSlug.toLowerCase();
+    const suburbs = [];
+
+    // Check if it's a province slug
+    for (const province of locationData.provinces) {
+      if (province.slug.toLowerCase() === slugLower) {
+        // It's a province - get all suburbs from all cities
+        for (const city of province.cities) {
+          suburbs.push(...city.suburbs);
+        }
+        return suburbs;
+      }
+
+      // Check if it's a city slug
+      for (const city of province.cities) {
+        if (city.slug.toLowerCase() === slugLower) {
+          // It's a city - get all suburbs
+          return city.suburbs.slice();
+        }
+      }
+    }
+
+    // Not a province or city slug - treat as suburb name
+    return [locationSlug];
+  }
+
+  /**
+   * Get display name for a location slug
+   * @param {string} locationSlug - The location slug
+   * @returns {string} Display name or original slug
+   */
+  function getLocationDisplayName(locationSlug) {
+    if (typeof window.locationData === 'undefined') {
+      return locationSlug;
+    }
+
+    const locationData = window.locationData;
+    const slugLower = locationSlug.toLowerCase();
+
+    // Check provinces
+    for (const province of locationData.provinces) {
+      if (province.slug.toLowerCase() === slugLower) {
+        return province.name;
+      }
+      // Check cities
+      for (const city of province.cities) {
+        if (city.slug.toLowerCase() === slugLower) {
+          return city.name;
+        }
+      }
+    }
+
+    return locationSlug;
+  }
+
+  /**
    * Parse URL query parameters and apply as filters
    * Handles ?location=xxx from breadcrumb links
    */
@@ -668,24 +735,28 @@
     // Check for location parameter
     const locationParam = urlParams.get('location');
     if (locationParam) {
+      // Expand location slug to suburbs (handles province/city/suburb)
+      const expandedLocations = expandLocationSlug(locationParam);
+      const locationValue = expandedLocations.join(',');
+
       // Set the location filter value
       const locationInput = document.getElementById('location-filter-value');
       if (locationInput) {
-        locationInput.value = locationParam;
+        locationInput.value = locationValue;
         hasUrlFilters = true;
       }
 
-      // Update the location button label
+      // Update the location button label with display name
       const locationBtnLabel = document.getElementById('location-btn-label');
       const locationBtn = document.getElementById('location-filter-btn');
       if (locationBtnLabel && locationBtn) {
-        locationBtnLabel.textContent = locationParam;
+        locationBtnLabel.textContent = getLocationDisplayName(locationParam);
         locationBtn.classList.add('active');
       }
 
       // Update selectedLocations in filter-bar.html scope if available
       if (typeof window.setSelectedLocations === 'function') {
-        window.setSelectedLocations([locationParam]);
+        window.setSelectedLocations(expandedLocations);
       }
     }
 

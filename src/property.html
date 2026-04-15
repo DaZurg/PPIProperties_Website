@@ -9,65 +9,6 @@ title: "Property Details"
 ---
 
 <article class="mb-8" data-property-id="{{ property.id }}">
-  <!-- Navigation Section - Back to Results & Property Navigation - Story 5.2 -->
-  <nav class="mb-8 pb-6 border-b border-gray-200" aria-label="Page navigation">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-      <!-- Back to Results Button (Primary) -->
-      <a href="/" class="inline-flex items-center justify-center min-h-[48px] px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-         aria-label="Back to property listing">
-        <span>← Back to Results</span>
-      </a>
-
-      <!-- Property Counter -->
-      {%- if pagination.pages and pagination.pageNumber is defined %}
-        <div class="text-center text-sm font-medium text-gray-600">
-          Property <span class="text-blue-600 font-bold">{{ pagination.pageNumber + 1 }}</span> of <span class="text-blue-600 font-bold">{{ pagination.pages.length }}</span>
-        </div>
-      {%- endif %}
-
-      <!-- Previous/Next Property Navigation (Secondary) -->
-      <div class="flex gap-2 items-center justify-end">
-        {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber > 0 %}
-          {%- set prevProperty = pagination.pages[pagination.pageNumber - 1] %}
-          {%- if prevProperty and prevProperty.id %}
-            <a href="/properties/{{ prevProperty.id }}/"
-               class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-               aria-label="View previous property">
-              <span>‹ Previous</span>
-            </a>
-          {%- else %}
-            <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
-              <span>‹ Previous</span>
-            </button>
-          {%- endif %}
-        {%- else %}
-          <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
-            <span>‹ Previous</span>
-          </button>
-        {%- endif %}
-
-        {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber < pagination.pages.length - 1 %}
-          {%- set nextProperty = pagination.pages[pagination.pageNumber + 1] %}
-          {%- if nextProperty and nextProperty.id %}
-            <a href="/properties/{{ nextProperty.id }}/"
-               class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-               aria-label="View next property">
-              <span>Next ›</span>
-            </a>
-          {%- else %}
-            <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
-              <span>Next ›</span>
-            </button>
-          {%- endif %}
-        {%- else %}
-          <button disabled class="inline-flex items-center justify-center min-h-[48px] px-4 py-2 bg-gray-100 text-gray-400 font-semibold rounded-lg cursor-not-allowed opacity-50" aria-disabled="true">
-            <span>Next ›</span>
-          </button>
-        {%- endif %}
-      </div>
-    </div>
-  </nav>
-
   <!-- Location Breadcrumb - Above Gallery -->
   <nav class="location-breadcrumb-bar" aria-label="Property location">
     {%- set propertyLocation = property.location %}
@@ -1224,17 +1165,17 @@ title: "Property Details"
       </a>
 
       {%- if pagination.pages and pagination.pageNumber is defined %}
-        <div class="text-sm text-gray-600">
+        <div class="text-sm text-gray-600" id="property-counter" data-current-index="{{ pagination.pageNumber }}" data-total="{{ pagination.pages.length }}">
           Viewing property {{ pagination.pageNumber + 1 }} of {{ pagination.pages.length }}
         </div>
       {%- endif %}
 
-      <div class="flex gap-2">
+      <div class="flex gap-2" id="property-nav-buttons">
         {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber > 0 %}
           {%- set prevProperty = pagination.pages[pagination.pageNumber - 1] %}
           {%- if prevProperty and prevProperty.id %}
-            <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-              Previous
+            <a href="/properties/{{ prevProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" id="prev-property-link" data-default-href="/properties/{{ prevProperty.id }}/">
+              Previous Property
             </a>
           {%- endif %}
         {%- endif %}
@@ -1242,8 +1183,8 @@ title: "Property Details"
         {%- if pagination.pages and pagination.pageNumber is defined and pagination.pageNumber < pagination.pages.length - 1 %}
           {%- set nextProperty = pagination.pages[pagination.pageNumber + 1] %}
           {%- if nextProperty and nextProperty.id %}
-            <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-              Next
+            <a href="/properties/{{ nextProperty.id }}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200" id="next-property-link" data-default-href="/properties/{{ nextProperty.id }}/">
+              Next Property
             </a>
           {%- endif %}
         {%- endif %}
@@ -1333,4 +1274,158 @@ title: "Property Details"
       });
     }
   });
+</script>
+
+<!-- Filter-aware navigation -->
+<script>
+  // All properties data for filter-based navigation
+  const allProperties = {{ properties | dump | safe }};
+  const locationData = {{ locations | dump | safe }};
+  const currentPropertyId = '{{ property.id }}';
+  const FILTER_STATE_KEY = 'ppiproperties-filter-state';
+
+  /**
+   * Expand a location slug to all child suburbs
+   */
+  function expandLocationSlug(locationSlug) {
+    const slugLower = locationSlug.toLowerCase();
+    const suburbs = [];
+
+    for (const province of locationData.provinces) {
+      if (province.slug.toLowerCase() === slugLower) {
+        for (const city of province.cities) {
+          suburbs.push(...city.suburbs);
+        }
+        return suburbs;
+      }
+      for (const city of province.cities) {
+        if (city.slug.toLowerCase() === slugLower) {
+          return city.suburbs.slice();
+        }
+      }
+    }
+    return [locationSlug];
+  }
+
+  /**
+   * Filter properties based on saved filter state
+   */
+  function filterProperties(properties, filters) {
+    if (!filters || Object.keys(filters).length === 0) {
+      return properties;
+    }
+
+    return properties.filter(property => {
+      // Property type filter
+      if (filters.type && property.propertyType) {
+        if (property.propertyType.toLowerCase() !== filters.type.toLowerCase()) {
+          return false;
+        }
+      } else if (filters.type && !property.propertyType) {
+        return false;
+      }
+
+      // Price min filter
+      if (filters.priceMin && property.price !== undefined && property.price !== null) {
+        if (property.price < filters.priceMin) return false;
+      } else if (filters.priceMin && (property.price === undefined || property.price === null)) {
+        return false;
+      }
+
+      // Price max filter
+      if (filters.priceMax && property.price !== undefined && property.price !== null) {
+        if (property.price > filters.priceMax) return false;
+      }
+
+      // Bedrooms filter
+      if (filters.bedrooms && property.bedrooms !== undefined && property.bedrooms !== null) {
+        if (property.bedrooms < filters.bedrooms) return false;
+      } else if (filters.bedrooms && (property.bedrooms === undefined || property.bedrooms === null)) {
+        return false;
+      }
+
+      // Bathrooms filter
+      if (filters.bathrooms && property.bathrooms !== undefined && property.bathrooms !== null) {
+        if (property.bathrooms < filters.bathrooms) return false;
+      } else if (filters.bathrooms && (property.bathrooms === undefined || property.bathrooms === null)) {
+        return false;
+      }
+
+      // Location filter - handle comma-separated list and slug expansion
+      if (filters.location) {
+        if (!property.location) return false;
+        let selectedLocations = filters.location.split(',').map(l => l.trim());
+        // Expand any slugs
+        let expandedLocations = [];
+        selectedLocations.forEach(loc => {
+          expandedLocations.push(...expandLocationSlug(loc));
+        });
+        // Deduplicate
+        expandedLocations = [...new Set(expandedLocations.map(l => l.toLowerCase()))];
+        if (!expandedLocations.includes(property.location.toLowerCase())) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }
+
+  /**
+   * Load filter state from localStorage
+   */
+  function loadFilterState() {
+    try {
+      const stateJson = localStorage.getItem(FILTER_STATE_KEY);
+      if (!stateJson) return null;
+      return JSON.parse(stateJson);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Update navigation based on filtered properties
+   */
+  function updateFilteredNavigation() {
+    const filterState = loadFilterState();
+    const filteredProperties = filterProperties(allProperties, filterState);
+
+    // Find current property index in filtered list
+    const currentIndex = filteredProperties.findIndex(p => p.id === currentPropertyId);
+
+    if (currentIndex === -1) {
+      // Current property is not in filtered list - show all properties navigation
+      return;
+    }
+
+    const total = filteredProperties.length;
+    const prevProperty = currentIndex > 0 ? filteredProperties[currentIndex - 1] : null;
+    const nextProperty = currentIndex < total - 1 ? filteredProperties[currentIndex + 1] : null;
+
+    // Update counter
+    const counterEl = document.getElementById('property-counter');
+    if (counterEl) {
+      counterEl.textContent = `Viewing property ${currentIndex + 1} of ${total}`;
+    }
+
+    // Update navigation buttons container
+    const navContainer = document.getElementById('property-nav-buttons');
+    if (navContainer) {
+      let html = '';
+
+      if (prevProperty) {
+        html += `<a href="/properties/${prevProperty.id}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">Previous Property</a>`;
+      }
+
+      if (nextProperty) {
+        html += `<a href="/properties/${nextProperty.id}/" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors duration-200">Next Property</a>`;
+      }
+
+      navContainer.innerHTML = html;
+    }
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', updateFilteredNavigation);
 </script>

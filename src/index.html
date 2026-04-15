@@ -215,6 +215,21 @@ window.toggleSave = function(propertyId) {
   return false;
 };
 
+// Parse date string like "30 Mar 2026" to Date object
+function parseListedDate(dateStr) {
+  if (!dateStr) return new Date(0);
+  const months = {
+    'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+    'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+  };
+  const parts = dateStr.split(' ');
+  if (parts.length !== 3) return new Date(0);
+  const day = parseInt(parts[0], 10);
+  const month = months[parts[1]] || 0;
+  const year = parseInt(parts[2], 10);
+  return new Date(year, month, day);
+}
+
 // Sort properties
 function sortProperties(sortBy) {
   const propertyList = document.getElementById('property-list');
@@ -234,6 +249,10 @@ function sortProperties(sortBy) {
       case 'beds':
         return (propB.bedrooms || 0) - (propA.bedrooms || 0);
       case 'newest':
+        // Sort by listedDate descending (newest first)
+        const dateA = parseListedDate(propA.listedDate);
+        const dateB = parseListedDate(propB.listedDate);
+        return dateB.getTime() - dateA.getTime();
       case 'featured':
       default:
         return 0;
