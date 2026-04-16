@@ -217,7 +217,7 @@ function transformProperty(prop, suburb, agent) {
 
   return {
     id: prop.property_id || `property-${Date.now()}`,
-    address: `${prop.address_line || ''}${suburb ? `, ${suburb.suburb_name || ''}` : ''}`.trim(),
+    address: (prop.address_line || '').trim(),
     price: parseInt(prop.list_price) || 0,
     currencySymbol: prop.currency_symbol || 'R',
     bedrooms: beds,
