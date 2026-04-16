@@ -344,7 +344,6 @@
       if (filters.location && filters.location.length > 0) {
         if (!property.location && !property.city) {
           // Exclude property if filter is active but property has no location/city
-          console.log('[Filter Debug] EXCLUDED (no location/city):', property.id, property.address);
           return false;
         }
         // Check if property location OR city matches any of the selected locations
@@ -354,8 +353,10 @@
         const matchesLocation = selectedLocations.includes(propertyLocationLower);
         const matchesCity = selectedLocations.includes(propertyCityLower);
         const matches = matchesLocation || matchesCity;
-        // Log ALL properties for debugging
-        console.log('[Filter Debug] Property:', property.id, '| location:', property.location, '| city:', property.city, '| matchesLocation:', matchesLocation, '| matchesCity:', matchesCity, '| RESULT:', matches ? 'SHOW' : 'HIDE');
+        // Log first few comparisons for debugging
+        if (properties.indexOf(property) < 3) {
+          console.log('[Filter Debug] Location check - suburb:', property.location, 'city:', property.city, 'selectedLocations:', selectedLocations, 'matches:', matches);
+        }
         if (!matches) {
           return false;
         }
@@ -612,11 +613,8 @@
       }
 
       const filters = getFilterValues();
-      console.log('[Filter Debug] ========== FILTER START ==========');
-      console.log('[Filter Debug] Filters:', JSON.stringify(filters));
-      console.log('[Filter Debug] Total properties in allProperties:', allProperties.length);
-      console.log('[Filter Debug] All property IDs:', allProperties.map(p => p.id).join(', '));
-      console.log('[Filter Debug] All property locations:', allProperties.map(p => `${p.id}:${p.location}`).join(', '));
+      console.log('[Filter Debug] handleFilterChange - filters:', JSON.stringify(filters));
+      console.log('[Filter Debug] handleFilterChange - total properties:', allProperties.length);
 
       const filtered = filterProperties(allProperties, filters);
       console.log('[Filter Debug] handleFilterChange - filtered count:', filtered.length);
