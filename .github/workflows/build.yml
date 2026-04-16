@@ -90,9 +90,7 @@ jobs:
           login $FTP_USERNAME $FTP_PASSWORD
           pwd
           ls
-          # Try different path variations
-          cd temp.ppiproperties.co.za || cd /temp.ppiproperties.co.za || cd /public_html/temp.ppiproperties.co.za || mkdir -p temp.ppiproperties.co.za && cd temp.ppiproperties.co.za
-          pwd
+          # Deploy directly to FTP root (which is the document root)
           mirror -R ./_site .
           quit
           LFTP_SCRIPT
@@ -115,7 +113,7 @@ jobs:
           echo "Deployment Status: ✅ Success"
           echo "Timestamp: $(date)"
           echo ""
-          echo "All files deployed to temp.ppiproperties.co.za"
+          echo "All files deployed to FTP root"
           echo "Visit https://temp.ppiproperties.co.za to verify the changes."
           echo "=========================================="
 
