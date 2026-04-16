@@ -340,18 +340,22 @@
       }
 
       // Location filter (supports comma-separated list of locations)
+      // Checks both suburb (property.location) and city (property.city) fields
       if (filters.location && filters.location.length > 0) {
-        if (!property.location) {
-          // Exclude property if filter is active but property has no location
+        if (!property.location && !property.city) {
+          // Exclude property if filter is active but property has no location/city
           return false;
         }
-        // Check if property location matches any of the selected locations
+        // Check if property location OR city matches any of the selected locations
         const selectedLocations = filters.location.split(',').map(l => l.trim().toLowerCase());
-        const propertyLocationLower = property.location.toLowerCase();
-        const matches = selectedLocations.includes(propertyLocationLower);
+        const propertyLocationLower = (property.location || '').toLowerCase();
+        const propertyCityLower = (property.city || '').toLowerCase();
+        const matchesLocation = selectedLocations.includes(propertyLocationLower);
+        const matchesCity = selectedLocations.includes(propertyCityLower);
+        const matches = matchesLocation || matchesCity;
         // Log first few comparisons for debugging
         if (properties.indexOf(property) < 3) {
-          console.log('[Filter Debug] Location check - property:', property.location, 'selectedLocations:', selectedLocations, 'matches:', matches);
+          console.log('[Filter Debug] Location check - suburb:', property.location, 'city:', property.city, 'selectedLocations:', selectedLocations, 'matches:', matches);
         }
         if (!matches) {
           return false;
@@ -669,9 +673,9 @@
   }
 
   /**
-   * Expand a location slug (province/city/suburb) to matching suburbs
+   * Expand a location slug (province/city/suburb) to matching locations
    * @param {string} locationSlug - The location slug or suburb name from URL
-   * @returns {Array} Array of suburb names
+   * @returns {Array} Array of location names (suburbs + city name for city matches)
    */
   function expandLocationSlug(locationSlug) {
     console.log('[Filter Debug] expandLocationSlug called with:', locationSlug);
@@ -688,20 +692,23 @@
     // Check if it's a province slug
     for (const province of locationData.provinces) {
       if (province.slug.toLowerCase() === slugLower) {
-        // It's a province - get all suburbs from all cities
-        const suburbs = [];
+        // It's a province - get all suburbs AND city names from all cities
+        const locations = [];
         for (const city of province.cities) {
-          suburbs.push(...city.suburbs);
+          locations.push(city.name); // Include city name for city field matching
+          locations.push(...city.suburbs);
         }
-        console.log('[Filter Debug] Matched PROVINCE:', province.name, '-> suburbs:', suburbs);
-        return suburbs;
+        console.log('[Filter Debug] Matched PROVINCE:', province.name, '-> locations:', locations);
+        return locations;
       }
 
       // Check if it's a city slug
       for (const city of province.cities) {
         if (city.slug.toLowerCase() === slugLower) {
-          console.log('[Filter Debug] Matched CITY:', city.name, '-> suburbs:', city.suburbs);
-          return city.suburbs.slice();
+          // Include the city name itself so properties with matching city field are found
+          const locations = [city.name, ...city.suburbs];
+          console.log('[Filter Debug] Matched CITY:', city.name, '-> locations:', locations);
+          return locations;
         }
       }
     }
