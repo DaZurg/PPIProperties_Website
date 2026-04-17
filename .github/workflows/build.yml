@@ -68,6 +68,7 @@ jobs:
 
       - name: Deploy to cPanel via FTP
         if: success()
+        timeout-minutes: 15
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
@@ -83,21 +84,25 @@ jobs:
           # Create lftp script to avoid shell parsing issues with credentials
           cat > /tmp/lftp-deploy.sh << LFTP_SCRIPT
           set ssl:verify-certificate no
-          set net:timeout 60
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          set net:reconnect-interval-multiplier 1
           set net:connection-limit 2
           set ftp:ssl-allow yes
+          set cmd:fail-exit yes
           open $FTP_HOST
           login $FTP_USERNAME $FTP_PASSWORD
           pwd
           ls
           # Deploy directly to FTP root (which is the document root)
-          mirror -R ./_site .
+          mirror -R --verbose ./_site .
           quit
           LFTP_SCRIPT
 
-          # Execute lftp with the script
-          lftp < /tmp/lftp-deploy.sh || {
-            echo "❌ Deployment failed"
+          # Execute lftp with timeout
+          timeout 600 lftp < /tmp/lftp-deploy.sh || {
+            echo "❌ Deployment failed or timed out"
             exit 1
           }
           echo "✅ Deployment completed successfully"
