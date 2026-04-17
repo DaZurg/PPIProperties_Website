@@ -309,7 +309,7 @@
 }
 
 .filter-btn.active {
-  border-color: #f97316;
+  border-color: #AD0D0D;
   background: #fff7ed;
   color: #ea580c;
 }
@@ -319,7 +319,7 @@
 }
 
 .filter-btn-more.active {
-  border-color: #f97316;
+  border-color: #AD0D0D;
   background: #fff7ed;
   color: #ea580c;
 }
@@ -381,7 +381,7 @@
 .filter-checkbox input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #f97316;
+  accent-color: #AD0D0D;
   cursor: pointer;
 }
 
@@ -426,7 +426,7 @@
 .more-filter-apply {
   flex: 1;
   padding: 8px 16px;
-  background: #f97316;
+  background: #AD0D0D;
   border: none;
   border-radius: 6px;
   font-size: 13px;
@@ -469,7 +469,7 @@
 .filter-option input[type="radio"] {
   width: 16px;
   height: 16px;
-  accent-color: #f97316;
+  accent-color: #AD0D0D;
 }
 
 .filter-count {
@@ -501,7 +501,7 @@
 
 .price-histogram-bar {
   flex: 1;
-  background: #f97316;
+  background: #AD0D0D;
   border-radius: 2px 2px 0 0;
   min-height: 4px;
   transition: background 0.2s, opacity 0.2s;
@@ -532,7 +532,7 @@
   position: absolute;
   top: 50%;
   height: 4px;
-  background: #f97316;
+  background: #AD0D0D;
   border-radius: 2px;
   transform: translateY(-50%);
 }
@@ -556,7 +556,7 @@
   width: 20px;
   height: 20px;
   background: white;
-  border: 2px solid #f97316;
+  border: 2px solid #AD0D0D;
   border-radius: 50%;
   cursor: pointer;
   pointer-events: all;
@@ -572,7 +572,7 @@
   width: 20px;
   height: 20px;
   background: white;
-  border: 2px solid #f97316;
+  border: 2px solid #AD0D0D;
   border-radius: 50%;
   cursor: pointer;
   pointer-events: all;
@@ -583,7 +583,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: #f97316;
+  color: #AD0D0D;
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -614,7 +614,7 @@
 .price-slider-apply {
   flex: 1;
   padding: 10px 20px;
-  background: #f97316;
+  background: #AD0D0D;
   border: none;
   border-radius: 6px;
   font-size: 14px;
@@ -738,12 +738,12 @@
 }
 
 .location-item-checkbox-btn:hover::before {
-  border-color: #f97316;
+  border-color: #AD0D0D;
 }
 
 .location-item.selected .location-item-checkbox-btn::before {
-  background: #f97316;
-  border-color: #f97316;
+  background: #AD0D0D;
+  border-color: #AD0D0D;
 }
 
 .location-item.selected .location-item-checkbox-btn::after {
@@ -781,8 +781,8 @@
 }
 
 .location-item.selected .location-item-checkbox {
-  background: #f97316;
-  border-color: #f97316;
+  background: #AD0D0D;
+  border-color: #AD0D0D;
 }
 
 .location-item.selected .location-item-checkbox::after {
@@ -813,7 +813,7 @@
 }
 
 .location-item-drill:hover {
-  color: #f97316;
+  color: #AD0D0D;
 }
 
 .location-item-name {
@@ -864,7 +864,7 @@
 .location-modal-apply {
   flex: 1;
   padding: 12px 24px;
-  background: #f97316;
+  background: #AD0D0D;
   border: none;
   border-radius: 8px;
   font-size: 15px;
@@ -1780,8 +1780,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let properties = allProperties;
 
     // Apply location filter (unless excluded)
+    // Checks both suburb (location) and city fields for matches
     if (excludeFilterType !== 'location' && selectedLocations && selectedLocations.length > 0) {
-      properties = properties.filter(p => selectedLocations.includes(p.location));
+      properties = properties.filter(p => {
+        const locationLower = (p.location || '').toLowerCase();
+        const cityLower = (p.city || '').toLowerCase();
+        return selectedLocations.some(loc => {
+          const locLower = loc.toLowerCase();
+          return locationLower === locLower || cityLower === locLower;
+        });
+      });
     }
 
     // Apply price filter (unless excluded)

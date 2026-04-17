@@ -204,7 +204,7 @@
   font-weight: 500;
   color: #1a1a1a;
   cursor: pointer;
-  border-top: 3px solid #f97316;
+  border-top: 3px solid #AD0D0D;
   z-index: 10;
 }
 
@@ -213,7 +213,7 @@
 }
 
 .gallery-tab-count {
-  background: #f97316;
+  background: #AD0D0D;
   color: white;
   font-size: 11px;
   font-weight: 700;
@@ -837,16 +837,73 @@
 
   // Share and save functions
   function shareProperty() {
+    var shareUrl = window.location.href;
+    var shareTitle = document.title;
+
+    // Try Web Share API first (mobile devices and some desktop browsers)
     if (navigator.share) {
       navigator.share({
-        title: document.title,
-        url: window.location.href
-      }).catch(function() {});
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href).then(function() {
-        alert('Link copied to clipboard!');
+        title: shareTitle,
+        url: shareUrl
+      }).catch(function(err) {
+        // User cancelled or share failed - try clipboard fallback
+        if (err.name !== 'AbortError') {
+          copyToClipboard(shareUrl);
+        }
       });
+    } else {
+      // Fallback to clipboard
+      copyToClipboard(shareUrl);
     }
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showShareNotification('Link copied to clipboard!');
+      }).catch(function() {
+        fallbackCopyToClipboard(text);
+      });
+    } else {
+      fallbackCopyToClipboard(text);
+    }
+  }
+
+  function fallbackCopyToClipboard(text) {
+    // Fallback for older browsers
+    var textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showShareNotification('Link copied to clipboard!');
+    } catch (err) {
+      showShareNotification('Copy this link: ' + text);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  function showShareNotification(message) {
+    // Create a toast notification instead of alert
+    var existing = document.getElementById('share-toast');
+    if (existing) existing.remove();
+
+    var toast = document.createElement('div');
+    toast.id = 'share-toast';
+    toast.textContent = message;
+    toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:white;padding:12px 24px;border-radius:8px;font-size:14px;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+    document.body.appendChild(toast);
+
+    setTimeout(function() {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
+      setTimeout(function() {
+        if (toast.parentNode) toast.remove();
+      }, 300);
+    }, 2500);
   }
 
   function saveProperty() {

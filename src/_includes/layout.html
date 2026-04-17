@@ -14,7 +14,7 @@
   {%- set descBase = trimmedAddress + " — " + bedroomsText + " property in " + (property.location or trimmedAddress) + ". " + descSnippet %}
   {%- set dynamicDescription = (descBase | truncate(160, true, "")) %}
   {%- set dynamicKeywords = "property for sale, " + (property.location or "") + ", " + bedroomsText + " bedroom" %}
-  {%- set dynamicOgImage = property.imageUrls[0] if property.imageUrls and property.imageUrls.length > 0 else "" %}
+  {%- set dynamicOgImage = siteConfig.company.url + "/images/property-" + property.id + "-0-1024.webp" if property.imageUrls and property.imageUrls.length > 0 else "" %}
   <meta name="description" content="{{ dynamicDescription }}">
   <meta name="keywords" content="{{ dynamicKeywords }}">
   <title>{{ dynamicTitle }}</title>
@@ -24,6 +24,8 @@
   <meta property="og:description" content="{{ dynamicDescription }}">
   {%- if dynamicOgImage %}
   <meta property="og:image" content="{{ dynamicOgImage }}">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="768">
   {%- endif %}
   <meta property="og:url" content="{{ siteConfig.company.url }}/properties/{{ property.id }}/">
   <meta property="og:type" content="website">
@@ -124,14 +126,18 @@
       width: auto;
     }
 
+    .header-logo:hover {
+      text-decoration: none;
+    }
+
     .header-logo-text {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #0A2C4E;
     }
 
     .header-logo-text span {
-      color: #f97316;
+      color: #AD0D0D;
     }
 
     .header-nav {
@@ -156,7 +162,7 @@
     }
 
     .header-nav a:hover {
-      color: #f97316;
+      color: #AD0D0D;
       text-decoration: none;
     }
 
@@ -184,7 +190,7 @@
 
     .header-search-input:focus {
       outline: none;
-      border-color: #f97316;
+      border-color: #AD0D0D;
       background: white;
     }
 
@@ -203,8 +209,8 @@
     }
 
     .header-signin:hover {
-      border-color: #f97316;
-      color: #f97316;
+      border-color: #AD0D0D;
+      color: #AD0D0D;
     }
 
     header h1 {
@@ -276,11 +282,11 @@
     .footer-logo-text {
       font-size: 1.3rem;
       font-weight: 700;
-      color: white;
+      color: #FEFEFE;
     }
 
     .footer-logo-text span {
-      color: #f97316;
+      color: #FEFEFE;
     }
 
     .footer-tagline {
@@ -312,7 +318,7 @@
     }
 
     footer a:hover {
-      color: #f97316;
+      color: #AD0D0D;
       text-decoration: none;
     }
 
@@ -1251,7 +1257,7 @@
       <!-- Logo Section -->
       <section class="footer-brand">
         <a href="/" class="footer-logo" data-clear-filters="true">
-          <img src="/images/ppi-logo.png" alt="PPI Properties Logo" class="footer-logo-img">
+          <img src="/images/ppi-logo-white.png" alt="PPI Properties Logo" class="footer-logo-img">
           <span class="footer-logo-text">PPI<span>Properties</span></span>
         </a>
         <p class="footer-tagline">{{ siteConfig.company.tagline }}</p>
