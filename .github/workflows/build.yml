@@ -68,7 +68,7 @@ jobs:
 
       - name: Deploy to cPanel via FTP
         if: success()
-        timeout-minutes: 15
+        timeout-minutes: 45
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
@@ -100,8 +100,8 @@ jobs:
           quit
           LFTP_SCRIPT
 
-          # Execute lftp with timeout
-          timeout 600 lftp < /tmp/lftp-deploy.sh || {
+          # Execute lftp with timeout (40 minutes)
+          timeout 2400 lftp < /tmp/lftp-deploy.sh || {
             echo "❌ Deployment failed or timed out"
             exit 1
           }
