@@ -58,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-output
-          path: .
+          path: ./_site
 
       - name: Install FTP client
         if: success()
@@ -80,6 +80,15 @@ jobs:
             exit 0
           fi
           echo "🚀 Starting FTP deployment to $FTP_HOST"
+
+          # Verify _site directory exists
+          if [ ! -d "./_site" ]; then
+            echo "❌ Error: _site directory not found"
+            ls -la
+            exit 1
+          fi
+          echo "📁 Contents of _site:"
+          ls -la ./_site | head -20
 
           # Create lftp script to avoid shell parsing issues with credentials
           cat > /tmp/lftp-deploy.sh << LFTP_SCRIPT
