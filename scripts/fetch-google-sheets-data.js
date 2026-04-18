@@ -93,8 +93,7 @@ function parseImageUrls(imagesJSON) {
     if (Array.isArray(images)) {
       return images
         .map(img => img.url || img)
-        .filter(url => url && typeof url === 'string')
-        .slice(0, 10); // Max 10 images per property
+        .filter(url => url && typeof url === 'string');
     }
     return [];
   } catch (e) {
