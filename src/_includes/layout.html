@@ -14,7 +14,7 @@
   {%- set descBase = trimmedAddress + " — " + bedroomsText + " property in " + (property.location or trimmedAddress) + ". " + descSnippet %}
   {%- set dynamicDescription = (descBase | truncate(160, true, "")) %}
   {%- set dynamicKeywords = "property for sale, " + (property.location or "") + ", " + bedroomsText + " bedroom" %}
-  {%- set dynamicOgImage = siteConfig.company.url + "/images/property-" + property.id + "-0-1024.webp" if property.imageUrls and property.imageUrls.length > 0 else "" %}
+  {%- set dynamicOgImage = siteConfig.company.url + "/images/property-" + property.id + "-0-1024.jpg" if property.imageUrls and property.imageUrls.length > 0 else "" %}
   <meta name="description" content="{{ dynamicDescription }}">
   <meta name="keywords" content="{{ dynamicKeywords }}">
   <title>{{ dynamicTitle }}</title>
