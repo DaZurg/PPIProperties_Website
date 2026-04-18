@@ -967,6 +967,34 @@ function getProvinces() {
   }));
 }
 
+// Calculate PRICE_MAX immediately (before DOMContentLoaded) so filtering.js can use it
+// This must happen before filtering.js reads the slider values
+(function initPriceMax() {
+  const PRICE_MAX = (function() {
+    if (typeof allProperties !== 'undefined' && allProperties.length > 0) {
+      const maxPrice = Math.max(...allProperties.map(p => p.price || 0));
+      // Round up to nearest million
+      return Math.ceil(maxPrice / 1000000) * 1000000;
+    }
+    return SITE_CONFIG.pricing.fallbackMax; // Default fallback from config
+  })();
+
+  // Expose globally for filtering.js
+  window.PRICE_MAX = PRICE_MAX;
+
+  // Update slider HTML attributes immediately if elements exist
+  const priceSliderMin = document.getElementById('price-slider-min');
+  const priceSliderMax = document.getElementById('price-slider-max');
+
+  if (priceSliderMin) {
+    priceSliderMin.max = PRICE_MAX;
+  }
+  if (priceSliderMax) {
+    priceSliderMax.max = PRICE_MAX;
+    priceSliderMax.value = PRICE_MAX;
+  }
+})();
+
 // Filter dropdown functionality with Price Histogram Slider and Location Modal
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -1492,17 +1520,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // ==================== PRICE SLIDER ====================
   // Price slider configuration
   const PRICE_MIN = 0;
-  // Calculate PRICE_MAX dynamically from property data
-  const PRICE_MAX = (function() {
-    if (typeof allProperties !== 'undefined' && allProperties.length > 0) {
-      const maxPrice = Math.max(...allProperties.map(p => p.price || 0));
-      // Round up to nearest million
-      return Math.ceil(maxPrice / 1000000) * 1000000;
-    }
-    return SITE_CONFIG.pricing.fallbackMax; // Default fallback from config
-  })();
-  // Expose for filtering.js
-  window.PRICE_MAX = PRICE_MAX;
+  // Use the PRICE_MAX calculated earlier (before DOMContentLoaded)
+  const PRICE_MAX = window.PRICE_MAX || SITE_CONFIG.pricing.fallbackMax;
   const NUM_BUCKETS = 20;
   const BUCKET_SIZE = PRICE_MAX / NUM_BUCKETS;
 
