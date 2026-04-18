@@ -10,6 +10,7 @@ const PROPERTIES_FILE = path.join(DATA_DIR, 'PropSync Data-Test - Properties.csv
 const SUBURBS_FILE = path.join(DATA_DIR, 'PropSync Data-Test - Suburbs.csv');
 const AGENTS_FILE = path.join(DATA_DIR, 'PropSync Data-Test - Agents.csv');
 const OUTPUT_FILE = path.join(__dirname, '../src/_data/properties.json');
+const LOCATIONS_FILE = path.join(__dirname, '../src/_data/locations.json');
 
 function parseCSVLine(line) {
   // CSV parser that handles quoted fields and escaped quotes
@@ -253,6 +254,98 @@ function extractFeatures(featuresJSON) {
   }
 }
 
+// Generate locations.json from suburbs data with lookup tables
+function generateLocationsJson(suburbs) {
+  const countries = {};
+  const bySuburb = {};
+  const byCity = {};
+  const byProvince = {};
+
+  // Filter out deleted records
+  const activeSuburbs = suburbs.filter(s => s._deleted !== 'TRUE');
+
+  activeSuburbs.forEach(record => {
+    const { country, province, city, suburb_name } = record;
+
+    // Skip if missing required fields
+    if (!country || !province || !city || !suburb_name) return;
+
+    // Build hierarchy: countries -> provinces -> cities -> suburbs
+    if (!countries[country]) {
+      countries[country] = { provinces: {} };
+    }
+    if (!countries[country].provinces[province]) {
+      countries[country].provinces[province] = { cities: {} };
+    }
+    if (!countries[country].provinces[province].cities[city]) {
+      countries[country].provinces[province].cities[city] = { suburbs: [] };
+    }
+
+    const cityObj = countries[country].provinces[province].cities[city];
+    if (!cityObj.suburbs.includes(suburb_name)) {
+      cityObj.suburbs.push(suburb_name);
+    }
+
+    // Build lookup tables with lowercase keys for case-insensitive matching
+    const suburbKey = suburb_name.toLowerCase();
+    bySuburb[suburbKey] = {
+      suburb: suburb_name,
+      city: city,
+      province: province,
+      country: country
+    };
+
+    const cityKey = city.toLowerCase();
+    if (!byCity[cityKey]) {
+      byCity[cityKey] = {
+        city: city,
+        province: province,
+        country: country,
+        suburbs: []
+      };
+    }
+    if (!byCity[cityKey].suburbs.includes(suburb_name)) {
+      byCity[cityKey].suburbs.push(suburb_name);
+    }
+
+    const provinceKey = province.toLowerCase();
+    if (!byProvince[provinceKey]) {
+      byProvince[provinceKey] = {
+        province: province,
+        country: country,
+        cities: []
+      };
+    }
+    if (!byProvince[provinceKey].cities.includes(city)) {
+      byProvince[provinceKey].cities.push(city);
+    }
+  });
+
+  // Sort suburbs within each city alphabetically
+  Object.values(countries).forEach(countryObj => {
+    Object.values(countryObj.provinces).forEach(provinceObj => {
+      Object.values(provinceObj.cities).forEach(cityObj => {
+        cityObj.suburbs.sort((a, b) => a.localeCompare(b));
+      });
+    });
+  });
+
+  // Sort cities in each province lookup
+  Object.values(byProvince).forEach(p => {
+    p.cities.sort((a, b) => a.localeCompare(b));
+  });
+
+  // Sort suburbs in each city lookup
+  Object.values(byCity).forEach(c => {
+    c.suburbs.sort((a, b) => a.localeCompare(b));
+  });
+
+  return {
+    countries,
+    lookup: { bySuburb, byCity, byProvince }
+  };
+}
+
 function convertProperties() {
   console.log('\n🔄 Converting PropSync data to JSON schema...\n');
 
@@ -267,6 +360,14 @@ function convertProperties() {
   const agents = parseCSV(agentsContent);
 
   console.log(`📊 Found ${properties.length} properties, ${suburbs.length} suburbs, ${agents.length} agents`);
+
+  // Generate locations.json from suburbs data
+  const locationsData = generateLocationsJson(suburbs);
+  fs.writeFileSync(LOCATIONS_FILE, JSON.stringify(locationsData, null, 2));
+  const suburbCount = Object.keys(locationsData.lookup.bySuburb).length;
+  const cityCount = Object.keys(locationsData.lookup.byCity).length;
+  const provinceCount = Object.keys(locationsData.lookup.byProvince).length;
+  console.log(`📍 Generated locations.json: ${provinceCount} provinces, ${cityCount} cities, ${suburbCount} suburbs`);
 
   // Create suburb map
   const suburbMap = {};

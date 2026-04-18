@@ -11,29 +11,30 @@ title: "Property Details"
 <article class="mb-8" data-property-id="{{ property.id }}">
   <!-- Location Breadcrumb - Above Gallery -->
   <nav class="location-breadcrumb-bar" aria-label="Property location">
-    {%- set propertyLocation = property.location %}
-    {%- set foundCity = null %}
-    {%- set foundProvince = null %}
-    {%- for province in locations.provinces %}
-      {%- for city in province.cities %}
-        {%- if propertyLocation in city.suburbs %}
-          {%- set foundCity = city %}
-          {%- set foundProvince = province %}
-        {%- endif %}
-      {%- endfor %}
-    {%- endfor %}
+    {%- set suburbKey = property.location | lower | trim if property.location else '' %}
+    {%- set suburbInfo = locations.lookup.bySuburb[suburbKey] if suburbKey and locations.lookup else null %}
     <a href="/" class="breadcrumb-item">For Sale</a>
     <span class="breadcrumb-sep">/</span>
-    {%- if foundProvince %}
-      <a href="/?location={{ foundProvince.slug }}" class="breadcrumb-item">{{ foundProvince.name }}</a>
+    {%- if suburbInfo %}
+      <a href="/?location={{ suburbInfo.province | urlencode }}" class="breadcrumb-item">{{ suburbInfo.province }}</a>
       <span class="breadcrumb-sep">/</span>
-    {%- endif %}
-    {%- if foundCity %}
-      <a href="/?location={{ foundCity.slug }}" class="breadcrumb-item">{{ foundCity.name }}</a>
+      <a href="/?location={{ suburbInfo.city | urlencode }}" class="breadcrumb-item">{{ suburbInfo.city }}</a>
       <span class="breadcrumb-sep">/</span>
-    {%- endif %}
-    {%- if propertyLocation %}
-      <a href="/?location={{ propertyLocation }}" class="breadcrumb-item breadcrumb-current">{{ propertyLocation }}</a>
+      <a href="/?location={{ suburbInfo.suburb | urlencode }}" class="breadcrumb-item breadcrumb-current">{{ suburbInfo.suburb }}</a>
+    {%- elif property.province %}
+      {# Fallback using property data directly when lookup fails #}
+      <a href="/?location={{ property.province | urlencode }}" class="breadcrumb-item">{{ property.province }}</a>
+      <span class="breadcrumb-sep">/</span>
+      {%- if property.city %}
+        <a href="/?location={{ property.city | urlencode }}" class="breadcrumb-item">{{ property.city }}</a>
+        <span class="breadcrumb-sep">/</span>
+      {%- endif %}
+      {%- if property.location %}
+        <a href="/?location={{ property.location | urlencode }}" class="breadcrumb-item breadcrumb-current">{{ property.location }}</a>
+      {%- endif %}
+    {%- elif property.location %}
+      {# Minimal fallback when only suburb is available #}
+      <a href="/?location={{ property.location | urlencode }}" class="breadcrumb-item breadcrumb-current">{{ property.location }}</a>
     {%- endif %}
   </nav>
 
@@ -1281,30 +1282,40 @@ title: "Property Details"
   // All properties data for filter-based navigation
   const allProperties = {{ properties | dump | safe }};
   const locationData = {{ locations | dump | safe }};
+  const locationLookup = locationData.lookup || {};
   const currentPropertyId = '{{ property.id }}';
   const FILTER_STATE_KEY = 'ppiproperties-filter-state';
 
   /**
-   * Expand a location slug to all child suburbs
+   * Expand a location parameter to all matching suburbs
+   * Uses lookup tables for case-insensitive matching
    */
-  function expandLocationSlug(locationSlug) {
-    const slugLower = locationSlug.toLowerCase();
-    const suburbs = [];
+  function expandLocationSlug(locationParam) {
+    const paramLower = locationParam.toLowerCase();
 
-    for (const province of locationData.provinces) {
-      if (province.slug.toLowerCase() === slugLower) {
-        for (const city of province.cities) {
-          suburbs.push(...city.suburbs);
-        }
-        return suburbs;
-      }
-      for (const city of province.cities) {
-        if (city.slug.toLowerCase() === slugLower) {
-          return city.suburbs.slice();
-        }
-      }
+    // Check if it's a province
+    if (locationLookup.byProvince && locationLookup.byProvince[paramLower]) {
+      const provinceData = locationLookup.byProvince[paramLower];
+      const suburbs = [];
+      provinceData.cities.forEach(city => {
+        const cityData = locationLookup.byCity[city.toLowerCase()];
+        if (cityData) suburbs.push(...cityData.suburbs);
+      });
+      return suburbs;
     }
-    return [locationSlug];
+
+    // Check if it's a city
+    if (locationLookup.byCity && locationLookup.byCity[paramLower]) {
+      return locationLookup.byCity[paramLower].suburbs.slice();
+    }
+
+    // Check if it's a suburb
+    if (locationLookup.bySuburb && locationLookup.bySuburb[paramLower]) {
+      return [locationLookup.bySuburb[paramLower].suburb];
+    }
+
+    // No match - return as-is
+    return [locationParam];
   }
 
   /**

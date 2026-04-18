@@ -951,6 +951,21 @@ const SITE_CONFIG = {{ siteConfig | dump | safe }};
 // Location hierarchy data - exposed globally for filtering.js
 const locationData = {{ locations | dump | safe }};
 window.locationData = locationData;
+window.locationLookup = locationData.lookup || {};
+
+// Helper to get provinces from new structure (for South Africa)
+const DEFAULT_COUNTRY = 'South Africa';
+function getProvinces() {
+  if (!locationData.countries || !locationData.countries[DEFAULT_COUNTRY]) return [];
+  const provinces = locationData.countries[DEFAULT_COUNTRY].provinces;
+  return Object.keys(provinces).map(name => ({
+    name: name,
+    cities: Object.keys(provinces[name].cities).map(cityName => ({
+      name: cityName,
+      suburbs: provinces[name].cities[cityName].suburbs
+    }))
+  }));
+}
 
 // Filter dropdown functionality with Price Histogram Slider and Location Modal
 document.addEventListener('DOMContentLoaded', function() {
@@ -976,49 +991,104 @@ document.addEventListener('DOMContentLoaded', function() {
   const locationFilterValue = document.getElementById('location-filter-value');
 
   // Count properties in a location (suburb)
-  function countPropertiesInSuburb(suburb) {
+  function countPropertiesInSuburb(suburbName) {
     if (typeof allProperties === 'undefined') return 0;
-    return allProperties.filter(p => p.location === suburb).length;
+    return allProperties.filter(p => p.location === suburbName).length;
   }
 
   // Count properties in a city (sum of all suburbs)
-  function countPropertiesInCity(city) {
+  // Accepts either a city object {name, suburbs} or city name string
+  function countPropertiesInCity(cityParam) {
     if (typeof allProperties === 'undefined') return 0;
+    let suburbs;
+    if (typeof cityParam === 'string') {
+      // Lookup suburbs from lookup table
+      const cityData = locationLookup.byCity && locationLookup.byCity[cityParam.toLowerCase()];
+      suburbs = cityData ? cityData.suburbs : [];
+    } else {
+      suburbs = cityParam.suburbs || [];
+    }
     let count = 0;
-    city.suburbs.forEach(suburb => {
+    suburbs.forEach(suburb => {
       count += countPropertiesInSuburb(suburb);
     });
     return count;
   }
 
   // Count properties in a province (sum of all cities)
-  function countPropertiesInProvince(province) {
+  // Accepts either a province object {name, cities} or province name string
+  function countPropertiesInProvince(provinceParam) {
     if (typeof allProperties === 'undefined') return 0;
+    let cities;
+    if (typeof provinceParam === 'string') {
+      // Lookup cities from lookup table
+      const provinceData = locationLookup.byProvince && locationLookup.byProvince[provinceParam.toLowerCase()];
+      cities = provinceData ? provinceData.cities : [];
+    } else {
+      cities = provinceParam.cities || [];
+    }
     let count = 0;
-    province.cities.forEach(city => {
-      count += countPropertiesInCity(city);
+    cities.forEach(city => {
+      const cityName = typeof city === 'string' ? city : city.name;
+      count += countPropertiesInCity(cityName);
     });
     return count;
   }
 
   // Check if all suburbs in a city are selected
-  function isCitySelected(city) {
-    return city.suburbs.every(suburb => selectedLocations.includes(suburb));
+  // Accepts city object {name, suburbs} or city name string
+  function isCitySelected(cityParam) {
+    let suburbs;
+    if (typeof cityParam === 'string') {
+      const cityData = locationLookup.byCity && locationLookup.byCity[cityParam.toLowerCase()];
+      suburbs = cityData ? cityData.suburbs : [];
+    } else {
+      suburbs = cityParam.suburbs || [];
+    }
+    return suburbs.length > 0 && suburbs.every(suburb => selectedLocations.includes(suburb));
   }
 
   // Check if any suburb in a city is selected
-  function isCityPartiallySelected(city) {
-    return city.suburbs.some(suburb => selectedLocations.includes(suburb));
+  function isCityPartiallySelected(cityParam) {
+    let suburbs;
+    if (typeof cityParam === 'string') {
+      const cityData = locationLookup.byCity && locationLookup.byCity[cityParam.toLowerCase()];
+      suburbs = cityData ? cityData.suburbs : [];
+    } else {
+      suburbs = cityParam.suburbs || [];
+    }
+    return suburbs.some(suburb => selectedLocations.includes(suburb));
   }
 
   // Check if all cities in a province are selected
-  function isProvinceSelected(province) {
-    return province.cities.every(city => isCitySelected(city));
+  // Accepts province object {name, cities} or province name string
+  function isProvinceSelected(provinceParam) {
+    let cities;
+    if (typeof provinceParam === 'string') {
+      const provinceData = locationLookup.byProvince && locationLookup.byProvince[provinceParam.toLowerCase()];
+      cities = provinceData ? provinceData.cities : [];
+    } else {
+      cities = provinceParam.cities || [];
+    }
+    return cities.length > 0 && cities.every(city => {
+      const cityName = typeof city === 'string' ? city : city.name;
+      return isCitySelected(cityName);
+    });
   }
 
   // Check if any city in a province has selections
-  function isProvincePartiallySelected(province) {
-    return province.cities.some(city => isCityPartiallySelected(city));
+  function isProvincePartiallySelected(provinceParam) {
+    let cities;
+    if (typeof provinceParam === 'string') {
+      const provinceData = locationLookup.byProvince && locationLookup.byProvince[provinceParam.toLowerCase()];
+      cities = provinceData ? provinceData.cities : [];
+    } else {
+      cities = provinceParam.cities || [];
+    }
+    return cities.some(city => {
+      const cityName = typeof city === 'string' ? city : city.name;
+      return isCityPartiallySelected(cityName);
+    });
   }
 
   // Render province list
@@ -1029,10 +1099,11 @@ document.addEventListener('DOMContentLoaded', function() {
     locationTitle.textContent = 'Select a region';
     locationBackBtn.style.visibility = 'hidden';
 
+    const provinces = getProvinces();
     let html = '';
 
     // Select All option
-    const allSelected = locationData.provinces.every(p => isProvinceSelected(p));
+    const allSelected = provinces.every(p => isProvinceSelected(p.name));
     html += `
       <div class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all">
         <button type="button" class="location-item-checkbox-btn" data-action="select-all" aria-label="Select all regions"></button>
@@ -1042,18 +1113,18 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
 
-    // Province items
-    locationData.provinces.forEach(province => {
-      const count = countPropertiesInProvince(province);
-      const selected = isProvinceSelected(province);
-      const partial = !selected && isProvincePartiallySelected(province);
+    // Province items - use name instead of slug
+    provinces.forEach(province => {
+      const count = countPropertiesInProvince(province.name);
+      const selected = isProvinceSelected(province.name);
+      const partial = !selected && isProvincePartiallySelected(province.name);
 
       html += `
-        <div class="location-item ${selected ? 'selected' : ''}" data-province="${province.slug}">
+        <div class="location-item ${selected ? 'selected' : ''}" data-province="${province.name}">
           <button type="button" class="location-item-checkbox-btn ${partial ? 'partial' : ''}"
-                  data-action="select-province" data-province="${province.slug}"
+                  data-action="select-province" data-province="${province.name}"
                   aria-label="Select all in ${province.name}"></button>
-          <button type="button" class="location-item-content location-item-drill" data-action="drill" data-province="${province.slug}">
+          <button type="button" class="location-item-content location-item-drill" data-action="drill" data-province="${province.name}">
             <span class="location-item-name">${province.name}</span>
             <div class="location-item-right">
               <span class="location-item-count">${count}</span>
@@ -1071,8 +1142,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Render city list for a province
-  function renderCities(province) {
+  // province can be a province object {name, cities} or province name string
+  function renderCities(provinceParam) {
     currentLevel = 'city';
+
+    // Normalize to province object
+    let province;
+    if (typeof provinceParam === 'string') {
+      const provinces = getProvinces();
+      province = provinces.find(p => p.name === provinceParam);
+      if (!province) return;
+    } else {
+      province = provinceParam;
+    }
+
     currentProvince = province;
     currentCity = null;
     locationTitle.textContent = province.name;
@@ -1081,7 +1164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let html = '';
 
     // Select All option for this province
-    const allSelected = isProvinceSelected(province);
+    const allSelected = isProvinceSelected(province.name);
     html += `
       <div class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all-province">
         <button type="button" class="location-item-checkbox-btn" data-action="select-all-province" aria-label="Select all in ${province.name}"></button>
@@ -1091,18 +1174,18 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
 
-    // City items
+    // City items - use name instead of slug
     province.cities.forEach(city => {
-      const count = countPropertiesInCity(city);
-      const selected = isCitySelected(city);
-      const partial = !selected && isCityPartiallySelected(city);
+      const count = countPropertiesInCity(city.name);
+      const selected = isCitySelected(city.name);
+      const partial = !selected && isCityPartiallySelected(city.name);
 
       html += `
-        <div class="location-item ${selected ? 'selected' : ''}" data-city="${city.slug}">
+        <div class="location-item ${selected ? 'selected' : ''}" data-city="${city.name}">
           <button type="button" class="location-item-checkbox-btn ${partial ? 'partial' : ''}"
-                  data-action="select-city" data-city="${city.slug}"
+                  data-action="select-city" data-city="${city.name}"
                   aria-label="Select all in ${city.name}"></button>
-          <button type="button" class="location-item-content location-item-drill" data-action="drill" data-city="${city.slug}">
+          <button type="button" class="location-item-content location-item-drill" data-action="drill" data-city="${city.name}">
             <span class="location-item-name">${city.name}</span>
             <div class="location-item-right">
               <span class="location-item-count">${count}</span>
@@ -1120,8 +1203,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Render suburb list for a city
-  function renderSuburbs(city) {
+  // city can be a city object {name, suburbs} or city name string
+  function renderSuburbs(cityParam) {
     currentLevel = 'suburb';
+
+    // Normalize to city object
+    let city;
+    if (typeof cityParam === 'string') {
+      // Find city in current province
+      if (currentProvince) {
+        city = currentProvince.cities.find(c => c.name === cityParam);
+      }
+      // Fallback to lookup
+      if (!city) {
+        const cityData = locationLookup.byCity && locationLookup.byCity[cityParam.toLowerCase()];
+        if (cityData) {
+          city = { name: cityData.city, suburbs: cityData.suburbs };
+        }
+      }
+      if (!city) return;
+    } else {
+      city = cityParam;
+    }
+
     currentCity = city;
     locationTitle.textContent = city.name;
     locationBackBtn.style.visibility = 'visible';
@@ -1129,7 +1233,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let html = '';
 
     // Select All option for this city
-    const allSelected = isCitySelected(city);
+    const allSelected = isCitySelected(city.name);
     html += `
       <div class="location-item ${allSelected ? 'selected' : ''}" data-action="select-all-city">
         <button type="button" class="location-item-checkbox-btn" data-action="select-all-city" aria-label="Select all in ${city.name}"></button>
@@ -1181,14 +1285,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const action = btn.dataset.action;
     const item = btn.closest('.location-item');
 
+    const provinces = getProvinces();
+
     if (action === 'select-all') {
       // Toggle select all provinces
-      const allSelected = locationData.provinces.every(p => isProvinceSelected(p));
+      const allSelected = provinces.every(p => isProvinceSelected(p.name));
       if (allSelected) {
         selectedLocations = [];
       } else {
         selectedLocations = [];
-        locationData.provinces.forEach(p => {
+        provinces.forEach(p => {
           p.cities.forEach(c => {
             c.suburbs.forEach(s => {
               if (!selectedLocations.includes(s)) selectedLocations.push(s);
@@ -1199,7 +1305,7 @@ document.addEventListener('DOMContentLoaded', function() {
       renderProvinces();
     } else if (action === 'select-all-province' && currentProvince) {
       // Toggle select all cities in current province
-      if (isProvinceSelected(currentProvince)) {
+      if (isProvinceSelected(currentProvince.name)) {
         currentProvince.cities.forEach(city => {
           city.suburbs.forEach(suburb => {
             const idx = selectedLocations.indexOf(suburb);
@@ -1216,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function() {
       renderCities(currentProvince);
     } else if (action === 'select-all-city' && currentCity) {
       // Toggle select all suburbs in current city
-      if (isCitySelected(currentCity)) {
+      if (isCitySelected(currentCity.name)) {
         currentCity.suburbs.forEach(suburb => {
           const idx = selectedLocations.indexOf(suburb);
           if (idx > -1) selectedLocations.splice(idx, 1);
@@ -1228,11 +1334,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       renderSuburbs(currentCity);
     } else if (action === 'select-province') {
-      // Toggle all suburbs in this province
-      const provinceSlug = btn.dataset.province;
-      const province = locationData.provinces.find(p => p.slug === provinceSlug);
+      // Toggle all suburbs in this province (using name instead of slug)
+      const provinceName = btn.dataset.province;
+      const province = provinces.find(p => p.name === provinceName);
       if (province) {
-        if (isProvinceSelected(province)) {
+        if (isProvinceSelected(province.name)) {
           // Deselect all suburbs in this province
           province.cities.forEach(city => {
             city.suburbs.forEach(suburb => {
@@ -1251,11 +1357,11 @@ document.addEventListener('DOMContentLoaded', function() {
         renderProvinces();
       }
     } else if (action === 'select-city') {
-      // Toggle all suburbs in this city
-      const citySlug = btn.dataset.city;
-      const city = currentProvince.cities.find(c => c.slug === citySlug);
+      // Toggle all suburbs in this city (using name instead of slug)
+      const cityName = btn.dataset.city;
+      const city = currentProvince.cities.find(c => c.name === cityName);
       if (city) {
-        if (isCitySelected(city)) {
+        if (isCitySelected(city.name)) {
           city.suburbs.forEach(suburb => {
             const idx = selectedLocations.indexOf(suburb);
             if (idx > -1) selectedLocations.splice(idx, 1);
@@ -1286,13 +1392,15 @@ document.addEventListener('DOMContentLoaded', function() {
     e.stopPropagation();
     const btn = e.currentTarget;
 
+    const provinces = getProvinces();
+
     if (currentLevel === 'province') {
-      const provinceSlug = btn.dataset.province;
-      const province = locationData.provinces.find(p => p.slug === provinceSlug);
+      const provinceName = btn.dataset.province;
+      const province = provinces.find(p => p.name === provinceName);
       if (province) renderCities(province);
     } else if (currentLevel === 'city' && currentProvince) {
-      const citySlug = btn.dataset.city;
-      const city = currentProvince.cities.find(c => c.slug === citySlug);
+      const cityName = btn.dataset.city;
+      const city = currentProvince.cities.find(c => c.name === cityName);
       if (city) renderSuburbs(city);
     }
   }

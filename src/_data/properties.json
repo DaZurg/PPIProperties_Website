@@ -1,7 +1,85 @@
 [
   {
+    "id": "3108494",
+    "address": "6b Fair Road",
+    "price": 7000000,
+    "currencySymbol": "R",
+    "bedrooms": 4,
+    "bathrooms": 0,
+    "parkingSpaces": 1,
+    "imageUrls": [
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=03e4a7a7-02c7-4752-a428-dc9db57538f1&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=266dfc3f-a6b2-403e-9a9a-abeab5432a78&userId=57314"
+    ],
+    "description": "Double story, 5 bedrooms, 3.5 bathrooms, across the road from Ohr sameach.\r\n\r\nIncluding: gas fireplace, solar inverter, gas and solar geyser, jojo tank, heated pool, double garage, underfloor heating in bathrooms, maids room, outdoor gas braai,\r\n\r\nChefs kitchen and more.",
+    "marketingHeading": "5 Bedroom House in Glenhazel",
+    "agentName": "MartieTest PelserTest",
+    "agentPhone": "0278722255",
+    "agentEmail": "martietest@ppi.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 4,
+        "items": [
+          {
+            "value": 1,
+            "description": "2",
+            "options": []
+          },
+          {
+            "value": 1,
+            "description": "3",
+            "options": []
+          },
+          {
+            "value": 1,
+            "description": "4",
+            "options": []
+          },
+          {
+            "value": 1,
+            "description": "1",
+            "options": []
+          }
+        ]
+      },
+      {
+        "type": "Garage",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "1",
+            "options": []
+          }
+        ]
+      }
+    ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": false,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": null,
+    "erfSize": null,
+    "furnishedType": null,
+    "levy": null,
+    "rates": null,
+    "ownershipType": "FullFreeTitle",
+    "petsAllowed": false,
+    "listedDate": "25 Mar 2026",
+    "updatedDate": "29 Mar 2026",
+    "location": "Glenhazel",
+    "city": "Johannesburg",
+    "province": "Gauteng",
+    "propertyType": "House"
+  },
+  {
     "id": "3108496",
-    "address": "95 Japonica Avenue, Moregloed",
+    "address": "95 Japonica Avenue",
     "price": 495000,
     "currencySymbol": "R",
     "bedrooms": 1,
@@ -174,8 +252,186 @@
     "propertyType": "FlatApartment"
   },
   {
+    "id": "3108499",
+    "address": "12 Fair Road",
+    "price": 600000,
+    "currencySymbol": "R",
+    "bedrooms": 2,
+    "bathrooms": 0,
+    "parkingSpaces": 3,
+    "imageUrls": [
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=e69e94d4-149e-4ce4-a69a-316a1b9392ad&userId=57314"
+    ],
+    "description": "test 3 description",
+    "marketingHeading": "",
+    "agentName": "Martie Pelser",
+    "agentPhone": "0726999255",
+    "agentEmail": "martie@ppiproperties.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 2,
+        "items": [
+          {
+            "value": 1,
+            "description": "2",
+            "options": [
+              "Double Bed"
+            ]
+          },
+          {
+            "value": 1,
+            "description": "3",
+            "options": [
+              "King Bed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Garage",
+        "count": 2,
+        "items": [
+          {
+            "value": 1,
+            "description": "garage 1",
+            "options": []
+          },
+          {
+            "value": 1,
+            "description": "garage 2",
+            "options": []
+          }
+        ]
+      },
+      {
+        "type": "Parking",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "off street",
+            "options": []
+          }
+        ]
+      },
+      {
+        "type": "Security",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Burglar Bars"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InternetAccess",
+        "count": 1,
+        "items": [
+          {
+            "value": 1,
+            "description": "",
+            "options": [
+              "Fibre"
+            ]
+          }
+        ]
+      }
+    ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": true,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": null,
+    "erfSize": null,
+    "furnishedType": "Yes",
+    "levy": null,
+    "rates": null,
+    "ownershipType": "FullFreeTitle",
+    "petsAllowed": false,
+    "listedDate": "30 Mar 2026",
+    "updatedDate": "31 Mar 2026",
+    "location": "Glenhazel",
+    "city": "Johannesburg",
+    "province": "Gauteng",
+    "propertyType": "House"
+  },
+  {
+    "id": "3108506",
+    "address": "Main Road\r\nRondebosch",
+    "price": 30000000,
+    "currencySymbol": "R",
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "parkingSpaces": 1,
+    "imageUrls": [
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=30457148-9cc9-4f51-afae-a7739e9657c7&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=66f17bc0-4b5d-4c5b-ba2f-6ec56b330b24&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=87eee5fa-1c7f-4f97-a9d5-92014dcc98dd&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=727d6b30-db1c-4e48-acb5-0476e44c1113&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=5400d603-4eca-427d-b2bc-68b7fe927c8a&userId=57314",
+      "https://server.exdev.propctrl-test.com/image.ashx?Id=0cca2f68-5a35-4e02-9031-dd6ffa3d76b7&userId=57314"
+    ],
+    "description": "Tony Soprano home",
+    "marketingHeading": "Tony Soprano Home",
+    "agentName": "agent3 AgentLastName3",
+    "agentPhone": "+27827758987",
+    "agentEmail": "agent3@agents.co.za",
+    "roomFeatures": [
+      {
+        "type": "Bedroom",
+        "count": 4,
+        "items": []
+      },
+      {
+        "type": "Bathroom",
+        "count": 2,
+        "items": []
+      },
+      {
+        "type": "Garage",
+        "count": 1,
+        "items": []
+      },
+      {
+        "type": "Office",
+        "count": 2,
+        "items": []
+      }
+    ],
+    "highlights": {
+      "backupBattery": false,
+      "borehole": false,
+      "solarPanels": false,
+      "solarGeyser": false,
+      "gasGeyser": false,
+      "waterTank": false
+    },
+    "floorArea": null,
+    "erfSize": null,
+    "furnishedType": null,
+    "levy": null,
+    "rates": null,
+    "ownershipType": "FullFreeTitle",
+    "petsAllowed": false,
+    "listedDate": "13 Apr 2026",
+    "updatedDate": "13 Apr 2026",
+    "location": "Ninapark",
+    "city": "Akasia",
+    "province": "Gauteng",
+    "propertyType": "House"
+  },
+  {
     "id": "3108497",
-    "address": "56B Sparrow Street, Ninapark",
+    "address": "56B Sparrow Street",
     "price": 1150000,
     "currencySymbol": "R",
     "bedrooms": 3,
@@ -330,7 +586,7 @@
     "ownershipType": "SectionalTitle",
     "petsAllowed": true,
     "listedDate": "30 Mar 2026",
-    "updatedDate": "30 Mar 2026",
+    "updatedDate": "17 Apr 2026",
     "location": "Ninapark",
     "city": "Akasia",
     "province": "Gauteng",
@@ -338,8 +594,8 @@
   },
   {
     "id": "3108498",
-    "address": "110 Christiaan De Wet Road, Florida Park",
-    "price": 1150000,
+    "address": "110 Christiaan De Wet Road",
+    "price": 1200000,
     "currencySymbol": "R",
     "bedrooms": 3,
     "bathrooms": 2.5,
@@ -563,7 +819,7 @@
       }
     ],
     "highlights": {
-      "backupBattery": false,
+      "backupBattery": true,
       "borehole": false,
       "solarPanels": false,
       "solarGeyser": false,
@@ -582,127 +838,14 @@
     },
     "furnishedType": "No",
     "levy": 3700,
-    "rates": 1021,
+    "rates": 2021,
     "ownershipType": "SectionalTitle",
     "petsAllowed": false,
     "listedDate": "30 Mar 2026",
-    "updatedDate": "30 Mar 2026",
+    "updatedDate": "16 Apr 2026",
     "location": "Florida Park",
     "city": "Roodepoort",
     "province": "Gauteng",
     "propertyType": "FlatApartment"
-  },
-  {
-    "id": "3108499",
-    "address": "12 Fair Road, Glenhazel",
-    "price": 600000,
-    "currencySymbol": "R",
-    "bedrooms": 2,
-    "bathrooms": 0,
-    "parkingSpaces": 3,
-    "imageUrls": [
-      "https://server.exdev.propctrl-test.com/image.ashx?Id=e69e94d4-149e-4ce4-a69a-316a1b9392ad&userId=57314"
-    ],
-    "description": "test 3 description",
-    "marketingHeading": "",
-    "agentName": "Martie Pelser",
-    "agentPhone": "0726999255",
-    "agentEmail": "martie@ppiproperties.co.za",
-    "roomFeatures": [
-      {
-        "type": "Bedroom",
-        "count": 2,
-        "items": [
-          {
-            "value": 1,
-            "description": "2",
-            "options": [
-              "Double Bed"
-            ]
-          },
-          {
-            "value": 1,
-            "description": "3",
-            "options": [
-              "King Bed"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "Garage",
-        "count": 2,
-        "items": [
-          {
-            "value": 1,
-            "description": "garage 1",
-            "options": []
-          },
-          {
-            "value": 1,
-            "description": "garage 2",
-            "options": []
-          }
-        ]
-      },
-      {
-        "type": "Parking",
-        "count": 1,
-        "items": [
-          {
-            "value": 1,
-            "description": "off street",
-            "options": []
-          }
-        ]
-      },
-      {
-        "type": "Security",
-        "count": 1,
-        "items": [
-          {
-            "value": 1,
-            "description": "",
-            "options": [
-              "Burglar Bars"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "InternetAccess",
-        "count": 1,
-        "items": [
-          {
-            "value": 1,
-            "description": "",
-            "options": [
-              "Fibre"
-            ]
-          }
-        ]
-      }
-    ],
-    "highlights": {
-      "backupBattery": false,
-      "borehole": true,
-      "solarPanels": false,
-      "solarGeyser": false,
-      "gasGeyser": false,
-      "waterTank": false
-    },
-    "floorArea": null,
-    "erfSize": null,
-    "furnishedType": "Yes",
-    "levy": null,
-    "rates": null,
-    "ownershipType": "FullFreeTitle",
-    "petsAllowed": false,
-    "listedDate": "30 Mar 2026",
-    "updatedDate": "31 Mar 2026",
-    "location": "Glenhazel",
-    "city": "Johannesburg",
-    "province": "Gauteng",
-    "propertyType": "House"
   }
 ]

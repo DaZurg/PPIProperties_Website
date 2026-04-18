@@ -673,90 +673,90 @@
   }
 
   /**
-   * Expand a location slug (province/city/suburb) to matching locations
-   * @param {string} locationSlug - The location slug or suburb name from URL
-   * @returns {Array} Array of location names (suburbs + city name for city matches)
+   * Expand a location parameter (province/city/suburb name) to matching suburbs
+   * Uses lookup tables for case-insensitive matching
+   * @param {string} locationParam - The location name from URL or filter
+   * @returns {Array} Array of suburb names (+ city name for city matches)
    */
-  function expandLocationSlug(locationSlug) {
-    console.log('[Filter Debug] expandLocationSlug called with:', locationSlug);
+  function expandLocationSlug(locationParam) {
+    console.log('[Filter Debug] expandLocationSlug called with:', locationParam);
 
-    // Check if locationData is available
-    if (typeof window.locationData === 'undefined') {
-      console.warn('[Filter Debug] locationData NOT available, returning original');
-      return [locationSlug];
+    // Check if locationLookup is available (from new locations.json structure)
+    const lookup = window.locationLookup || (window.locationData && window.locationData.lookup);
+    if (!lookup) {
+      console.warn('[Filter Debug] locationLookup NOT available, returning original');
+      return [locationParam];
     }
 
-    const locationData = window.locationData;
-    const slugLower = locationSlug.toLowerCase();
+    const paramLower = locationParam.toLowerCase();
 
-    // Check if it's a province slug
-    for (const province of locationData.provinces) {
-      if (province.slug.toLowerCase() === slugLower) {
-        // It's a province - get all suburbs AND city names from all cities
-        const locations = [];
-        for (const city of province.cities) {
-          locations.push(city.name); // Include city name for city field matching
-          locations.push(...city.suburbs);
+    // Check if it's a province
+    if (lookup.byProvince && lookup.byProvince[paramLower]) {
+      const provinceData = lookup.byProvince[paramLower];
+      const locations = [];
+      // Include all cities and their suburbs
+      provinceData.cities.forEach(cityName => {
+        locations.push(cityName); // Include city name for city field matching
+        const cityData = lookup.byCity[cityName.toLowerCase()];
+        if (cityData) {
+          locations.push(...cityData.suburbs);
         }
-        console.log('[Filter Debug] Matched PROVINCE:', province.name, '-> locations:', locations);
-        return locations;
-      }
-
-      // Check if it's a city slug
-      for (const city of province.cities) {
-        if (city.slug.toLowerCase() === slugLower) {
-          // Include the city name itself so properties with matching city field are found
-          const locations = [city.name, ...city.suburbs];
-          console.log('[Filter Debug] Matched CITY:', city.name, '-> locations:', locations);
-          return locations;
-        }
-      }
+      });
+      console.log('[Filter Debug] Matched PROVINCE:', provinceData.province, '-> locations:', locations);
+      return locations;
     }
 
-    // Check if it's a suburb name (direct match)
-    for (const province of locationData.provinces) {
-      for (const city of province.cities) {
-        for (const suburb of city.suburbs) {
-          if (suburb.toLowerCase() === slugLower) {
-            console.log('[Filter Debug] Matched SUBURB:', suburb);
-            return [suburb];
-          }
-        }
-      }
+    // Check if it's a city
+    if (lookup.byCity && lookup.byCity[paramLower]) {
+      const cityData = lookup.byCity[paramLower];
+      // Include the city name itself so properties with matching city field are found
+      const locations = [cityData.city, ...cityData.suburbs];
+      console.log('[Filter Debug] Matched CITY:', cityData.city, '-> locations:', locations);
+      return locations;
+    }
+
+    // Check if it's a suburb
+    if (lookup.bySuburb && lookup.bySuburb[paramLower]) {
+      const suburbData = lookup.bySuburb[paramLower];
+      console.log('[Filter Debug] Matched SUBURB:', suburbData.suburb);
+      return [suburbData.suburb];
     }
 
     // No match found - return original value
-    console.warn('[Filter Debug] No match found for:', locationSlug, '- returning as-is');
-    return [locationSlug];
+    console.warn('[Filter Debug] No match found for:', locationParam, '- returning as-is');
+    return [locationParam];
   }
 
   /**
-   * Get display name for a location slug
-   * @param {string} locationSlug - The location slug
-   * @returns {string} Display name or original slug
+   * Get display name for a location
+   * Uses lookup tables for case-insensitive matching
+   * @param {string} locationParam - The location name
+   * @returns {string} Display name (preserves original case)
    */
-  function getLocationDisplayName(locationSlug) {
-    if (typeof window.locationData === 'undefined') {
-      return locationSlug;
+  function getLocationDisplayName(locationParam) {
+    const lookup = window.locationLookup || (window.locationData && window.locationData.lookup);
+    if (!lookup) {
+      return locationParam;
     }
 
-    const locationData = window.locationData;
-    const slugLower = locationSlug.toLowerCase();
+    const paramLower = locationParam.toLowerCase();
 
-    // Check provinces
-    for (const province of locationData.provinces) {
-      if (province.slug.toLowerCase() === slugLower) {
-        return province.name;
-      }
-      // Check cities
-      for (const city of province.cities) {
-        if (city.slug.toLowerCase() === slugLower) {
-          return city.name;
-        }
-      }
+    // Check province
+    if (lookup.byProvince && lookup.byProvince[paramLower]) {
+      return lookup.byProvince[paramLower].province;
     }
 
-    return locationSlug;
+    // Check city
+    if (lookup.byCity && lookup.byCity[paramLower]) {
+      return lookup.byCity[paramLower].city;
+    }
+
+    // Check suburb
+    if (lookup.bySuburb && lookup.bySuburb[paramLower]) {
+      return lookup.bySuburb[paramLower].suburb;
+    }
+
+    return locationParam;
   }
 
   /**
