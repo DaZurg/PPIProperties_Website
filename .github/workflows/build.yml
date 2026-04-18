@@ -97,15 +97,20 @@ jobs:
           set net:max-retries 3
           set net:reconnect-interval-base 5
           set net:reconnect-interval-multiplier 1
-          set net:connection-limit 2
+          set net:connection-limit 8
           set ftp:ssl-allow yes
           set cmd:fail-exit yes
+          set mirror:parallel-transfer-count 4
           open $FTP_HOST
           login $FTP_USERNAME $FTP_PASSWORD
           pwd
           ls
           # Deploy directly to FTP root (which is the document root)
-          mirror -R --verbose ./_site .
+          # --ignore-time: compare by size only (skip files with same size)
+          # --no-perms: don't try to sync permissions (faster)
+          # --parallel=4: upload 4 files simultaneously
+          # This means images with unchanged content (same size) will be skipped
+          mirror -R --verbose --ignore-time --no-perms --parallel=4 ./_site .
           quit
           LFTP_SCRIPT
 

@@ -362,8 +362,9 @@ export async function fetchGoogleSheetsData() {
       console.log(`✓ Created agent lookup map with ${Object.keys(agentMap).length} agents`);
     }
 
-    // Filter active properties and transform
+    // Filter active properties (exclude deleted and inactive)
     const properties = propertiesData
+      .filter(prop => prop._deleted !== 'TRUE')
       .filter(prop => prop.listing_status === 'Active' || !prop.listing_status)
       .map(prop => {
         const suburbId = prop[suburbanKeyColumn];
