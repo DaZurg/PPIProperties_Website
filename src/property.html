@@ -540,9 +540,16 @@ title: "Property Details"
     {%- if property.description %}
       <div class="property-description">
         <h3 class="property-section-title">About This Property</h3>
-        <div class="property-description-text">
-          {{- property.description | replace("\r\n", "\n") | replace("\r", "\n") | nl2br | safe -}}
+        <div class="property-description-wrapper collapsed-mobile">
+          <div class="property-description-text">
+            {{- property.description | replace("\r\n", "\n") | replace("\r", "\n") | nl2br | safe -}}
+          </div>
+          <div class="property-description-fade"></div>
         </div>
+        <button type="button" class="read-more-btn" onclick="toggleCollapse(this)">
+          <span class="read-more-text">Read more</span>
+          <svg class="read-more-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
       </div>
     {%- endif %}
 
@@ -550,36 +557,43 @@ title: "Property Details"
     {%- if property.roomFeatures and property.roomFeatures.length > 0 %}
       <div class="property-room-features">
         <h3 class="property-section-title">Room Details & Features</h3>
-        <div class="property-rooms-grid">
-          {%- for room in property.roomFeatures %}
-            <div class="property-room-card">
-              <div class="property-room-header">
-                <span class="property-room-type">{{ room.type | replace("FamilyTVRoom", "Family/TV Room") | replace("DiningRoom", "Dining Room") | replace("InternetAccess", "Internet") | replace("SpecialFeature", "Special Features") | replace("NearbyPublicTransport", "Transport") }}</span>
-                {%- if room.count > 1 or (room.count == 0.5) %}
-                  <span class="property-room-count">
-                    {%- if room.count == 0.5 %}Half{%- else %}{{ room.count }}{%- endif %}
-                  </span>
+        <div class="property-rooms-wrapper collapsed-mobile">
+          <div class="property-rooms-grid">
+            {%- for room in property.roomFeatures %}
+              <div class="property-room-card">
+                <div class="property-room-header">
+                  <span class="property-room-type">{{ room.type | replace("FamilyTVRoom", "Family/TV Room") | replace("DiningRoom", "Dining Room") | replace("InternetAccess", "Internet") | replace("SpecialFeature", "Special Features") | replace("NearbyPublicTransport", "Transport") }}</span>
+                  {%- if room.count > 1 or (room.count == 0.5) %}
+                    <span class="property-room-count">
+                      {%- if room.count == 0.5 %}Half{%- else %}{{ room.count }}{%- endif %}
+                    </span>
+                  {%- endif %}
+                </div>
+                {%- if room.items and room.items.length > 0 %}
+                  <div class="property-room-items">
+                    {%- for item in room.items %}
+                      {%- if item.description %}
+                        <div class="property-room-item-desc">{{ item.description }}</div>
+                      {%- endif %}
+                      {%- if item.options and item.options.length > 0 %}
+                        <div class="property-room-options">
+                          {%- for opt in item.options %}
+                            <span class="property-room-option">{{ opt }}</span>
+                          {%- endfor %}
+                        </div>
+                      {%- endif %}
+                    {%- endfor %}
+                  </div>
                 {%- endif %}
               </div>
-              {%- if room.items and room.items.length > 0 %}
-                <div class="property-room-items">
-                  {%- for item in room.items %}
-                    {%- if item.description %}
-                      <div class="property-room-item-desc">{{ item.description }}</div>
-                    {%- endif %}
-                    {%- if item.options and item.options.length > 0 %}
-                      <div class="property-room-options">
-                        {%- for opt in item.options %}
-                          <span class="property-room-option">{{ opt }}</span>
-                        {%- endfor %}
-                      </div>
-                    {%- endif %}
-                  {%- endfor %}
-                </div>
-              {%- endif %}
-            </div>
-          {%- endfor %}
+            {%- endfor %}
+          </div>
+          <div class="property-description-fade"></div>
         </div>
+        <button type="button" class="read-more-btn" onclick="toggleCollapse(this)">
+          <span class="read-more-text">Read more</span>
+          <svg class="read-more-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
       </div>
     {%- endif %}
 
@@ -723,6 +737,76 @@ title: "Property Details"
     font-size: 15px;
     line-height: 1.7;
     color: #4b5563;
+  }
+
+  /* Collapsible sections on mobile */
+  .property-description-wrapper,
+  .property-rooms-wrapper {
+    position: relative;
+  }
+
+  .property-description-fade {
+    display: none;
+  }
+
+  .read-more-btn {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .collapsed-mobile {
+      max-height: 150px;
+      overflow: hidden;
+    }
+
+    .collapsed-mobile .property-description-fade {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      pointer-events: none;
+    }
+
+    .collapsed-mobile.expanded {
+      max-height: none;
+    }
+
+    .collapsed-mobile.expanded .property-description-fade {
+      display: none;
+    }
+
+    .read-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .read-more-btn:hover {
+      background: #e5e7eb;
+    }
+
+    .read-more-btn .read-more-icon {
+      transition: transform 0.2s;
+    }
+
+    .read-more-btn.expanded .read-more-icon {
+      transform: rotate(180deg);
+    }
   }
 
   /* Room Features */
@@ -1193,6 +1277,24 @@ title: "Property Details"
     </div>
   </nav>
 </article>
+
+<!-- Collapsible Sections Toggle -->
+<script>
+function toggleCollapse(btn) {
+  const wrapper = btn.previousElementSibling;
+  const textSpan = btn.querySelector('.read-more-text');
+
+  if (wrapper.classList.contains('expanded')) {
+    wrapper.classList.remove('expanded');
+    btn.classList.remove('expanded');
+    textSpan.textContent = 'Read more';
+  } else {
+    wrapper.classList.add('expanded');
+    btn.classList.add('expanded');
+    textSpan.textContent = 'Show less';
+  }
+}
+</script>
 
 <!-- Contact Form - FormSubmit.co Integration -->
 <script>

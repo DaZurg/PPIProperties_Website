@@ -278,6 +278,13 @@
   opacity: 1;
 }
 
+/* Always show arrows on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .gallery-arrow {
+    opacity: 0.9;
+  }
+}
+
 .gallery-arrow:hover {
   background: white;
   transform: translateY(-50%) scale(1.1);
@@ -533,6 +540,9 @@
     // Keyboard navigation
     bindKeyboardEvents();
 
+    // Swipe gestures for touch devices
+    bindSwipeEvents();
+
     // Set initial state - show first image
     updateMainImage(0);
     updateThumbnailHighlight(0);
@@ -719,6 +729,64 @@
           break;
       }
     });
+  }
+
+  function bindSwipeEvents() {
+    var mainImageContainer = document.querySelector('.gallery-main');
+    var lightboxContent = document.querySelector('.lightbox-content');
+
+    // Swipe detection variables
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchEndX = 0;
+    var touchEndY = 0;
+    var minSwipeDistance = 50;
+
+    function handleSwipe(isLightbox) {
+      var diffX = touchEndX - touchStartX;
+      var diffY = touchEndY - touchStartY;
+
+      // Only trigger if horizontal swipe is greater than vertical (not scrolling)
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+        if (diffX > 0) {
+          // Swipe right - previous image
+          isLightbox ? navigateLightbox(-1) : navigateImage(-1);
+        } else {
+          // Swipe left - next image
+          isLightbox ? navigateLightbox(1) : navigateImage(1);
+        }
+      }
+    }
+
+    // Main gallery swipe
+    if (mainImageContainer) {
+      mainImageContainer.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      mainImageContainer.addEventListener('touchend', function(e) {
+        // Don't trigger swipe if touching buttons
+        if (e.target.closest('button')) return;
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe(false);
+      }, { passive: true });
+    }
+
+    // Lightbox swipe
+    if (lightboxContent) {
+      lightboxContent.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      lightboxContent.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe(true);
+      }, { passive: true });
+    }
   }
 
   // Navigation functions
