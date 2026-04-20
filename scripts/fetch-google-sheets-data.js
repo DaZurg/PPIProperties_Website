@@ -464,6 +464,13 @@ export async function fetchGoogleSheetsData() {
       console.log(`✓ Created agent lookup map with ${Object.keys(agentMap).length} agents`);
     }
 
+    // Debug: Log raw data for specific property
+    const debugProperty = propertiesData.find(p => p.property_id === '3108510');
+    if (debugProperty) {
+      console.log(`\n🔍 DEBUG Property 3108510:`);
+      console.log(`   features column value: ${debugProperty.features ? debugProperty.features.substring(0, 100) + '...' : 'EMPTY/UNDEFINED'}`);
+    }
+
     // Filter active properties (exclude deleted and inactive)
     const properties = propertiesData
       .filter(prop => prop._deleted !== 'TRUE')
@@ -476,7 +483,15 @@ export async function fetchGoogleSheetsData() {
         const agentIds = parseAgentIds(prop.agents);
         const primaryAgent = agentIds.length > 0 ? agentMap[agentIds[0]] : null;
 
-        return transformProperty(prop, suburb, primaryAgent);
+        const transformed = transformProperty(prop, suburb, primaryAgent);
+
+        // Debug: Log computed values for property 3108510
+        if (prop.property_id === '3108510') {
+          console.log(`   Computed bedrooms: ${transformed.bedrooms}`);
+          console.log(`   Computed bathrooms: ${transformed.bathrooms}`);
+        }
+
+        return transformed;
       })
       .filter(prop => prop.price >= 0);
 

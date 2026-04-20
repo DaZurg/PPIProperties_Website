@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "eleventy",
+    "fetch-data": "node scripts/fetch-google-sheets-data.js",
+    "build": "npm run fetch-data && eleventy",
     "dev": "eleventy --serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
