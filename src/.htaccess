@@ -1,0 +1,11 @@
+# Disable caching for HTML files to ensure fresh content
+<FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>
+
+# Cache images and static assets (they have unique names)
+<FilesMatch "\.(jpg|jpeg|png|webp|gif|ico|css|js)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>

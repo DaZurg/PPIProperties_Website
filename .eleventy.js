@@ -8,6 +8,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy({"src/_includes/js": "js"});
   eleventyConfig.addPassthroughCopy("src/images");
+  eleventyConfig.addPassthroughCopy("src/.htaccess");
 
   // Run data fetch, validation, and optimization before build
   eleventyConfig.on('eleventy.before', async () => {
