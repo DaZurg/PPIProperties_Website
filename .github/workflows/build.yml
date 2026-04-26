@@ -26,10 +26,72 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install FTP client (for image cache check)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Fetch existing FTP images list
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "⚠️  FTP not configured, will process all images"
+            echo "[]" > .ftp-images-cache.json
+            exit 0
+          fi
+
+          echo "📋 Fetching existing images list from FTP..."
+
+          # Create lftp script to list images directory
+          cat > /tmp/lftp-list.sh << 'LFTP_SCRIPT'
+          set ssl:verify-certificate no
+          set net:timeout 30
+          set net:max-retries 3
+          set ftp:ssl-allow yes
+          set ftp:passive-mode yes
+          LFTP_SCRIPT
+
+          # Add credentials and commands (separate to avoid variable expansion issues)
+          echo "open $FTP_HOST" >> /tmp/lftp-list.sh
+          echo "login $FTP_USERNAME $FTP_PASSWORD" >> /tmp/lftp-list.sh
+          echo "cd images" >> /tmp/lftp-list.sh
+          echo "cls -1" >> /tmp/lftp-list.sh
+          echo "quit" >> /tmp/lftp-list.sh
+
+          # Execute and capture output
+          if timeout 120 lftp < /tmp/lftp-list.sh > .ftp-images-raw.txt 2>/dev/null; then
+            # Convert to JSON array
+            echo "[" > .ftp-images-cache.json
+            first=true
+            while IFS= read -r line; do
+              if [ -n "$line" ]; then
+                if [ "$first" = true ]; then
+                  first=false
+                else
+                  echo "," >> .ftp-images-cache.json
+                fi
+                echo "  \"$line\"" >> .ftp-images-cache.json
+              fi
+            done < .ftp-images-raw.txt
+            echo "]" >> .ftp-images-cache.json
+
+            IMAGE_COUNT=$(grep -c '"property-' .ftp-images-cache.json 2>/dev/null || echo "0")
+            echo "✅ Found $IMAGE_COUNT existing images on FTP"
+          else
+            echo "⚠️  Could not fetch FTP images list, will process all images"
+            echo "[]" > .ftp-images-cache.json
+          fi
+
+          rm -f .ftp-images-raw.txt /tmp/lftp-list.sh
+
       - name: Run build
         run: npm run build
         env:
           GOOGLE_SHEETS_CONFIG: ${{ secrets.GOOGLE_SHEETS_CONFIG }}
+          FTP_IMAGES_CACHE: .ftp-images-cache.json
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -59,12 +121,6 @@ jobs:
         with:
           name: build-output
           path: ./_site
-
-      - name: Install FTP client
-        if: success()
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lftp
 
       - name: Deploy to cPanel via FTP
         if: success()
