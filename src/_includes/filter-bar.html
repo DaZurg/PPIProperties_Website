@@ -113,7 +113,7 @@
       </div>
     </div>
 
-    <!-- Property Type Dropdown -->
+    <!-- Property Type Dropdown (dynamically populated from data) -->
     <div class="filter-dropdown">
       <button type="button" class="filter-btn" data-dropdown="type">
         <span class="filter-btn-label">Property types</span>
@@ -124,21 +124,8 @@
       <div class="filter-dropdown-menu" id="dropdown-type">
         <div class="filter-dropdown-header">Property Type</div>
         <div id="property-type-options">
-          <label class="filter-option">
-            <input type="radio" name="propertyType" value="" checked data-filter="type"> All Types <span class="filter-count" data-count="type-any"></span>
-          </label>
-          <label class="filter-option">
-            <input type="radio" name="propertyType" value="House" data-filter="type"> House <span class="filter-count" data-count="type-House"></span>
-          </label>
-          <label class="filter-option">
-            <input type="radio" name="propertyType" value="FlatApartment" data-filter="type"> Flat/Apartment <span class="filter-count" data-count="type-FlatApartment"></span>
-          </label>
-          <label class="filter-option">
-            <input type="radio" name="propertyType" value="Townhouse" data-filter="type"> Townhouse <span class="filter-count" data-count="type-Townhouse"></span>
-          </label>
-          <label class="filter-option">
-            <input type="radio" name="propertyType" value="Land" data-filter="type"> Land <span class="filter-count" data-count="type-Land"></span>
-          </label>
+          <!-- Options populated dynamically from property data -->
+          <div class="filter-option" style="color: #9ca3af; font-style: italic;">Loading...</div>
         </div>
       </div>
     </div>
@@ -1031,15 +1018,18 @@ function getPropertyTypeDisplayName(type) {
 document.addEventListener('DOMContentLoaded', function() {
 
   // ==================== DYNAMIC PROPERTY TYPES ====================
-  // Detect property types from data for filter counts (static HTML options are used for UI)
-  function detectPropertyTypes() {
+  // Populate property type filter options from actual property data (like locations)
+  function populatePropertyTypes() {
     if (typeof allProperties === 'undefined') {
       // Retry until properties are loaded
-      setTimeout(detectPropertyTypes, 100);
+      setTimeout(populatePropertyTypes, 100);
       return;
     }
 
-    // Get unique property types from data
+    const container = document.getElementById('property-type-options');
+    if (!container) return;
+
+    // Get unique property types from data with counts
     const typeCounts = {};
     allProperties.forEach(prop => {
       if (prop.propertyType) {
@@ -1052,10 +1042,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Store types globally for filter counts
     window.dynamicPropertyTypes = sortedTypes;
+
+    // Build HTML for options
+    let html = `
+      <label class="filter-option">
+        <input type="radio" name="propertyType" value="" checked data-filter="type"> All Types <span class="filter-count" data-count="type-any">(${allProperties.length})</span>
+      </label>
+    `;
+
+    sortedTypes.forEach(type => {
+      const displayName = getPropertyTypeDisplayName(type);
+      const count = typeCounts[type];
+      html += `
+        <label class="filter-option">
+          <input type="radio" name="propertyType" value="${type}" data-filter="type"> ${displayName} <span class="filter-count" data-count="type-${type}">(${count})</span>
+        </label>
+      `;
+    });
+
+    // Set the HTML
+    container.innerHTML = html;
+
+    // Attach event handlers AFTER rendering (like locations do)
+    attachPropertyTypeHandlers();
   }
 
-  // Initialize property type detection
-  detectPropertyTypes();
+  // Attach event handlers to property type radio buttons (called after HTML is rendered)
+  function attachPropertyTypeHandlers() {
+    const container = document.getElementById('property-type-options');
+    if (!container) return;
+
+    container.querySelectorAll('input[data-filter="type"]').forEach(input => {
+      input.addEventListener('change', function() {
+        applyFilters();
+
+        // Update button label
+        const dropdown = this.closest('.filter-dropdown');
+        if (dropdown) {
+          const btn = dropdown.querySelector('.filter-btn-label');
+          const filterBtn = dropdown.querySelector('.filter-btn');
+          if (this.checked && this.value) {
+            btn.textContent = getPropertyTypeDisplayName(this.value);
+            filterBtn.classList.add('active');
+          } else if (this.checked && !this.value) {
+            btn.textContent = 'Property types';
+            filterBtn.classList.remove('active');
+          }
+        }
+      });
+    });
+  }
+
+  // Initialize property types
+  populatePropertyTypes();
 
   // ==================== LOCATION MODAL ====================
   // State
@@ -1883,6 +1922,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Skip price sliders and highlight checkboxes - they have their own handling
     if (input.id === 'price-slider-min' || input.id === 'price-slider-max') return;
     if (input.getAttribute('data-filter') === 'highlight') return;
+    // Skip property type - handled separately by populatePropertyTypes/attachPropertyTypeHandlers
+    if (input.getAttribute('data-filter') === 'type') return;
 
     input.addEventListener('change', function() {
       applyFilters();
@@ -1899,8 +1940,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const defaultLabels = {
             'location': SITE_CONFIG.location.countryLabel,
             'bedrooms': 'Beds',
-            'bathrooms': 'Baths',
-            'type': 'Property types'
+            'bathrooms': 'Baths'
           };
           const filterType = this.getAttribute('data-filter');
           if (defaultLabels[filterType]) {
@@ -2059,12 +2099,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Property type counts - filter by everything EXCEPT type
-    // Use dynamically detected property types, with static types as fallback
+    // Uses dynamically populated property types from data
     const typeFiltered = getFilteredPropertiesForCounts('type');
     const typeAnyEl = document.querySelector('[data-count="type-any"]');
     if (typeAnyEl) typeAnyEl.textContent = `(${typeFiltered.length})`;
-    const staticTypes = ['House', 'FlatApartment', 'Townhouse', 'Land'];
-    const types = window.dynamicPropertyTypes || staticTypes;
+    const types = window.dynamicPropertyTypes || [];
     types.forEach(type => {
       const count = typeFiltered.filter(p => p.propertyType === type).length;
       const el = document.querySelector(`[data-count="type-${type}"]`);
