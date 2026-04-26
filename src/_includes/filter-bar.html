@@ -1075,6 +1075,7 @@ document.addEventListener('DOMContentLoaded', function() {
     container.querySelectorAll('input[data-filter="type"]').forEach(input => {
       input.addEventListener('change', function() {
         applyFilters();
+        updateFilterCounts();
 
         // Update button label
         const dropdown = this.closest('.filter-dropdown');
@@ -1927,6 +1928,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     input.addEventListener('change', function() {
       applyFilters();
+      updateFilterCounts();
 
       // Update button label if selection changed
       const dropdown = this.closest('.filter-dropdown');
